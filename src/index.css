@@ -9,6 +9,7 @@
 
 main{
   flex-grow: 1;
+  background-color: #FAFAFA;
   color: #2C3E50;
 }
 

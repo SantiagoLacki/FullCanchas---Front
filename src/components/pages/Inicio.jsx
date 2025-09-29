@@ -12,22 +12,22 @@ const Inicio = () => {
                         alt="fondo cancha"
                     />
                     <div className="carousel-caption position-absolute end-50 bottom-0 text-start w-50 fadeInTexto">
-                        <h3 className="titulo fs-1 mb-0">Viví el futbol</h3>
-                        <h3 className="titulo shadow-sm">FULLCANCHAS</h3>
-                        <p className="fs-5">
+                        <h3 className="titulo fs-1 mb-0 fw-light">Viví el futbol</h3>
+                        <h3 className="titulo shadow-sm fw-bold">FULLCANCHAS</h3>
+                        <p className="fs-5 fw-light">
                             Aquí, la pasión por la pelota se enciende en cada partido. Tenemos el espacio perfecto para vos. Conéctate, elige tu horario y preparate para jugar.
                         </p>
                     </div>
                 </div>
             </div>
             <Container className="mt-5">
-                <h1>Nuestras Canchas</h1>
+                <h1 className="text-center">Nuestras Canchas</h1>
                 <Row>
                     {
 
                     }
                 </Row>
-                <h2>Shopp</h2>
+                <h2 className="text-center">Shopp</h2>
                 <Row>
                     {
 
@@ -78,6 +78,25 @@ const Inicio = () => {
                     />
                 </Col>
             </Row>
+            <div className="container mt-5 ">
+                <h2>Donde estamos</h2>
+                <div className="d-flex align-items-center">
+                    <i className="bi bi-geo-alt fs-2"></i>
+                    <p className="fs-6 mx-2 mb-0 fw-light">Gral. José María Paz 1544, San Miguel de Tucumán, Tucumán</p>
+                </div>
+            </div>
+            <div >
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13836.007794024403!2d-65.23461743173766!3d-26.82855015704578!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94225c6e58a8deab%3A0x889e3702172a7141!2sEl%20Abasto%20Futbol%205!5e0!3m2!1ses-419!2sar!4v1759030578317!5m2!1ses-419!2sar" 
+                    width="100%" 
+                    height="200" 
+                    style={{border: 0}} 
+                    allowFullScreen 
+                    loading="lazy" 
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="Ubicación de las canchas"
+                ></iframe>
+            </div>
         </section>
     );
 };
