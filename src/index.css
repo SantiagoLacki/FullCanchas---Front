@@ -5,3 +5,7 @@
 .nav-link:hover {
   background: #0a5204;
 }
+
+.logo-nav {
+  width: 150px;
+}
