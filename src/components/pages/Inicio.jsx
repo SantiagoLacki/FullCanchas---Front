@@ -21,20 +21,25 @@ const Inicio = () => {
                     </div>
                 </div>
             </div>
-            <Container className="mt-5">
-                <h1 className="text-center">Nuestras Canchas</h1>
-                <Row>
-                        <CardCanchas></CardCanchas>
-                        <CardCanchas></CardCanchas>
-                        <CardCanchas></CardCanchas>
-                </Row>
-                <h2 className="text-center">Shopp</h2>
-                <Row>
-                    {
+            <section>
+                <Container className="mt-5">
+                    <h1 className="text-center">Nuestras Canchas</h1>
+                    <Row className="justify-content-center">
+                            <CardCanchas></CardCanchas>
+                            <CardCanchas></CardCanchas>
+                            <CardCanchas></CardCanchas>
+                            <CardCanchas></CardCanchas>
+                            <CardCanchas></CardCanchas>
+                    </Row>
+                    <h2 className="text-center">Shopp</h2>
+                    <Row>
+                        {
 
-                    }
-                </Row>
-            </Container>
+                        }
+                    </Row>
+                </Container>
+            </section>
+
             <Row className="mt-4">
                 <Col xs={12} md={4} lg={2} className="p-0">
                     <img
@@ -80,7 +85,7 @@ const Inicio = () => {
                 </Col>
             </Row>
             <div className="container mt-5 ">
-                <h2>Donde estamos</h2>
+                <h3 >Donde estamos</h3>
                 <div className="d-flex align-items-center">
                     <i className="bi bi-geo-alt fs-2"></i>
                     <p className="fs-6 mx-2 mb-0 fw-light">Gral. José María Paz 1544, San Miguel de Tucumán, Tucumán</p>
