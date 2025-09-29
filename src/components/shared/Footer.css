@@ -1,0 +1,76 @@
+.footer {
+  background-color: #2C3E50;
+  color: #ecf0f1;
+  font-family: "Nunito", sans-serif;
+  padding: 40px 20px;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between; /* separa columnas a lo largo del footer */
+  align-items: flex-start;
+  max-width: 1400px; /* más espacio entre columnas */
+  margin: 0 auto;
+  padding: 0 20px; /* padding a los costados */
+  flex-wrap: wrap;
+  gap: 40px; /* separación extra si se envuelven */
+}
+
+.footer-left, .footer-center, .footer-right {
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+}
+.footer-left {
+  align-items: flex-start;
+}
+
+.footer-center {
+  align-items: center; /* centra los links verticalmente */
+}
+
+.footer-right {
+  align-items: flex-end;
+}
+
+.footer-logo {
+  width: 120px;
+  margin-bottom: 10px;
+}
+
+.footer-copy {
+  font-size: 12px;
+  color: #ffffff; /* lo dejaste blanco */
+}
+
+.footer-title {
+  font-size: 16px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.footer-center a {
+  color: #ecf0f1;
+  text-decoration: none;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.footer-center a:hover {
+  text-decoration: underline;
+}
+
+.social-icons {
+  display: flex;
+  gap: 15px;
+}
+
+.social-icons a {
+  color: #ecf0f1;
+  font-size: 22px;
+  transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #5A9A00; /* tu color de hover de la paleta */
+}
