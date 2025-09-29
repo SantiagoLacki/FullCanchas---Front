@@ -1,7 +1,7 @@
 import { Button, Card, Col} from "react-bootstrap";
 import { Link } from "react-router";
 
-const CardCanchas = () => {
+const CardCancha = () => {
     return (
         <Col md={6} lg={4} className="mb-5">
             <Card style={{ width: '20rem' }} border="0" className="shadow-sm">
@@ -22,4 +22,4 @@ const CardCanchas = () => {
     );
 };
 
-export default CardCanchas;
+export default CardCancha;

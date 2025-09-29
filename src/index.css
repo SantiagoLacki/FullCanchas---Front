@@ -30,8 +30,16 @@ main{
   height: 200px;
 }
 
+.imagen-icono{
+  object-fit: cover;
+  height: 100px;
+}
 
 .btn-gold{
   background-color: #d4ac0d !important;
   border-color: #d4ac0d !important;
+}
+
+.bg-shopp {
+  background-color: #2c3e50;
 }

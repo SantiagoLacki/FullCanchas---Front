@@ -1,6 +1,7 @@
 import { Container, Row, Col, Form } from "react-bootstrap";
 import { useEffect, useState } from "react";
-import CardCanchas from "./cancha/CardCanchas";
+import CardCancha from "./cancha/CardCancha";
+import CardProducto from "./producto/CardProducto";
 
 const Inicio = () => {
     return (
@@ -22,25 +23,52 @@ const Inicio = () => {
                 </div>
             </div>
             <section>
-                <Container className="mt-5">
+                <Container className="mt-2">
+                    <Row className="bg-shopp pt-3 rounded-2 mb-4">
+                        <Col className="d-flex flex-column align-items-center mx-4">
+                            <img
+                                className="imagen-icono"
+                                src="https://res.cloudinary.com/duwi53e7z/image/upload/v1759154741/Elegir2_t2ykcl.png"
+                                alt="icono elegí"
+                            />
+                            <p className="fw-bolder fs-5 text-white">Elegí tu cancha</p>
+                        </Col>
+                        <Col className="d-flex flex-column align-items-center mx-4">
+                            <img
+                                className="imagen-icono"
+                                src="https://res.cloudinary.com/duwi53e7z/image/upload/v1759154741/Horario2_satb47.png"
+                                alt="icono elegí"
+                            />
+                            <p className="fw-bolder fs-5 text-white">Elegí el día y la hora</p>
+                        </Col>
+                        <Col className="d-flex flex-column align-items-center mx-4">
+                            <img
+                                className="imagen-icono"
+                                src="https://res.cloudinary.com/duwi53e7z/image/upload/v1759154741/Juga2_xw0qnm.png"
+                                alt="icono elegí"
+                            />
+                            <p className="fw-bolder fs-5 text-white">Vení a Jugar!!!</p>
+                        </Col>
+                    </Row>
                     <h1 className="text-center">Nuestras Canchas</h1>
                     <Row className="justify-content-center">
-                            <CardCanchas></CardCanchas>
-                            <CardCanchas></CardCanchas>
-                            <CardCanchas></CardCanchas>
-                            <CardCanchas></CardCanchas>
-                            <CardCanchas></CardCanchas>
+                        <CardCancha></CardCancha>
+                        <CardCancha></CardCancha>
+                        <CardCancha></CardCancha>
+                        <CardCancha></CardCancha>
+                        <CardCancha></CardCancha>
                     </Row>
-                    <h2 className="text-center">Shopp</h2>
-                    <Row>
-                        {
+                    <div className="bg-shopp px-5 rounded-4 mb-1">
+                        <h2 className="text-center text-white">Productos</h2>
+                        <Row>
+                        <CardProducto></CardProducto>
+                        </Row>
+                    </div>
 
-                        }
-                    </Row>
                 </Container>
             </section>
 
-            <Row className="mt-4">
+            <Row className="mt-2">
                 <Col xs={12} md={4} lg={2} className="p-0">
                     <img
                         className="imagenGaleria w-100"
