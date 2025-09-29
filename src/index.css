@@ -23,3 +23,8 @@ main{
   width: 100%;
   filter: grayscale(20%);
 }
+
+.imagenGaleria{
+  object-fit: cover;
+  height: 200px;
+}
