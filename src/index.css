@@ -29,3 +29,9 @@ main{
   object-fit: cover;
   height: 200px;
 }
+
+
+.btn-gold{
+  background-color: #d4ac0d !important;
+  border-color: #d4ac0d !important;
+}

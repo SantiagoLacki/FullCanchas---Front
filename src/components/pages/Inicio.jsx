@@ -1,5 +1,6 @@
 import { Container, Row, Col, Form } from "react-bootstrap";
 import { useEffect, useState } from "react";
+import CardCanchas from "./cancha/CardCanchas";
 
 const Inicio = () => {
     return (
@@ -23,9 +24,9 @@ const Inicio = () => {
             <Container className="mt-5">
                 <h1 className="text-center">Nuestras Canchas</h1>
                 <Row>
-                    {
-
-                    }
+                        <CardCanchas></CardCanchas>
+                        <CardCanchas></CardCanchas>
+                        <CardCanchas></CardCanchas>
                 </Row>
                 <h2 className="text-center">Shopp</h2>
                 <Row>
