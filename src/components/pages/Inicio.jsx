@@ -2,10 +2,20 @@ import { Container, Row, Col, Form, Modal } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import CardCancha from "./cancha/CardCancha";
 import CardProducto from "./producto/CardProducto";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const Inicio = () => {
     const [showModal, setShowModal] = useState(false);
     const [selectedImage, setSelectedImage] = useState("");
+
+    useEffect(() => {
+    AOS.init({
+        duration: 3000,
+        once: true,
+        offset: 100
+        });
+    }, []);
 
     const galleryImages = [
         "https://images.pexels.com/photos/274422/pexels-photo-274422.jpeg",
@@ -83,11 +93,31 @@ const Inicio = () => {
                 <Container className="mt-2">
                     <h1 className="titulo-seccion text-center mt-5 mb-4 text-white">Nuestras Canchas</h1>
                     <Row className="justify-content-center">
-                        <CardCancha></CardCancha>
-                        <CardCancha></CardCancha>
-                        <CardCancha></CardCancha>
-                        <CardCancha></CardCancha>
-                        <CardCancha></CardCancha>
+                                <Col xl={3} lg={4} md={6}>
+                                    <div data-aos="fade-down" data-aos-delay="50" data-aos-duration="2000">
+                                        <CardCancha></CardCancha>
+                                    </div>
+                                </Col>
+                                <Col xl={3} lg={4} md={6} >
+                                    <div data-aos="fade-down" data-aos-delay="100" data-aos-duration="2000">
+                                        <CardCancha></CardCancha>
+                                    </div>
+                                </Col>
+                                <Col xl={3} lg={4} md={6}>
+                                    <div data-aos="fade-down" data-aos-delay="150" data-aos-duration="2000">
+                                        <CardCancha></CardCancha>
+                                    </div>
+                                </Col>
+                                <Col xl={3} lg={4} md={6} >
+                                    <div data-aos="fade-down" data-aos-delay="200" data-aos-duration="2000">
+                                        <CardCancha></CardCancha>
+                                    </div>
+                                </Col>
+                                <Col xl={3} lg={4} md={6} >
+                                    <div data-aos="fade-down" data-aos-delay="250" data-aos-duration="2000">
+                                        <CardCancha></CardCancha>
+                                    </div>
+                                </Col>
                     </Row>
 
 
@@ -96,9 +126,26 @@ const Inicio = () => {
                         <h2 className="titulo-seccion text-center mt-3 mb-4 text-white fs-1">Productos</h2>
                         <Container>
                         <Row>
-                            <CardProducto></CardProducto>
-                            <CardProducto></CardProducto>
-                            <CardProducto></CardProducto>
+                            <Col xl={3} lg={4} md={6} className="mb-4">
+                                <div data-aos="fade-right" data-aos-duration="3000">
+                                    <CardProducto></CardProducto>
+                                </div>
+                            </Col>
+                            <Col xl={3} lg={4} md={6} className="mb-4">
+                                <div data-aos="fade-right" data-aos-duration="3000">
+                                    <CardProducto></CardProducto>
+                                </div>
+                            </Col>
+                            <Col xl={3} lg={4} md={6} className="mb-4">
+                                <div data-aos="fade-right" data-aos-duration="3000">
+                                    <CardProducto></CardProducto>
+                                </div>
+                            </Col>
+                            <Col xl={3} lg={4} md={6} className="mb-4">
+                                <div data-aos="fade-right" data-aos-duration="3000">
+                                    <CardProducto></CardProducto>
+                                </div>
+                            </Col>
                         </Row>
                         </Container>
                     </div>
