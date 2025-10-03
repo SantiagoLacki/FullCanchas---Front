@@ -1,14 +1,15 @@
 import { Table } from "react-bootstrap";
 import { Link } from "react-router";
+import ItemUsuario from "./usuario/ItemUsuario";
 
 const Administrador = () => {
     return (
-        <div>
+        <section className="container mainSection">
                     <div className="d-flex justify-content-between align-items-center mt-5">
-                        <h2 className="display-6 titulo-banner fw-bold text-white">Usuarios registrados</h2>
+                        <h2 className="display-6 titulo-banner fw-bold text-white">Usuarios</h2>
                         <div>
-                        <Link className="btn btn-gold text-white" to={'/administrador/crear'} >
-                            <i className="bi bi-file-earmark-plus fs-3"></i>
+                        <Link className="btn btn-gold text-white" to={'/administrador/crear'} ><i class="bi bi-plus-circle"></i> Agregar Usuario
+                            
                         </Link>
                         </div>
                     </div>
@@ -24,11 +25,17 @@ const Administrador = () => {
                         </thead>
                         <tbody>
                         {
-                            <ItemUsuario></ItemUsuario>
+                            <>
+                                <ItemUsuario></ItemUsuario>
+                                <ItemUsuario></ItemUsuario>
+                                <ItemUsuario></ItemUsuario>
+                                <ItemUsuario></ItemUsuario>
+                                <ItemUsuario></ItemUsuario>
+                            </>
                         }
                         </tbody>
                     </Table>
-                </div> 
+                </section> 
     );
 };
 

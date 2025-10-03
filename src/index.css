@@ -47,6 +47,11 @@ main{
   border-color: #d4ac0d !important;
 }
 
+.btn-gold:hover{
+  background-color: #967a09 !important;
+  border-color: #967a09 !important;
+}
+
 .bg-shopp {
   background-color: #2c3e50;
 }
