@@ -12,13 +12,11 @@ function Menu() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            <Nav.Link as={Link} to={"/reservas"} className='nav-link fw-bold text-white rounded px-2'><i 
-              className="bi bi-calendar-check fs-4 me-1"></i>Reservar</Nav.Link>
             <Nav.Link as={Link} to={"/catalogo"} className='nav-link fw-bold text-white rounded px-2'><i 
               className="bi bi-bag-fill fs-4 me-1"></i>Catalogo</Nav.Link>
-            <Nav.Link as={Link} to={"/login"} className='nav-link fw-bold text-white rounded px-2'><i className="bi bi-person-circle fs-4 me-2"></i>Iniciar Sesión</Nav.Link>
             <Nav.Link as={Link} to={"/carrito"} className='nav-link fw-bold text-white rounded px-2'><i 
                 className="bi bi-cart-plus-fill fs-4 me-1"></i>Carrito</Nav.Link>
+            <Nav.Link as={Link} to={"/login"} className='nav-link fw-bold text-white rounded px-2'><i className="bi bi-person-circle fs-4 me-2"></i>Iniciar Sesión</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
