@@ -1,79 +1,61 @@
+/* Footer.css */
+
 .footer {
-  background-color: #2C3E50;
+  background: linear-gradient(to top, #008500, #5A9A00);
   color: #ecf0f1;
   font-family: "Nunito", sans-serif;
   padding: 40px 20px;
 }
 
-.footer-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  max-width: 1600px;
-  margin: 0 auto;
-  flex-wrap: wrap;
-  /* padding: 0 10px; menos padding en los costados */
-  gap: 40px;
-}
-
-.footer-left,
-.footer-center,
-.footer-extra,
-.footer-right {
-  flex: 1;
-  min-width: 200px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.footer-center,
-.footer-extra {
-  align-items: center;
-  text-align: center; /* centra el texto */
-}
-
-
-.footer-left {
-  align-items: center;
-  margin-left: 0;     /* pegado al borde */
+.footer-top {
+  text-align: center;
+  margin-bottom: 30px;
 }
 
 .footer-logo {
-  width: 120px;
-  margin-bottom: 10px;
-  align-self: center;
+  width: 200px;
 }
 
-.footer-copy {
-  font-size: 12px;
-  color: #bdc3c7;
-  text-align: center; /* centra el texto dentro de la columna */
+.footer-middle {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px; /* separa columnas en pantallas grandes */
 }
 
-
-.footer-title {
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #ffffff;
+.footer-col {
+  flex: 1;
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centra contenido de cada columna */
+  gap: 10px;
 }
 
+.footer-left a,
 .footer-center a,
-.footer-extra a {
+.footer-right a {
   color: #ecf0f1;
   text-decoration: none;
   font-size: 14px;
 }
 
+.footer-left a:hover,
 .footer-center a:hover,
-.footer-extra a:hover {
+.footer-right a:hover {
+  color: #2C3E50;
   text-decoration: underline;
 }
 
-.footer-right p {
+.footer-title {
+  font-size: 16px;
+  font-weight: 700;
   margin-bottom: 10px;
-  font-size: 14px;
+}
+
+.footer-social-title {
+  margin-top: 15px;
+  font-weight: 600;
 }
 
 .social-icons {
@@ -88,5 +70,32 @@
 }
 
 .social-icons a:hover {
-  color: #5A9A00;
+  color: #2C3E50;
+}
+
+.sponsor-logos {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.sponsor-logos img {
+  width: 150px; /* tamaño uniforme para todos los logos */
+  height: auto;
+  object-fit: contain;
+  margin: 10px; /* separación entre logos */
+}
+
+.logo-adidas {
+  width: 100px; /* ajusta este valor hasta que quede del tamaño de los otros */
+  height: auto; /* mantiene la proporción */
+  display: block; /* evita que sea inline y respete el tamaño */
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 12px;
+  color: #ffffff;
 }
