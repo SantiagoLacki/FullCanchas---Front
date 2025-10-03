@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import ItemUsuario from "./usuario/ItemUsuario";
 import { useState } from "react";
 import ItemCancha from "./cancha/ItemCancha";
+import ItemProducto from "./producto/ItemProducto";
 
 const Administrador = () => {
     const [terminoBusqueda, setTerminoBusqueda] = useState('')
@@ -75,7 +76,7 @@ const Administrador = () => {
                     <tr className="text-center">
                         <th className="text-secondary">#</th>
                         <th className="text-secondary">Cancha</th>
-                        <th className="text-secondary">Precio</th>
+                        <th className="text-secondary">Precio por Hora</th>
                         <th className="text-secondary">Imagen</th>
                         <th className="text-secondary">Acciones</th>
                     </tr>
@@ -88,6 +89,40 @@ const Administrador = () => {
                             <ItemCancha></ItemCancha>
                             <ItemCancha></ItemCancha>
                             <ItemCancha></ItemCancha>
+                        </>
+                    }
+                    </tbody>
+                </Table>
+            </div>
+
+            <div>
+                <div className="d-flex align-items-center mt-5 mb-3">
+                    <h2 className="display-6 titulo-banner fw-bold text-white me-4">Productos</h2>
+                    <div>
+                    <Link className="btn btn-gold text-white" to={'/administrador/crear'} >
+                        <i class="bi bi-plus-circle"></i> Agregar
+                    </Link>
+                    </div>
+                </div>
+                <Table responsive striped bordered hover>
+                    <thead>
+                    <tr className="text-center">
+                        <th className="text-secondary">#</th>
+                        <th className="text-secondary">Nombre del producto</th>
+                        <th className="text-secondary">Precio</th>
+                        <th className="text-secondary">Categoria</th>
+                        <th className="text-secondary">Imagen</th>
+                        <th className="text-secondary">Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {
+                        <>
+                            <ItemProducto></ItemProducto>
+                            <ItemProducto></ItemProducto>
+                            <ItemProducto></ItemProducto>
+                            <ItemProducto></ItemProducto>
+                            <ItemProducto></ItemProducto>
                         </>
                     }
                     </tbody>
