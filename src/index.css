@@ -77,3 +77,17 @@ main{
 .logo-nav {
   width: 150px;
 }
+
+.btn-fullcanchas-primary {
+    background-color: #007bff !important; 
+    border-color: #007bff !important;
+    color: white !important; 
+}
+
+.login-image {
+    height: 100% !important; 
+}
+
+.card-login {
+  max-width: 900px;
+}
