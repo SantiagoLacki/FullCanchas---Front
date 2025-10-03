@@ -65,4 +65,15 @@ main{
     height: auto;
     max-height: 80vh;
     object-fit: contain;
+  
+.navbar {
+  background:linear-gradient(to top, #008500, #5A9A00);
+}
+
+.nav-link:hover {
+  background: #0a5204;
+}
+
+.logo-nav {
+  width: 150px;
 }
