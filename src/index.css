@@ -89,3 +89,9 @@ main{
   height: 80px;
   object-fit:cover;
 }
+
+.dropdown-item.active, 
+.dropdown-item:active {
+  background-color: #d4ac0d !important; 
+  color: #fff !important;
+}
