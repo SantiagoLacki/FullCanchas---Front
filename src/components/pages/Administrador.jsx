@@ -47,8 +47,8 @@ const Administrador = () => {
                 </Dropdown.Menu>
             </Dropdown>
            {activeSection === 'usuarios' && ( 
-            <div>
-                <div className="d-flex justify-content-between align-items-center mt-5 mb-3">
+            <div className="border text-white rounded-2 py-3 px-4 mt-4 shadow-lg">
+                <div className="d-flex justify-content-between align-items-center mt-2 mb-3">
                     <div className="d-flex justify-content-between align-items-center">
                         <h2 className="display-6 titulo-banner fw-bold text-white me-4">Usuarios</h2>
                         <div>
@@ -97,8 +97,8 @@ const Administrador = () => {
             </div>
             )}
             {activeSection === 'canchas' && ( 
-            <div>
-                <div className="d-flex align-items-center mt-5 mb-3">
+            <div className="border text-white rounded-2 py-3 px-4 mt-4 shadow-lg">
+                <div className="d-flex align-items-center mt-2 mb-3">
                     <h2 className="display-6 titulo-banner fw-bold text-white me-4">Canchas</h2>
                     <div>
                     <Link className="btn btn-gold text-white" to={'/administrador/crear'} >
@@ -131,8 +131,8 @@ const Administrador = () => {
             </div>
             )}
             {activeSection === 'productos' && ( 
-            <div>
-                <div className="d-flex justify-content-between align-items-center mt-5 mb-3">
+            <div className="border text-white rounded-2 py-3 px-4 mt-4 shadow-lg">
+                <div className="d-flex justify-content-between align-items-center mt-2 mb-3">
                     <div className="d-flex justify-content-between align-items-center">
                         <h2 className="display-6 titulo-banner fw-bold text-white me-4">Productos</h2>
                         <div>
