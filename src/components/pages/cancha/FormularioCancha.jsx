@@ -20,7 +20,7 @@ const FormularioCancha = () => {
 
     }
     return (
-        <>
+        <div>
             <div className="text-center mt-3">
                 <img
                     className="imagen-icono"
@@ -28,11 +28,11 @@ const FormularioCancha = () => {
                     alt="icono cancha"
                 />
             </div>
-            <section className="container mainSection border text-white rounded-2 py-1 px-4 mt-4 shadow-lg">
+            <section className="container mainSection border text-white rounded-2 py-1 px-4 mt-4 shadow-lg ">
                 <h1 className="display-6 titulo-banner fw-bold text-center me-4 mt-2">Nueva Cancha</h1>
                 <div className="d-flex justify-content-center">
                     <Form className="my-4 w-75" onSubmit={handleSubmit(onSubmit)}>
-                        <Form.Group className="mb-3 d-flex align-items-center" controlId="formNombreCancha">
+                        <Form.Group className="mb-4 d-flex align-items-center" controlId="formNombreCancha">
                             <Form.Label className="me-2">Nombre:</Form.Label>
                             <Form.Control
                                 type="text"
@@ -56,8 +56,8 @@ const FormularioCancha = () => {
                             </Form.Text>
                         </Form.Group>
 
-                        <Form.Group className="mb-3 d-flex align-items-center" controlId="formImagen">
-                            <Form.Label>Imagen URL*</Form.Label>
+                        <Form.Group className="mb-4 d-flex align-items-center" controlId="formImagen">
+                            <Form.Label>Imagen URL:</Form.Label>
                             <Form.Control
                                 type="text"
                                 placeholder="https://www.pexels.com/es-es/imagen1"
@@ -76,7 +76,7 @@ const FormularioCancha = () => {
                             </Form.Text>
                         </Form.Group>
 
-                        <Form.Group className="mb-3 d-flex align-items-center">
+                        <Form.Group className="mb-4 d-flex align-items-center">
                             <Form.Label>Tipo de Superficie: </Form.Label>
                             <Form.Select 
                             {...register('tipoDeSuperficie', {
@@ -105,14 +105,23 @@ const FormularioCancha = () => {
                                         className="fs-5"
                                     />
                                 </div>
-                                <Form.Text className="text-muted">
+                                <Form.Text className="text-white">
                                     La cancha estará disponible para reservas cuando esté activada
                                 </Form.Text>
                             </Form.Group>
+
+                            <div className="d-flex justify-content-around mt-5">
+                                <Button type="submit" variant="warning" className="w-25 btn-gold text-white">
+                                    Guardar
+                                </Button>
+                                <Link to={"/administrador"} className="btn btn-danger ms-5 w-25">
+                                    Cancelar
+                                </Link>
+                            </div>
                     </Form>
                 </div>
             </section>
-        </>
+        </div>
     );
 };
 
