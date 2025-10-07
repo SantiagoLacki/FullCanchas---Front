@@ -7,6 +7,7 @@ import Inicio from "./components/pages/Inicio"
 import Login from "./components/pages/Login"
 import QuienesSomos from "./components/pages/QuienesSomos"
 import Register from "./components/pages/Register"
+import FormularioUsuario from "./components/pages/usuario/FormularioUsuario";
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
           <Route path="/quienesSomos" element={<QuienesSomos></QuienesSomos>}></Route>
           <Route path="/registro" element={<Register></Register>}></Route>
           <Route path="/administrador" element={<Administrador></Administrador>}></Route>
+          <Route path="/administrador/crearusuario" element={<FormularioUsuario></FormularioUsuario>}></Route>
           <Route path="*" element={<Inicio></Inicio>}></Route>
         </Routes>
       </main>
