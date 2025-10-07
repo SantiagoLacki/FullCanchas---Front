@@ -71,7 +71,6 @@ main{
     max-height: 80vh;
     object-fit: contain;
 }
-
 .navbar {
   background:linear-gradient(to top, #008500, #5A9A00);
 }
@@ -83,6 +82,19 @@ main{
 .logo-nav {
   width: 150px;
 }
+
+.btn-fullcanchas-primary {
+    background-color: #007bff !important; 
+    border-color: #007bff !important;
+    color: white !important; 
+}
+
+.login-image {
+    height: 100% !important; 
+}
+
+.card-login {
+  max-width: 900px;
 
 .img-thumbnail {
   width: 80px;
