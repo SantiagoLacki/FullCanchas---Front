@@ -15,7 +15,7 @@ const FormularioUsuario = () => {
     const navegacion = useNavigate()
     const {id} = useParams()
 
-    const onSubmit = async (receta) =>{
+    const onSubmit = async (usuario) =>{
 
     }
     return (
@@ -31,7 +31,68 @@ const FormularioUsuario = () => {
                 <h1 className="display-6 titulo-banner fw-bold text-center me-4 mt-2">Nuevo Usuario</h1>
                 <div className="d-flex justify-content-center">
                     <Form className="my-4 w-75" onSubmit={handleSubmit(onSubmit)}>
+                        <Form.Group className="mb-3 d-flex align-items-center" controlId="formNombreCancha">
+                            <Form.Label className="me-2">Nombre Usuario:</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="usuario"
+                                {...register("nombreUsuario", {
+                                required: "El nombre del usuario es un dato obligatorio",
+                                minLength: {
+                                    value: 2,
+                                    message:
+                                    "El nombre del usuario debe tener al menos 2 caracteres",
+                                },
+                                maxLength: {
+                                    value: 100,
+                                    message:
+                                    "El nombre del usuario debe tener como máximo 100 caracteres",
+                                },
+                                })}
+                            />
+                            <Form.Text className="text-danger">
+                                {errors.nombreCancha?.message}
+                            </Form.Text>
+                        </Form.Group>
 
+                        <Form.Group className="mb-3 d-flex align-items-center" controlId="formEmail">
+                            <Form.Label className="me-2">Email:</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="admin@admin.com"
+                                {...register("email", {
+                                required: "El Email es un valor obligatorio",
+                                pattern: {
+                                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                                    message: "Por favor ingresa un email válido"
+                                    }
+                                })}
+                            />
+                            <Form.Text className="text-danger">
+                                {errors.email?.message}
+                            </Form.Text>
+                        </Form.Group>
+
+                        <Form.Group className="mb-3 d-flex align-items-center" controlId="formPassword">
+                            <Form.Label className="me-2">Contraseña:</Form.Label>
+                            <Form.Control
+                                type="password"
+                                {...register("password", {
+                                required: "La contraseña es un dato obligatorio",
+                                pattern: {
+                                    value:
+                                    /^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,16}$/,
+                                    message:
+                                    "La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un número y un caracter especial",
+                                },
+                                })}
+                            />
+                            <Form.Text className="text-danger">
+                                {errors.password?.message}
+                            </Form.Text>
+                        </Form.Group>
+
+                        
                     </Form>
                 </div>
             </section>
