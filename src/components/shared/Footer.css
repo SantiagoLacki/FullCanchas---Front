@@ -10,7 +10,7 @@ html, body, #root {
 }
 
 main {
-  flex: 1; /* ocupa todo el espacio disponible entre navbar y footer */
+  flex: 1; /* ocupa todo el espacio disponible entre nav y footer */
 }
 
 /* Estilos generales del footer */
