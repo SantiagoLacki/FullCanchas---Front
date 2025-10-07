@@ -92,7 +92,14 @@ const FormularioUsuario = () => {
                             </Form.Text>
                         </Form.Group>
 
-                        
+                        <div className="d-flex justify-content-around mt-5">
+                            <Button type="submit" variant="warning" className="w-25">
+                                Guardar
+                            </Button>
+                            <Link to={"/administrador"} className="btn btn-danger ms-5 w-25">
+                                Cancelar
+                            </Link>
+                        </div>
                     </Form>
                 </div>
             </section>
