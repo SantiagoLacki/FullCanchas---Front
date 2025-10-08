@@ -9,6 +9,7 @@ import QuienesSomos from "./components/pages/QuienesSomos"
 import Register from "./components/pages/Register"
 import FormularioUsuario from "./components/pages/usuario/FormularioUsuario";
 import FormularioCancha from "./components/pages/cancha/FormularioCancha";
+import FormularioProducto from "./components/pages/producto/FormularioProducto";
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
           <Route path="/administrador" element={<Administrador></Administrador>}></Route>
           <Route path="/administrador/crearusuario" element={<FormularioUsuario></FormularioUsuario>}></Route>
           <Route path="/administrador/crearcancha" element={<FormularioCancha></FormularioCancha>}></Route>
+          <Route path="/administrador/crearproducto" element={<FormularioProducto></FormularioProducto>}></Route>
           <Route path="*" element={<Inicio></Inicio>}></Route>
         </Routes>
       </main>
