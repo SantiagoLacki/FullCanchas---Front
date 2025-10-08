@@ -108,3 +108,11 @@ main{
   background-color: #d4ac0d !important; 
   color: #fff !important;
 }
+
+.btn-reservar{
+  background: linear-gradient(to top, #008500, #5A9A00) !important;
+}
+
+.btn-reservado{
+  background: linear-gradient(to top, #d10b0b, #be0404) !important;
+}
