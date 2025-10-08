@@ -83,12 +83,6 @@ main{
   width: 150px;
 }
 
-.btn-fullcanchas-primary {
-    background-color: #007bff !important; 
-    border-color: #007bff !important;
-    color: white !important; 
-}
-
 .login-image {
     height: 100% !important; 
 }
@@ -107,4 +101,8 @@ main{
 .dropdown-item:active {
   background-color: #d4ac0d !important; 
   color: #fff !important;
+}
+
+.card-register {
+  max-width: 900px;
 }
