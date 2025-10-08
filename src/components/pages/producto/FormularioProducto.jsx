@@ -31,7 +31,7 @@ const FormularioProducto = () => {
                 <h1 className="display-6 titulo-banner fw-bold text-center me-4 mt-2">Nuevo Producto</h1>
                 <div className="d-flex justify-content-center">
                     <Form className="my-4 w-75" onSubmit={handleSubmit(onSubmit)}>
-                        <Form.Group className="mb-3 d-flex align-items-center" controlId="formNombreCancha">
+                        <Form.Group className="mb-4 d-flex align-items-center" controlId="formNombreCancha">
                             <Form.Label className="me-2">Nombre:</Form.Label>
                             <Form.Control
                                 type="text"
@@ -55,7 +55,7 @@ const FormularioProducto = () => {
                             </Form.Text>
                         </Form.Group>
 
-                        <Form.Group className="mb-3 d-flex align-items-center" controlId="formPrecio">
+                        <Form.Group className="mb-4 d-flex align-items-center" controlId="formPrecio">
                             <Form.Label className="me-2">Precio: </Form.Label>
                             <Form.Control
                                 type="number"
@@ -79,7 +79,7 @@ const FormularioProducto = () => {
                             </Form.Text>
                         </Form.Group>
 
-                        <Form.Group className="mb-3 d-flex align-items-center" controlId="formPrecio">
+                        <Form.Group className="mb-4 d-flex align-items-center" controlId="formPrecio">
                             <Form.Label className="me-3">Categoría*</Form.Label>
                             <Form.Select
                                 {...register("categoria", {
@@ -97,7 +97,7 @@ const FormularioProducto = () => {
                             </Form.Text>
                         </Form.Group>
 
-                        <Form.Group className="mb-3 d-flex align-items-center" controlId="formImagen">
+                        <Form.Group className="mb-4 d-flex align-items-center" controlId="formImagen">
                             <Form.Label className="me-3">Imagen URL*</Form.Label>
                                 <Form.Control
                                     type="text"
@@ -117,7 +117,7 @@ const FormularioProducto = () => {
                                 </Form.Text>
                             </Form.Group>       
 
-                            <Form.Group className="mb-3 d-flex align-items-center" controlId="formDescripcion">
+                            <Form.Group className="mb-4 d-flex align-items-center" controlId="formDescripcion">
                                 <Form.Label className="me-3">Descripción: </Form.Label>
                                 <Form.Control
                                     type="text"
@@ -139,7 +139,16 @@ const FormularioProducto = () => {
                                 <Form.Text className="text-danger">
                                     {errors.descripcion?.message}
                                 </Form.Text>
-                            </Form.Group>           
+                            </Form.Group>     
+
+                            <div className="d-flex justify-content-around mt-5">
+                                <Button type="submit" variant="warning" className="w-25 btn-gold text-white">
+                                    Guardar
+                                </Button>
+                                <Link to={"/administrador"} className="btn btn-danger ms-5 w-25">
+                                    Cancelar
+                                </Link>
+                            </div>      
                     </Form>
                 </div>
             </section>
