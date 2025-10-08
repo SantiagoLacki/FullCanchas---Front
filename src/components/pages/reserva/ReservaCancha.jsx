@@ -6,9 +6,9 @@ const ReservaCancha = () => {
         <section className='container mainSection'>
             <h2 className="display-6 titulo-banner fw-bold text-white me-4 mt-5">Elije tu turno</h2>
             <div className="border rounded-2 py-1 px-4 my-4 shadow-lg">
-                <h4 className="mt-4">Cancha N° 1</h4>
-                <p className="fw-light">Cancha de Futbol 5 | Césped sintético | Con iluminación</p>
-                <Table responsive striped bordered hover>
+                <h4 className="mt-4 text-white">Cancha N° 1</h4>
+                <p className="fw-light text-white">Cancha de Futbol 5 | Césped sintético | Con iluminación</p>
+                <Table responsive striped bordered hover className="table-reservas">
                     <thead>
                         <tr className="text-center">
                             <th className="text-secondary align-middle">Turno</th>
@@ -32,7 +32,12 @@ const ReservaCancha = () => {
                         }
                     </tbody>
                 </Table>
-
+                    <div className="d-flex justify-content-end">
+                        <div className="border rounded-1 btn-reservar box-referencia me-1">.</div>
+                        <p className="me-5">Reservar</p>
+                        <div className="border rounded-1 btn-reservado box-referencia me-1">.</div>
+                        <p >Ocupado</p>
+                    </div>
             </div>
         </section>
     );

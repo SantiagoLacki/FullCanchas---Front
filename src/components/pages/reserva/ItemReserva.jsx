@@ -5,34 +5,26 @@ const ItemReserva = () => {
     return (
         <tr>
             <td className="text-center align-middle fw-light">18:00</td>
-            <td className="align-middle fw-light text-center">
-                <Link className="btn btn-reservar border-0 text-white w-100" to={'/reserva'}>
-                    Reservar
+            <td className="align-middle fw-light text-center btn-reservar p-0">
+                <Link className="d-block w-100 h-100 text-decoration-none text-white py-3" to={'/reserva/'}>   
                 </Link>
             </td>
-            <td className="align-middle fw-light text-center">
-                <Link className="btn btn-reservar border-0 text-white w-100" to={'/reserva/'}>
-                    Reservar
+            <td className="align-middle fw-light text-center btn-reservar p-0">
+                <Link className="d-block w-100 h-100 text-decoration-none text-white py-3" to={'/reserva/'}>   
                 </Link>
             </td>
-            <td className="align-middle fw-light text-center">
-                <Link className="btn btn-reservado border-0 text-white w-100" to={'/reserva/'}>
-                    Reservado
+            <td className="align-middle fw-light text-center btn-reservado p-0">
+                
+            </td>
+            <td className="align-middle fw-light text-center btn-reservar p-0">
+                <Link className="d-block w-100 h-100 text-decoration-none text-white py-3" to={'/reserva/'}>   
                 </Link>
             </td>
-            <td className="align-middle fw-light text-center">
-                <Link className="btn btn-reservar border-0 text-white w-100" to={'/reserva/'}>
-                    Reservar
-                </Link>
+            <td className="align-middle fw-light text-center btn-reservado p-0">
+                
             </td>
-            <td className="align-middle fw-light text-center">
-                <Link className="btn btn-reservado border-0 text-white w-100" to={'/reserva/'}>
-                    Reservado
-                </Link>
-            </td>
-            <td className="align-middle fw-light text-center">
-                <Link className="btn btn-reservar border-0 text-white w-100" to={'/reserva/'}>
-                    Reservar
+            <td className="align-middle fw-light text-center btn-reservar p-0">
+                <Link className="d-block w-100 h-100 text-decoration-none text-white py-3" to={'/reserva/'}>   
                 </Link>
             </td>
         </tr>
