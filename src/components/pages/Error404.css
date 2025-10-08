@@ -1,0 +1,62 @@
+/* Estilos principales del contenedor */
+.error-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: space-between; /* mantiene el footer abajo */
+  background: linear-gradient(to top, #f0f0f0, #ffffff);
+  font-family: "Nunito", sans-serif;
+}
+
+/* Contenedor central */
+.error-container {
+  text-align: center;
+  padding: 60px 20px;
+  color: #333;
+}
+
+/* Código del error grande */
+.error-code {
+  font-size: 120px;
+  font-weight: 900;
+  color: #008500; /* verde principal */
+  margin-bottom: 10px;
+}
+
+/* Mensaje principal */
+.error-message {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+/* Descripción breve */
+.error-description {
+  font-size: 16px;
+  max-width: 600px;
+  margin: 0 auto 30px;
+  color: #555;
+}
+
+/* Imagen ilustrativa del error */
+.error-image {
+  width: 300px;
+  height: auto;
+  margin-bottom: 30px;
+}
+
+/* Botón para volver al inicio */
+.error-btn {
+  display: inline-block;
+  background-color: #008500;
+  color: #fff;
+  text-decoration: none;
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.error-btn:hover {
+  background-color: #5A9A00;
+}
