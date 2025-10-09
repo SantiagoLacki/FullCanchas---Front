@@ -11,8 +11,16 @@ import FormularioUsuario from "./components/pages/usuario/FormularioUsuario";
 import FormularioCancha from "./components/pages/cancha/FormularioCancha";
 import ReservaCancha from "./components/pages/reserva/ReservaCancha";
 import FormularioProducto from "./components/pages/producto/FormularioProducto";
+import { useEffect, useState } from "react";
+
 
 function App() {
+  const usuarioLogueado = JSON.parse(sessionStorage.getItem('userKey')) || {}
+  const [usuarioAdmin, setUsuarioAdmin] = useState(usuarioLogueado)
+
+  useEffect(()=>{
+    sessionStorage.setItem('userKey', JSON.stringify(usuarioAdmin))
+  }, [usuarioAdmin])
 
   return (
     <>
@@ -21,7 +29,7 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<Inicio></Inicio>}></Route>
-          <Route path="/login" element={<Login></Login>}></Route>
+          <Route path="/login" element={<Login setUsuarioAdmin={setUsuarioAdmin}></Login>}></Route>
           <Route path="/quienesSomos" element={<QuienesSomos></QuienesSomos>}></Route>
           <Route path="/registro" element={<Register></Register>}></Route>
           <Route path="/administrador" element={<Administrador></Administrador>}></Route>

@@ -2,8 +2,9 @@ import { Container, Row, Col, Form, Button, Card, Image } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router';
 import { login } from './helpers/queries';
 import Swal from 'sweetalert2';
+import { useForm } from 'react-hook-form';
 
-function Login() {
+function Login({setUsuarioAdmin}) {
   const {
         register,
         handleSubmit,
@@ -11,7 +12,27 @@ function Login() {
     } = useForm()
   const navegacion = useNavigate()
 
-  
+  const iniciarSesion= async (usuario)=>{
+    console.log(usuario)
+    const respuesta = await login(usuario)
+    console.log(respuesta)
+    if(respuesta.status === 200){
+      const datosUsuario = await respuesta.json()
+      setUsuarioAdmin({nombreUsuario: datosUsuario.nombreUsuario, rol:datosUsuario.rol, token: datosUsuario.token})
+      Swal.fire({
+          title: "Incio de sesión correcto",
+          text: `Bienvenido ${datosUsuario.nombreUsuario}`,
+          icon: "success"
+      });
+      navegacion('/administrador')
+    }else{        
+      Swal.fire({
+        title: "Error al iniciar sesion",
+        text: `Credenciales incorrectas` ,
+        icon: "error",
+      });
+    }
+  }
   return (
     <Container className='d-flex align-items-center justify-content-center my-5'>
       <Card className='card-login shadow-lg border-0'>
@@ -24,14 +45,26 @@ function Login() {
               <Card.Title as="h2" className='text-center mb-4'>
                 Inicio de Sesión
               </Card.Title>
-              <Form>
+              <Form onSubmit={handleSubmit(iniciarSesion)}>
                 <Form.Group className="mb-3" controlId="email">
                   <Form.Label className='fw-semibold'>Correo Electrónico</Form.Label>
-                  <Form.Control type="email" placeholder="nombre@dominio.com" required />
+                  <Form.Control type="email" placeholder="nombre@dominio.com" required {...register('email',{
+                            required: 'El email es un dato obligatorio',
+                            pattern:{
+                            value: /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
+                            message: 'El email debe tener un formato valido, por ej: juanperez@mail.com'
+                            }
+                        })} />
                 </Form.Group>
                 <Form.Group className="mb-4" controlId="password">
                   <Form.Label className='fw-semibold'>Contraseña</Form.Label>
-                  <Form.Control type="password" placeholder="Contraseña" required />
+                  <Form.Control type="password" placeholder="Contraseña" required {...register('password', {
+                            required: 'La contraseña es un dato ogligatorio',
+                            pattern:{
+                            value: /^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,16}$/,
+                            message: 'La contraseña debe tener entre 8 y 16 caracteres, al menos un dígito, al menos una minúscula, al menos una mayúscula y al menos un caracter no alfanumérico.'
+                            }
+                        })}/>
                   <div className='text-end mt-1'>
                     <Link to={"*"} className="text-decoration-none text-primary small">¿Olvidaste tu contraseña?</Link>
                   </div>
