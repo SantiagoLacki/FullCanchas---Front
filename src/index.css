@@ -32,6 +32,13 @@ main{
   filter: grayscale(20%);
 }
 
+.banner-titulo {
+  object-fit: cover;
+  height: 100px;
+  width: 100%;
+  filter: blur(1px)
+}
+
 .imagenGaleria{
   object-fit: cover;
   height: 200px;
@@ -107,4 +114,21 @@ main{
 .dropdown-item:active {
   background-color: #d4ac0d !important; 
   color: #fff !important;
+}
+
+.btn-reservar{
+  background-color: #40eb40 !important;
+}
+
+.btn-reservar:hover{
+  background-color: #45c245 !important;
+}
+
+.btn-reservado{
+  background-color: #b4b4b4 !important;
+}
+
+.box-referencia{
+  width: 25px;
+  height: 25px;
 }
