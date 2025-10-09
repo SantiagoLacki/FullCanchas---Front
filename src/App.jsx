@@ -10,6 +10,7 @@ import Register from "./components/pages/Register"
 import FormularioUsuario from "./components/pages/usuario/FormularioUsuario";
 import FormularioCancha from "./components/pages/cancha/FormularioCancha";
 import ReservaCancha from "./components/pages/reserva/ReservaCancha";
+import FormularioProducto from "./components/pages/producto/FormularioProducto";
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
           <Route path="/administrador/crearusuario" element={<FormularioUsuario></FormularioUsuario>}></Route>
           <Route path="/administrador/crearcancha" element={<FormularioCancha></FormularioCancha>}></Route>
           <Route path="/reserva" element={<ReservaCancha></ReservaCancha>}></Route>
+          <Route path="/administrador/crearproducto" element={<FormularioProducto></FormularioProducto>}></Route>
           <Route path="*" element={<Inicio></Inicio>}></Route>
         </Routes>
       </main>
