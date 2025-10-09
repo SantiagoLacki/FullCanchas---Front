@@ -1,7 +1,17 @@
 import { Container, Row, Col, Form, Button, Card, Image } from 'react-bootstrap';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
+import { login } from './helpers/queries';
+import Swal from 'sweetalert2';
 
 function Login() {
+  const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm()
+  const navegacion = useNavigate()
+
+  
   return (
     <Container className='d-flex align-items-center justify-content-center my-5'>
       <Card className='card-login shadow-lg border-0'>
