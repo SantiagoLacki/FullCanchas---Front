@@ -12,7 +12,7 @@ import FormularioCancha from "./components/pages/cancha/FormularioCancha";
 import ReservaCancha from "./components/pages/reserva/ReservaCancha";
 import FormularioProducto from "./components/pages/producto/FormularioProducto";
 import { useEffect, useState } from "react";
-
+import ProtectorAdmin from "./components/routes/ProtectorAdmin";
 
 function App() {
   const usuarioLogueado = JSON.parse(sessionStorage.getItem('userKey')) || {}
@@ -25,18 +25,20 @@ function App() {
   return (
     <>
     <BrowserRouter>
-      <Menu></Menu>
+      <Menu usuarioAdmin={usuarioAdmin} setUsuarioAdmin={setUsuarioAdmin}></Menu>
       <main>
         <Routes>
           <Route path="/" element={<Inicio></Inicio>}></Route>
           <Route path="/login" element={<Login setUsuarioAdmin={setUsuarioAdmin}></Login>}></Route>
           <Route path="/quienesSomos" element={<QuienesSomos></QuienesSomos>}></Route>
           <Route path="/registro" element={<Register></Register>}></Route>
-          <Route path="/administrador" element={<Administrador></Administrador>}></Route>
-          <Route path="/administrador/crearusuario" element={<FormularioUsuario></FormularioUsuario>}></Route>
-          <Route path="/administrador/crearcancha" element={<FormularioCancha></FormularioCancha>}></Route>
+          <Route path="/administrador" element={<ProtectorAdmin isAdmin={usuarioAdmin}></ProtectorAdmin>}>
+              <Route index element={<Administrador></Administrador>}></Route>
+              <Route path="crearusuario" element={<FormularioUsuario></FormularioUsuario>}></Route>
+              <Route path="crearcancha" element={<FormularioCancha></FormularioCancha>}></Route>
+              <Route path="crearproducto" element={<FormularioProducto></FormularioProducto>}></Route>
+          </Route>
           <Route path="/reserva" element={<ReservaCancha></ReservaCancha>}></Route>
-          <Route path="/administrador/crearproducto" element={<FormularioProducto></FormularioProducto>}></Route>
           <Route path="*" element={<Inicio></Inicio>}></Route>
         </Routes>
       </main>
