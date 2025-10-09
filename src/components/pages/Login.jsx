@@ -18,13 +18,20 @@ function Login({setUsuarioAdmin}) {
     console.log(respuesta)
     if(respuesta.status === 200){
       const datosUsuario = await respuesta.json()
+      console.log(datosUsuario)
       setUsuarioAdmin({nombreUsuario: datosUsuario.nombreUsuario, rol:datosUsuario.rol, token: datosUsuario.token})
       Swal.fire({
           title: "Incio de sesión correcto",
           text: `Bienvenido ${datosUsuario.nombreUsuario}`,
           icon: "success"
       });
-      navegacion('/administrador')
+      console.log(datosUsuario.rol)
+      if(datosUsuario.rol === "staff"){
+        navegacion('/administrador')
+      }else{
+        navegacion('/')
+      }
+
     }else{        
       Swal.fire({
         title: "Error al iniciar sesion",
