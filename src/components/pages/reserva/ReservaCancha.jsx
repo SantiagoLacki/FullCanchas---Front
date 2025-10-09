@@ -3,12 +3,33 @@ import ItemReserva from "./ItemReserva";
 
 const ReservaCancha = () => {
     return (
+        <>
+        <div className="position-relative">
+            <img
+                className="banner-titulo w-100"
+                src="https://images.pexels.com/photos/1302514/pexels-photo-1302514.jpeg"
+                alt="fondo cancha"
+            />
+            <div className="container position-absolute top-50 start-50 w-100 h-100 translate-middle">
+                <h2 className="display-6 titulo-banner fw-bold text-white me-4 mt-5">Elije tu turno</h2>
+            </div>
+        </div>
+
         <section className='container mainSection'>
-            <h2 className="display-6 titulo-banner fw-bold text-white me-4 mt-5">Elije tu turno</h2>
-            <div className="border rounded-2 py-1 px-4 my-4 shadow-lg">
-                <h4 className="mt-4 text-white">Cancha N° 1</h4>
+            
+            <div className="border rounded-2 py-1 px-4 my-4 shadow-lg bg">
+                <h4 className="mt-4 text-white fw-bolder">Cancha N° 1</h4>
                 <p className="fw-light text-white">Cancha de Futbol 5 | Césped sintético | Con iluminación</p>
-                <Table responsive striped bordered hover className="table-reservas">
+                <Table responsive striped bordered hover >
+                      <colgroup>
+                        <col style={{ width: "10%" }} />
+                        <col style={{ width: "15%" }} />
+                        <col style={{ width: "15%" }} />
+                        <col style={{ width: "15%" }} />
+                        <col style={{ width: "15%" }} />
+                        <col style={{ width: "15%" }} />
+                        <col style={{ width: "15%" }} />
+                    </colgroup>
                     <thead>
                         <tr className="text-center">
                             <th className="text-secondary align-middle">Turno</th>
@@ -40,6 +61,7 @@ const ReservaCancha = () => {
                     </div>
             </div>
         </section>
+        </>
     );
 };
 

@@ -32,6 +32,13 @@ main{
   filter: grayscale(20%);
 }
 
+.banner-titulo {
+  object-fit: cover;
+  height: 100px;
+  width: 100%;
+  filter: blur(1px)
+}
+
 .imagenGaleria{
   object-fit: cover;
   height: 200px;
@@ -124,15 +131,4 @@ main{
 .box-referencia{
   width: 25px;
   height: 25px;
-}
-
-.table-reservas {
-  table-layout: fixed;
-  width: 100%;
-}
-
-.table-reservas td {
-  width: 14.28%; /* si tenés 7 columnas → 100 / 7 */
-  text-align: center;
-  vertical-align: middle;
 }
