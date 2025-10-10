@@ -22,18 +22,25 @@ function Menu({usuarioAdmin, setUsuarioAdmin}) {
               className="bi bi-bag-fill fs-4 me-1"></i>Catalogo</Nav.Link>
             <Nav.Link as={Link} to={"/carrito"} className='nav-link fw-bold text-white rounded px-2'><i 
                 className="bi bi-cart-plus-fill fs-4 me-1"></i>Carrito</Nav.Link>
-            {usuarioAdmin.token ? (
+            {usuarioAdmin.token && usuarioAdmin.rol === "staff" ? (
               <>
-                <NavLink className="nav-link fw-bold text-white rounded px-2" to={"/administrador"}><i 
-                className="bi bi-person-vcard fs-4 me-1"></i>
+                <NavLink className="nav-link fw-bold text-white rounded px-2" to={"/administrador"}>
+                  <i className="bi bi-person-vcard fs-4 me-1"></i>
                   Administrador
                 </NavLink>
-                <Button className="nav-link fw-bold text-white rounded px-2 btn-gold" onClick={logout}>Logout</Button>
+                <Button className="nav-link fw-bold text-white rounded px-2 btn-gold" onClick={logout}>
+                  Logout
+                </Button>
               </>
+            ) : usuarioAdmin.token && usuarioAdmin.rol === "user" ? (
+              <Button className="nav-link fw-bold text-white rounded px-2 btn-gold" onClick={logout}>
+                Logout
+              </Button>
             ) : (
-              <Nav.Link as={Link} to={"/login"} className='nav-link fw-bold text-white rounded px-2'><i className="bi bi-person-circle fs-4 me-2"></i>Iniciar Sesión</Nav.Link>
+              <Nav.Link as={Link} to={"/login"} className='nav-link fw-bold text-white rounded px-2'>
+                <i className="bi bi-person-circle fs-4 me-2"></i>Iniciar Sesión
+              </Nav.Link>
             )}
-            
           </Nav>
         </Navbar.Collapse>
       </Container>
