@@ -110,7 +110,7 @@ const Administrador = ({usuarioAdmin}) => {
                     </thead>
                     <tbody>
                     {
-                        listaUsuarios.map((usuario, indice)=> <ItemUsuario key={usuario._id} usuario={usuario} fila={indice+1} setListaUsuarios={setListaUsuarios}></ItemUsuario>)
+                        listaUsuarios.map((usuario, indice)=> <ItemUsuario key={usuario._id} usuario={usuario} fila={indice+1} setListaUsuarios={setListaUsuarios} obtenerUsuarios={obtenerUsuarios}></ItemUsuario>)
                     }
                     </tbody>
                 </Table>

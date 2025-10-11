@@ -59,7 +59,8 @@ export const editarUsuario = async(usuarioEditado, id)=>{
         const respuesta = await fetch(urlUsuario+`/${id}`, {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'x-token': JSON.parse(sessionStorage.getItem('userKey')).token
             },
             body: JSON.stringify(usuarioEditado)
         })

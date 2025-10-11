@@ -1,7 +1,10 @@
 import { Button } from "react-bootstrap";
 import { Link } from "react-router";
+import Swal from 'sweetalert2'
+import { borrarUsuarioPorId, leerUsuarios } from "../helpers/queries";
 
-const ItemUsuario = ({usuario, fila, setListaUsuarios}) => {
+
+const ItemUsuario = ({usuario, fila, setListaUsuarios, obtenerUsuarios}) => {
     const eliminarUsuario=()=>{
         Swal.fire({
         title: "Eliminar Usuario",
@@ -21,9 +24,7 @@ const ItemUsuario = ({usuario, fila, setListaUsuarios}) => {
                 text: `El usuario ${usuario.nombreUsuario} fue eliminado correctamente`,
                 icon: "success",
             });
-            const respuestaUsuarios = await leerUsuarios();
-            const usuariosActualizados = await respuestaUsuarios.json()
-            setListaUsuarios(usuariosActualizados)
+            obtenerUsuarios()
             }else{
                 Swal.fire({
                 title: "Ocurrio un error",
