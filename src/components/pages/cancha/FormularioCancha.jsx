@@ -111,12 +111,16 @@ const FormularioCancha = () => {
                             </Form.Group>
 
                             <div className="d-flex justify-content-around mt-5">
-                                <Button type="submit" variant="warning" className="w-25 btn-gold text-white">
-                                    Guardar
-                                </Button>
-                                <Link to={"/administrador"} className="btn btn-danger ms-5 w-25">
-                                    Cancelar
-                                </Link>
+                                <Col xs={12} md={6}>
+                                    <Button type="submit" variant="warning" className="w-25 btn-gold text-white">
+                                        Guardar
+                                    </Button>
+                                </Col>
+                                <Col xs={12} md={6}>
+                                    <Link to={"/administrador"} className="btn btn-danger ms-5 w-25">
+                                        Cancelar
+                                    </Link>
+                                </Col>
                             </div>
                     </Form>
                 </div>
