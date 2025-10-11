@@ -1,13 +1,31 @@
 import { Col, Dropdown, Form, Row, Table } from "react-bootstrap";
 import { Link } from "react-router";
 import ItemUsuario from "./usuario/ItemUsuario";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ItemCancha from "./cancha/ItemCancha";
 import ItemProducto from "./producto/ItemProducto";
+import { leerUsuarios } from "../../helpers/queries";
 
 const Administrador = () => {
     const [activeSection, setActiveSection] = useState("usuarios");
     const [terminoBusqueda, setTerminoBusqueda] = useState('')
+
+    const [listaUsuarios, setListaUsuarios]= useState([]);
+
+    useEffect(()=>{
+      obtenerUsuarios();
+    }, [])
+
+    const obtenerUsuarios = async ()=>{
+      const respuesta = await leerUsuarios()
+      if(respuesta.status === 200){
+        const datos = await respuesta.json()
+        setListaUsuarios(datos)
+      }else{
+        console.info('Ocurrio un error al buscar un producto')
+      }
+      //setMostrarSpinner(false)
+    }
 
     const handleBuscarChange=(e)=>{
         setTerminoBusqueda(e.target.value)
@@ -84,13 +102,7 @@ const Administrador = () => {
                     </thead>
                     <tbody>
                     {
-                        <>
-                            <ItemUsuario></ItemUsuario>
-                            <ItemUsuario></ItemUsuario>
-                            <ItemUsuario></ItemUsuario>
-                            <ItemUsuario></ItemUsuario>
-                            <ItemUsuario></ItemUsuario>
-                        </>
+                        listaUsuarios.map((usuario, indice)=> <ItemUsuario key={usuario._id} usuario={usuario} fila={indice+1} setListaUsuarios={setListaUsuarios}></ItemUsuario>)
                     }
                     </tbody>
                 </Table>
