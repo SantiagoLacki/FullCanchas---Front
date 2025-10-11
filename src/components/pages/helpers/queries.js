@@ -38,11 +38,10 @@ export const obtenerUsuarioPorId = async(id)=>{
 
 export const crearUsuario = async(usuarioNuevo)=>{
     try{
-        const formData = new formData();
-        formData.append('nombreUsuario', usuarioNuevo.nombreUsuario)
         const respuesta = await fetch(urlUsuario, {
             method: 'POST',
             headers: {
+                'Content-Type': 'application/json',
                 'x-token': JSON.parse(sessionStorage.getItem('userKey')).token
             },
             body: JSON.stringify(usuarioNuevo)

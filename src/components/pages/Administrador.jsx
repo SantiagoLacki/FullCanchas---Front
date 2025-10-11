@@ -6,7 +6,7 @@ import ItemCancha from "./cancha/ItemCancha";
 import ItemProducto from "./producto/ItemProducto";
 import { leerUsuarios } from "./helpers/queries";
 
-const Administrador = () => {
+const Administrador = ({usuarioAdmin}) => {
     const [activeSection, setActiveSection] = useState("usuarios");
     const [terminoBusqueda, setTerminoBusqueda] = useState('')
 
@@ -20,7 +20,15 @@ const Administrador = () => {
       const respuesta = await leerUsuarios()
       if(respuesta.status === 200){
         const datos = await respuesta.json()
-        setListaUsuarios(datos)
+        console.log(usuarioAdmin.rol)
+        if(usuarioAdmin.rol === "staff"){
+            const datosFiltrados = datos.filter(usuario => usuario.rol === "user")
+            setListaUsuarios(datosFiltrados)
+        }else{
+            const datosFiltrados = datos.filter(usuario => usuario.rol === "staff")
+            setListaUsuarios(datosFiltrados)
+        }
+
       }else{
         console.info('Ocurrio un error al buscar un producto')
       }
@@ -70,7 +78,7 @@ const Administrador = () => {
                     <div className="d-flex justify-content-between align-items-center">
                         <h2 className="display-6 titulo-banner fw-bold text-white me-4">Usuarios</h2>
                         <div>
-                        <Link className="btn btn-gold text-white" to={'/administrador/crearusuario'} ><i class="bi bi-plus-circle"></i> Agregar     
+                        <Link className="btn btn-gold text-white" to={'/administrador/crearusuario'} ><i className="bi bi-plus-circle"></i> Agregar     
                         </Link>
                         </div>
                     </div>

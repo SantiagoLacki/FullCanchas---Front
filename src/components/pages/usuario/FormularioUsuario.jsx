@@ -3,7 +3,7 @@ import Swal from 'sweetalert2'
 import { Link, useNavigate, useParams } from "react-router";
 import { useEffect } from "react";
 import { useForm} from "react-hook-form";
-import { obtenerUsuarioPorId } from "../helpers/queries";
+import { obtenerUsuarioPorId, editarUsuario, crearUsuario } from "../helpers/queries";
 
 const FormularioUsuario = ({titulo}) => {
     const {
@@ -42,7 +42,34 @@ const FormularioUsuario = ({titulo}) => {
     }
 
     const onSubmit = async (usuario) =>{
-
+        console.log(usuario)
+        if(titulo === 'Usuario Nuevo'){
+          const respuesta = await crearUsuario(usuario)
+            if(respuesta.status === 201){
+              Swal.fire({
+              title: "Usuario creado",
+              text: `El usuario ${usuario.nombreUsuario} fue creado correctamente`,
+              icon: "success"
+              });
+            reset()
+            }else{
+              Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "No pudo crearse el usuario",
+            });
+            }
+        }else{
+          const respuesta = await editarUsuario(usuario, id)
+            if(respuesta.status === 200){
+                Swal.fire({
+                title: "Usuario editado",
+                text: `El usuario ${usuario.nombreUsuario} fue editado correctamente`,
+                icon: "success"
+            });
+            }
+        }
+        navegacion('/administrador')
     }
     return (
         <>
