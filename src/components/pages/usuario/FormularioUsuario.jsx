@@ -3,8 +3,9 @@ import Swal from 'sweetalert2'
 import { Link, useNavigate, useParams } from "react-router";
 import { useEffect } from "react";
 import { useForm} from "react-hook-form";
+import { obtenerUsuarioPorId } from "../helpers/queries";
 
-const FormularioUsuario = () => {
+const FormularioUsuario = ({titulo}) => {
     const {
       register,
       handleSubmit,
@@ -14,6 +15,31 @@ const FormularioUsuario = () => {
     } = useForm();
     const navegacion = useNavigate()
     const {id} = useParams()
+
+    useEffect(()=>{
+      obtenerUsuario();
+    },[])
+
+     const obtenerUsuario = async()=>{
+        if(titulo === 'Modificar Usuario'){
+          const respuesta = await obtenerUsuarioPorId(id)
+          if(respuesta.status === 200){
+            const usuarioBuscado = await respuesta.json()
+            console.log(usuarioBuscado)
+            if(usuarioBuscado === undefined){
+              navegacion('/administrador')
+              Swal.fire({
+                  icon: "error",
+                  title: "Oops...",
+                  text: "El usuario es inexistente",
+                  });
+            }else{
+              setValue('nombreUsuario', usuarioBuscado.nombreUsuario)
+              setValue('email', usuarioBuscado.email)
+            }
+          }
+        }
+    }
 
     const onSubmit = async (usuario) =>{
 
@@ -28,7 +54,7 @@ const FormularioUsuario = () => {
                 />
             </div>
             <section className="container mainSection border text-white rounded-2 py-1 px-4 mt-4 shadow-lg">
-                <h1 className="display-6 titulo-banner fw-bold text-center me-4 mt-2">Nuevo Usuario</h1>
+                <h1 className="display-6 titulo-banner fw-bold text-center me-4 mt-2">{titulo}</h1>
                 <div className="d-flex justify-content-center">
                     <Form className="my-4 w-75" onSubmit={handleSubmit(onSubmit)}>
                         <Form.Group className="mb-3 d-flex align-items-center" controlId="formNombreCancha">

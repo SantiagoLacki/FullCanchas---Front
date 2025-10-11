@@ -40,7 +40,7 @@ const ItemUsuario = ({usuario, fila, setListaUsuarios}) => {
             <td className="align-middle fw-light">{usuario.nombreUsuario}</td>
             <td className="text-center align-middle fw-light">{usuario.email}</td>
             <td className="text-center align-middle fw-light">
-                <Link className="me-lg-2 btn btn-gold text-white fw-light" to={'/usuarios/editar/'+usuario._id}>
+                <Link className="me-lg-2 btn btn-gold text-white fw-light" to={'/administrador/editarusuario/'+usuario._id}>
                 <i className="bi bi-pencil-square"></i>
                 </Link>
                 <Button variant="danger" onClick={eliminarUsuario}>

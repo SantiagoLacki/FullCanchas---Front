@@ -35,6 +35,7 @@ function App() {
           <Route path="/administrador" element={<ProtectorAdmin isAdmin={usuarioAdmin}></ProtectorAdmin>}>
               <Route index element={<Administrador></Administrador>}></Route>
               <Route path="crearusuario" element={<FormularioUsuario></FormularioUsuario>}></Route>
+              <Route path="editarusuario/:id" element={<FormularioUsuario titulo={'Modificar Usuario'}></FormularioUsuario>}></Route>
               <Route path="crearcancha" element={<FormularioCancha></FormularioCancha>}></Route>
               <Route path="crearproducto" element={<FormularioProducto></FormularioProducto>}></Route>
           </Route>
