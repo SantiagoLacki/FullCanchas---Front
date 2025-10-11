@@ -94,27 +94,27 @@ const Inicio = () => {
                     <h1 className="titulo-seccion text-center mt-5 mb-4 text-white">Nuestras Canchas</h1>
                     <Row className="justify-content-center">
                                 <Col xl={3} lg={4} md={6}>
-                                    <div data-aos="fade-down" data-aos-delay="50" data-aos-duration="2000">
+                                    <div>
                                         <CardCancha></CardCancha>
                                     </div>
                                 </Col>
                                 <Col xl={3} lg={4} md={6} >
-                                    <div data-aos="fade-down" data-aos-delay="100" data-aos-duration="2000">
+                                    <div>
                                         <CardCancha></CardCancha>
                                     </div>
                                 </Col>
                                 <Col xl={3} lg={4} md={6}>
-                                    <div data-aos="fade-down" data-aos-delay="150" data-aos-duration="2000">
+                                    <div>
                                         <CardCancha></CardCancha>
                                     </div>
                                 </Col>
                                 <Col xl={3} lg={4} md={6} >
-                                    <div data-aos="fade-down" data-aos-delay="200" data-aos-duration="2000">
+                                    <div>
                                         <CardCancha></CardCancha>
                                     </div>
                                 </Col>
                                 <Col xl={3} lg={4} md={6} >
-                                    <div data-aos="fade-down" data-aos-delay="250" data-aos-duration="2000">
+                                    <div>
                                         <CardCancha></CardCancha>
                                     </div>
                                 </Col>
@@ -127,22 +127,22 @@ const Inicio = () => {
                         <Container>
                         <Row>
                             <Col xl={3} lg={4} md={6} className="mb-4">
-                                <div data-aos="fade-right" data-aos-duration="3000">
+                                <div>
                                     <CardProducto></CardProducto>
                                 </div>
                             </Col>
                             <Col xl={3} lg={4} md={6} className="mb-4">
-                                <div data-aos="fade-right" data-aos-duration="3000">
+                                <div>
                                     <CardProducto></CardProducto>
                                 </div>
                             </Col>
                             <Col xl={3} lg={4} md={6} className="mb-4">
-                                <div data-aos="fade-right" data-aos-duration="3000">
+                                <div>
                                     <CardProducto></CardProducto>
                                 </div>
                             </Col>
                             <Col xl={3} lg={4} md={6} className="mb-4">
-                                <div data-aos="fade-right" data-aos-duration="3000">
+                                <div>
                                     <CardProducto></CardProducto>
                                 </div>
                             </Col>
