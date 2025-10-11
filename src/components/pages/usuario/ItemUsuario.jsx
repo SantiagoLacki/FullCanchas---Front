@@ -3,6 +3,36 @@ import { Link } from "react-router";
 
 const ItemUsuario = ({usuario, fila, setListaUsuarios}) => {
     const eliminarUsuario=()=>{
+        Swal.fire({
+        title: "Eliminar Usuario",
+        text: "No puedes revertir este paso",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#024959",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Eliminar",
+        cancelButtonText: "Cancelar"
+        }).then(async(result) => {
+        if (result.isConfirmed) {
+            const respuesta = await borrarUsuarioPorId(usuario._id)
+            if(respuesta.status === 200){
+            Swal.fire({
+                title: "Usuario eliminado",
+                text: `El usuario ${usuario.nombreUsuario} fue eliminado correctamente`,
+                icon: "success",
+            });
+            const respuestaUsuarios = await leerUsuarios();
+            const usuariosActualizados = await respuestaUsuarios.json()
+            setListaUsuarios(usuariosActualizados)
+            }else{
+                Swal.fire({
+                title: "Ocurrio un error",
+                text: `El usuario ${usuario.nombreUsuario} no pudo ser eliminado.`,
+                icon: "error",
+            });
+            }
+        }
+        });
     }
     return (
         <tr>
