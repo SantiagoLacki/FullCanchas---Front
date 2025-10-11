@@ -1,16 +1,16 @@
 import { Button } from "react-bootstrap";
 import { Link } from "react-router";
 
-const ItemUsuario = ({}) => {
+const ItemUsuario = ({usuario, fila, setListaUsuarios}) => {
     const eliminarUsuario=()=>{
     }
     return (
         <tr>
-            <td className="text-center align-middle fw-light">1</td>
-            <td className="align-middle fw-light">usuario1</td>
-            <td className="text-center align-middle fw-light">usuario1@mail.com</td>
+            <td className="text-center align-middle fw-light">{fila}</td>
+            <td className="align-middle fw-light">{usuario.nombreUsuario}</td>
+            <td className="text-center align-middle fw-light">{usuario.email}</td>
             <td className="text-center align-middle fw-light">
-                <Link className="me-lg-2 btn btn-gold text-white fw-light" to={'/usuarios/editar/'}>
+                <Link className="me-lg-2 btn btn-gold text-white fw-light" to={'/usuarios/editar/'+usuario._id}>
                 <i className="bi bi-pencil-square"></i>
                 </Link>
                 <Button variant="danger" onClick={eliminarUsuario}>

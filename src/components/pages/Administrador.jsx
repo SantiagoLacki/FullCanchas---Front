@@ -4,7 +4,7 @@ import ItemUsuario from "./usuario/ItemUsuario";
 import { useEffect, useState } from "react";
 import ItemCancha from "./cancha/ItemCancha";
 import ItemProducto from "./producto/ItemProducto";
-import { leerUsuarios } from "../../helpers/queries";
+import { leerUsuarios } from "./helpers/queries";
 
 const Administrador = () => {
     const [activeSection, setActiveSection] = useState("usuarios");
