@@ -21,7 +21,7 @@ function App() {
           <Route path="/quienesSomos" element={<QuienesSomos></QuienesSomos>}></Route>
           <Route path="/registro" element={<Register></Register>}></Route>
           <Route path="/administrador" element={<Administrador></Administrador>}></Route>
-          <Route path="*" element={<Inicio></Inicio>}></Route>
+          <Route path="*" element={<Error404 />}></Route>
         </Routes>
       </main>
       <Footer></Footer>
