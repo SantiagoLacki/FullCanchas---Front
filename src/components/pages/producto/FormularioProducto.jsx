@@ -3,8 +3,9 @@ import Swal from 'sweetalert2'
 import { Link, useNavigate, useParams } from "react-router";
 import { useEffect } from "react";
 import { useForm} from "react-hook-form";
+import { crearProducto, editarProducto, obtenerProductoPorId } from "../helpers/queries";
 
-const FormularioProducto = () => {
+const FormularioProducto = ({titulo}) => {
     const {
       register,
       handleSubmit,
@@ -15,7 +16,35 @@ const FormularioProducto = () => {
     const navegacion = useNavigate()
     const {id} = useParams()
 
-    const onSubmit = async (receta) =>{
+    useEffect(()=>{
+          obtenerProducto();
+    },[])
+
+    const obtenerProducto = async()=>{
+        if(titulo === 'Modificar Producto'){
+            const respuesta = await obtenerProductoPorId(id)
+            if(respuesta.status === 200){
+            const productoBuscado = await respuesta.json()
+            console.log(productoBuscado)
+            if(productoBuscado === undefined){
+                navegacion('/administrador')
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "El usuario es inexistente",
+                    });
+            }else{
+                setValue('nombre', productoBuscado.nombre)
+                setValue('precio', productoBuscado.precio)
+                setValue('categoria', productoBuscado.categoria)
+                setValue('imagen', productoBuscado.imagen)
+                setValue('descripcion', productoBuscado.descripcion)
+            }
+            }
+        }
+    }
+
+    const onSubmit = async (producto) =>{
 
     }
     return (
