@@ -4,16 +4,18 @@ import ItemUsuario from "./usuario/ItemUsuario";
 import { useEffect, useState } from "react";
 import ItemCancha from "./cancha/ItemCancha";
 import ItemProducto from "./producto/ItemProducto";
-import { leerUsuarios } from "./helpers/queries";
+import { leerProductos, leerUsuarios } from "./helpers/queries";
 
 const Administrador = ({usuarioAdmin}) => {
     const [activeSection, setActiveSection] = useState("usuarios");
     const [terminoBusqueda, setTerminoBusqueda] = useState('')
 
     const [listaUsuarios, setListaUsuarios]= useState([]);
+    const [listaProductos, setListaProductos]= useState([]);
 
     useEffect(()=>{
       obtenerUsuarios();
+      obtenerProductos();
     }, [])
 
     const obtenerUsuarios = async ()=>{
@@ -29,6 +31,17 @@ const Administrador = ({usuarioAdmin}) => {
             setListaUsuarios(datosFiltrados)
         }
 
+      }else{
+        console.info('Ocurrio un error al buscar un producto')
+      }
+      //setMostrarSpinner(false)
+    }
+
+    const obtenerProductos = async ()=>{
+      const respuesta = await leerProductos()
+      if(respuesta.status === 200){
+        const datos = await respuesta.json()
+        setListaProductos(datos)
       }else{
         console.info('Ocurrio un error al buscar un producto')
       }
@@ -198,13 +211,7 @@ const Administrador = ({usuarioAdmin}) => {
                     </thead>
                     <tbody>
                     {
-                        <>
-                            <ItemProducto></ItemProducto>
-                            <ItemProducto></ItemProducto>
-                            <ItemProducto></ItemProducto>
-                            <ItemProducto></ItemProducto>
-                            <ItemProducto></ItemProducto>
-                        </>
+                        listaProductos.map((producto, indice)=> <ItemProducto key={producto._id} producto={producto} fila={indice+1} setListaProductos={setListaProductos}></ItemProducto>)
                     }
                     </tbody>
                 </Table>
