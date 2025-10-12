@@ -1,10 +1,11 @@
-import { Form, Button} from "react-bootstrap";
+import { Form, Button, Col, Row} from "react-bootstrap";
 import Swal from 'sweetalert2'
 import { Link, useNavigate, useParams } from "react-router";
 import { useEffect } from "react";
 import { useForm} from "react-hook-form";
+import { obtenerUsuarioPorId, editarUsuario, crearUsuario } from "../helpers/queries";
 
-const FormularioUsuario = () => {
+const FormularioUsuario = ({titulo}) => {
     const {
       register,
       handleSubmit,
@@ -15,8 +16,60 @@ const FormularioUsuario = () => {
     const navegacion = useNavigate()
     const {id} = useParams()
 
-    const onSubmit = async (usuario) =>{
+    useEffect(()=>{
+      obtenerUsuario();
+    },[])
 
+     const obtenerUsuario = async()=>{
+        if(titulo === 'Modificar Usuario'){
+          const respuesta = await obtenerUsuarioPorId(id)
+          if(respuesta.status === 200){
+            const usuarioBuscado = await respuesta.json()
+            console.log(usuarioBuscado)
+            if(usuarioBuscado === undefined){
+              navegacion('/administrador')
+              Swal.fire({
+                  icon: "error",
+                  title: "Oops...",
+                  text: "El usuario es inexistente",
+                  });
+            }else{
+              setValue('nombreUsuario', usuarioBuscado.nombreUsuario)
+              setValue('email', usuarioBuscado.email)
+            }
+          }
+        }
+    }
+
+    const onSubmit = async (usuario) =>{
+        console.log(usuario)
+        if(titulo === 'Usuario Nuevo'){
+          const respuesta = await crearUsuario(usuario)
+            if(respuesta.status === 201){
+              Swal.fire({
+              title: "Usuario creado",
+              text: `El usuario ${usuario.nombreUsuario} fue creado correctamente`,
+              icon: "success"
+              });
+            reset()
+            }else{
+              Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "No pudo crearse el usuario",
+            });
+            }
+        }else{
+          const respuesta = await editarUsuario(usuario, id)
+            if(respuesta.status === 200){
+                Swal.fire({
+                title: "Usuario editado",
+                text: `El usuario ${usuario.nombreUsuario} fue editado correctamente`,
+                icon: "success"
+            });
+            }
+        }
+        navegacion('/administrador')
     }
     return (
         <>
@@ -27,8 +80,8 @@ const FormularioUsuario = () => {
                     alt="icono elegí"
                 />
             </div>
-            <section className="container mainSection border text-white rounded-2 py-1 px-4 mt-4 shadow-lg">
-                <h1 className="display-6 titulo-banner fw-bold text-center me-4 mt-2">Nuevo Usuario</h1>
+            <section className="container mainSection border text-white rounded-2 py-1 px-4 my-4 shadow-lg">
+                <h1 className="display-6 titulo-banner fw-bold text-center me-4 mt-2">{titulo}</h1>
                 <div className="d-flex justify-content-center">
                     <Form className="my-4 w-75" onSubmit={handleSubmit(onSubmit)}>
                         <Form.Group className="mb-3 d-flex align-items-center" controlId="formNombreCancha">
@@ -92,14 +145,18 @@ const FormularioUsuario = () => {
                             </Form.Text>
                         </Form.Group>
 
-                        <div className="d-flex justify-content-around mt-5">
-                            <Button type="submit" variant="warning" className="w-25 btn-gold text-white">
-                                Guardar
-                            </Button>
-                            <Link to={"/administrador"} className="btn btn-danger ms-5 w-25">
-                                Cancelar
-                            </Link>
-                        </div>
+                        <Row className="mt-5">
+                            <Col xs={12} md={6} className="mb-2 mb-md-0 text-center text-md-end">
+                                <Button type="submit" variant="warning" className="w-50 btn-gold text-white">
+                                    Guardar
+                                </Button>
+                            </Col>
+                            <Col xs={12} md={6} className="text-center text-md-start">
+                                <Link to={"/administrador"} className="btn btn-danger w-50">
+                                    Cancelar
+                                </Link>
+                            </Col>
+                        </Row>
                     </Form>
                 </div>
             </section>
