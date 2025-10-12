@@ -5,7 +5,36 @@ import Swal from "sweetalert2";
 
 const ItemProducto = ({producto, fila, setListaProductos}) => {
     const eliminarProducto=()=>{
-
+            Swal.fire({
+            title: "Eliminar Producto",
+            text: "No puedes revertir este paso",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#024959",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Eliminar",
+            cancelButtonText: "Cancelar"
+            }).then(async(result) => {
+            if (result.isConfirmed) {
+                const respuesta = await borrarProductoPorId(producto._id)
+                if(respuesta.status === 200){
+                Swal.fire({
+                    title: "Usuario eliminado",
+                    text: `El usuario ${producto.nombre} fue eliminado correctamente`,
+                    icon: "success",
+                });
+                const respuestaProductos = await leerProductos();
+                const productosActualizados = await respuestaProductos.json()
+                setListaProductos(productosActualizados)
+                }else{
+                    Swal.fire({
+                    title: "Ocurrio un error",
+                    text: `El usuario ${producto.nombre} no pudo ser eliminado.`,
+                    icon: "error",
+                });
+                }
+            }
+            });
         }
     return (
         <tr>
