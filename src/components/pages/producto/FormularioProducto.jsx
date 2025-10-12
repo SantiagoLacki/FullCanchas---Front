@@ -1,4 +1,4 @@
-import { Form, Button} from "react-bootstrap";
+import { Form, Button, Row, Col} from "react-bootstrap";
 import Swal from 'sweetalert2'
 import { Link, useNavigate, useParams } from "react-router";
 import { useEffect } from "react";
@@ -156,23 +156,23 @@ const FormularioProducto = ({titulo}) => {
 
                         <Form.Group className="mb-4 d-flex align-items-center" controlId="formImagen">
                             <Form.Label className="me-3">Imagen URL*</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="https://www.pexels.com/imagen"
-                                    {...register("imagen", {
-                                    required: "La url de la imagen es un dato obligatorio",
-                                    pattern: {
-                                        value:
-                                        /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?(\.(jpg|jpeg|png|webp))$/,
-                                        message:
-                                        "La imagen debe ser una url de imagen valida terminada en (jpg|jpeg|png|webp)",
-                                    },
-                                    })}
-                                />
-                                <Form.Text className="text-danger">
-                                    {errors.imagen?.message}
-                                </Form.Text>
-                            </Form.Group>       
+                            <Form.Control
+                                type="text"
+                                placeholder="https://www.pexels.com/imagen"
+                                {...register("imagen", {
+                                required: "La url de la imagen es un dato obligatorio",
+                                pattern: {
+                                    value:
+                                    /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?(\.(jpg|jpeg|png|webp))$/,
+                                    message:
+                                    "La imagen debe ser una url de imagen valida terminada en (jpg|jpeg|png|webp)",
+                                },
+                                })}
+                            />
+                            <Form.Text className="text-danger">
+                                {errors.imagen?.message}
+                            </Form.Text>
+                        </Form.Group>       
 
                             <Form.Group className="mb-4 d-flex align-items-center" controlId="formDescripcion">
                                 <Form.Label className="me-3">Descripción: </Form.Label>
@@ -198,14 +198,18 @@ const FormularioProducto = ({titulo}) => {
                                 </Form.Text>
                             </Form.Group>     
 
-                            <div className="d-flex justify-content-around mt-5">
-                                <Button type="submit" variant="warning" className="w-25 btn-gold text-white">
+                        <Row className="mt-5">
+                            <Col xs={12} md={6} className="mb-2 mb-md-0 text-center text-md-end">
+                                <Button type="submit" variant="warning" className="w-50 btn-gold text-white">
                                     Guardar
                                 </Button>
-                                <Link to={"/administrador"} className="btn btn-danger ms-5 w-25">
+                            </Col>
+                            <Col xs={12} md={6} className="text-center text-md-start">
+                                <Link to={"/administrador"} className="btn btn-danger w-50">
                                     Cancelar
                                 </Link>
-                            </div>      
+                            </Col>
+                        </Row>   
                     </Form>
                 </div>
             </section>
