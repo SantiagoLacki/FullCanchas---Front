@@ -1,54 +1,34 @@
-/* Estilos principales del contenedor */
 .error-page {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  justify-content: space-between; /* mantiene el footer abajo */
+  justify-content: flex-start; /* empezamos desde arriba */
   background: linear-gradient(to top, #f0f0f0, #ffffff);
   font-family: "Nunito", sans-serif;
+  padding-bottom: 40px; /* espacio extra para que no quede tan pegado al footer */
 }
 
-/* Contenedor central */
 .error-container {
   text-align: center;
-  padding: 60px 20px;
+  margin-top: auto; /* empuja el contenido hacia abajo */
+  margin-bottom: 40px; /* espacio entre contenido y footer */
+  padding: 0 20px;
   color: #333;
 }
 
-/* Código del error grande */
-.error-code {
-  font-size: 120px;
-  font-weight: 900;
-  color: #008500; /* verde principal */
-  margin-bottom: 10px;
-}
-
-/* Mensaje principal */
-.error-message {
-  font-size: 28px;
-  font-weight: 700;
-  margin-bottom: 15px;
-}
-
-/* Descripción breve */
-.error-description {
-  font-size: 16px;
-  max-width: 600px;
-  margin: 0 auto 30px;
-  color: #555;
-}
-
-/* Imagen ilustrativa del error */
 .error-image {
-  width: 300px;
+  width: 800px;
+  max-width: 90%;
   height: auto;
-  margin-bottom: 30px;
+  display: block;
+  margin: 0 auto 20px; /* mantiene espacio entre imagen y botón */
+  border-radius: 12px;
 }
 
-/* Botón para volver al inicio */
 .error-btn {
   display: inline-block;
-  background-color: #008500;
+  margin-top: 15px; /* espacio entre botón e imagen */
+  background-color: #d4ac0d;
   color: #fff;
   text-decoration: none;
   padding: 12px 25px;
@@ -58,5 +38,5 @@
 }
 
 .error-btn:hover {
-  background-color: #5A9A00;
+  background-color: #5a9a00;
 }
