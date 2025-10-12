@@ -19,7 +19,7 @@ const FormularioProducto = ({titulo}) => {
     useEffect(()=>{
           obtenerProducto();
     },[])
-
+    
     const obtenerProducto = async()=>{
         if(titulo === 'Modificar Producto'){
             const respuesta = await obtenerProductoPorId(id)
@@ -43,9 +43,37 @@ const FormularioProducto = ({titulo}) => {
             }
         }
     }
+    
 
     const onSubmit = async (producto) =>{
-
+        console.log(producto)
+        if(titulo === 'Producto Nuevo'){
+            const respuesta = await crearProducto(producto)
+            if(respuesta.status === 201){
+              Swal.fire({
+              title: "Producto creado",
+              text: `El producto ${producto.nombre} fue creado correctamente`,
+              icon: "success"
+              });
+            reset()
+            }else{
+              Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "No pudo crearse el usuario",
+            });
+            }
+        }else{
+          const respuesta = await editarProducto(producto, id)
+            if(respuesta.status === 200){
+                Swal.fire({
+                title: "Producto editado",
+                text: `El producto ${producto.nombre} fue editado correctamente`,
+                icon: "success"
+            });
+            }
+        }
+        navegacion('/administrador')
     }
     return (
         <>
@@ -57,7 +85,7 @@ const FormularioProducto = ({titulo}) => {
                 />
             </div> 
             <section className="container mainSection border text-white rounded-2 py-1 px-4 mt-4 shadow-lg">
-                <h1 className="display-6 titulo-banner fw-bold text-center me-4 mt-2">Nuevo Producto</h1>
+                <h1 className="display-6 titulo-banner fw-bold text-center me-4 mt-2">{titulo}</h1>
                 <div className="d-flex justify-content-center">
                     <Form className="my-4 w-75" onSubmit={handleSubmit(onSubmit)}>
                         <Form.Group className="mb-4 d-flex align-items-center" controlId="formNombreCancha">
