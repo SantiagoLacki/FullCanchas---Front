@@ -84,7 +84,7 @@ const FormularioProducto = ({titulo}) => {
                     alt="icono elegí"
                 />
             </div> 
-            <section className="container mainSection border text-white rounded-2 py-1 px-4 mt-4 shadow-lg">
+            <section className="container mainSection border text-white rounded-2 py-1 px-4 my-4 shadow-lg">
                 <h1 className="display-6 titulo-banner fw-bold text-center me-4 mt-2">{titulo}</h1>
                 <div className="d-flex justify-content-center">
                     <Form className="my-4 w-75" onSubmit={handleSubmit(onSubmit)}>
@@ -96,7 +96,7 @@ const FormularioProducto = ({titulo}) => {
                                 {...register("nombre", {
                                 required: "El nombre del usuario es un dato obligatorio",
                                 minLength: {
-                                    value: 10,
+                                    value: 2,
                                     message:
                                     "El nombre del producto debe tener al menos 2 caracteres",
                                 },
