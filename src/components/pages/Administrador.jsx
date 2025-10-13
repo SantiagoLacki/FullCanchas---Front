@@ -24,7 +24,6 @@ const Administrador = ({usuarioAdmin}) => {
       const respuesta = await leerUsuarios()
       if(respuesta.status === 200){
         const datos = await respuesta.json()
-        console.log(usuarioAdmin.rol)
         if(usuarioAdmin.rol === "staff"){
             const datosFiltrados = datos.filter(usuario => usuario.rol === "user")
             setListaUsuarios(datosFiltrados)
@@ -152,7 +151,7 @@ const Administrador = ({usuarioAdmin}) => {
                     <h2 className="display-6 titulo-banner fw-bold text-white me-4">Canchas</h2>
                     <div>
                     <Link className="btn btn-gold text-white" to={'/administrador/crearcancha'} >
-                        <i class="bi bi-plus-circle"></i> Agregar
+                        <i className="bi bi-plus-circle"></i> Agregar
                     </Link>
                     </div>
                 </div>

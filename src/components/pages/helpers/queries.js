@@ -209,6 +209,7 @@ export const crearCancha = async(canchaNueva)=>{
             },
             body: JSON.stringify(canchaNueva)
         })
+        console.log(respuesta)
         return respuesta
     }catch(error){
         console.error(error);

@@ -3,7 +3,7 @@ import Swal from 'sweetalert2'
 import { Link, useNavigate, useParams } from "react-router";
 import { useEffect } from "react";
 import { useForm} from "react-hook-form";
-import { obtenerCanchaPorId } from "../helpers/queries";
+import { crearCancha, editarCancha, obtenerCanchaPorId } from "../helpers/queries";
 
 const FormularioCancha = ({titulo}) => {
     const {
@@ -26,7 +26,6 @@ const FormularioCancha = ({titulo}) => {
             const respuesta = await obtenerCanchaPorId(id)
             if(respuesta.status === 200){
                 const canchaBuscada = await respuesta.json()
-                console.log(canchaBuscada)
             if(canchaBuscada === undefined){
                 navegacion('/administrador')
                 Swal.fire({
@@ -34,19 +33,49 @@ const FormularioCancha = ({titulo}) => {
                     title: "Oops...",
                     text: "El usuario es inexistente",
                     });
-            }else{
-                setValue('nombre', canchaBuscada.nombre)
-                setValue('tipoDeSuperficie', canchaBuscada.tipoDeSuperficie)
-                setValue('precioPorHora', canchaBuscada.precioPorHora)
-                setValue('imagen', canchaBuscada.imagen)
-                setValue('disponibilidad', canchaBuscada.disponibilidad)
-            }
+                }else{
+                    setValue('nombre', canchaBuscada.nombre)
+                    setValue('tipoDeSuperficie', canchaBuscada.tipoDeSuperficie)
+                    setValue('precioPorHora', canchaBuscada.precioPorHora)
+                    setValue('imagen', canchaBuscada.imagen)
+                    setValue('disponibilidad', canchaBuscada.disponibilidad === "true")
+                }
             }
         }
     }
 
     const onSubmit = async (cancha) =>{
-
+        const canchaAEnviar = {
+            ...cancha,
+            disponibilidad: Boolean(cancha.disponibilidad)
+        };
+        if(titulo === 'Cancha Nueva'){
+            const respuesta = await crearCancha(canchaAEnviar)
+            if(respuesta.status === 201){
+              Swal.fire({
+              title: "Cancha creada",
+              text: `La cancha ${cancha.nombre} fue creada correctamente`,
+              icon: "success"
+              });
+            reset()
+            }else{
+              Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "No pudo crearse la cancha",
+            });
+            }
+        }else{
+          const respuesta = await editarCancha(cancha, id)
+            if(respuesta.status === 200){
+                Swal.fire({
+                title: "Cancha editada",
+                text: `La cancha ${cancha.nombre} fue editada correctamente`,
+                icon: "success"
+            });
+            }
+        }
+        navegacion('/administrador')
     }
 
     return (
@@ -59,7 +88,7 @@ const FormularioCancha = ({titulo}) => {
                 />
             </div>
             <section className="container mainSection border text-white rounded-2 py-1 px-4 mt-4 shadow-lg ">
-                <h1 className="display-6 titulo-banner fw-bold text-center me-4 mt-2">Nueva Cancha</h1>
+                <h1 className="display-6 titulo-banner fw-bold text-center me-4 mt-2">{titulo}</h1>
                 <div className="d-flex justify-content-center">
                     <Form className="my-4 w-75" onSubmit={handleSubmit(onSubmit)}>
                         <Form.Group className="mb-4 d-flex align-items-center" controlId="formNombreCancha">
@@ -83,6 +112,30 @@ const FormularioCancha = ({titulo}) => {
                             />
                             <Form.Text className="text-danger">
                                 {errors.nombreCancha?.message}
+                            </Form.Text>
+                        </Form.Group>
+
+                        <Form.Group className="mb-4 d-flex align-items-center" controlId="formPrecio">
+                            <Form.Label className="me-2">Precio: </Form.Label>
+                            <Form.Control
+                                type="number"
+                                placeholder="$50"
+                                {...register("precioPorHora", {
+                                required: "El precio es un valor obligatorio",
+                                min: {
+                                    value: 1,
+                                    message:
+                                    "El precio minimo del alquiler debe ser de almenos $50",
+                                },
+                                max: {
+                                    value: 1000000,
+                                    message:
+                                    "El precio maximo del alquilero debe ser de hasta $1000000",
+                                },
+                                })}
+                            />
+                            <Form.Text className="text-danger">
+                                {errors.precio?.message}
                             </Form.Text>
                         </Form.Group>
 
