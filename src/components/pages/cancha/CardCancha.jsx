@@ -14,7 +14,7 @@ const CardCancha = () => {
                 Cancha de Futbol 5 | Césped sintético | Con iluminación
                 </Card.Text>
                 <div className="text-center">
-                    <Button variant="primary" className="btn-gold">Reservar</Button>
+                    <Link variant="primary" className="btn btn-gold text-white" to={'/reserva'}>Reservar</Link>
                 </div>
             </Card.Body>
             </Card>

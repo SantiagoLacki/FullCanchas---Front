@@ -1,10 +1,16 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { Link } from 'react-router';
+import {NavLink, Link, useNavigate } from 'react-router';
 import FullCanchaLogo from '../../assets/logo-canchasfull-nav.png'
+import { Button } from 'react-bootstrap';
 
-function Menu() {
+function Menu({usuarioAdmin, setUsuarioAdmin}) {
+  const navegacion = useNavigate()
+  const logout = () =>{
+    setUsuarioAdmin({})
+    navegacion('/')
+  }
   return (
     <Navbar expand="lg" className="navbar ps-4 pe-5">
       <Container fluid>
@@ -16,7 +22,25 @@ function Menu() {
               className="bi bi-bag-fill fs-4 me-1"></i>Catalogo</Nav.Link>
             <Nav.Link as={Link} to={"/carrito"} className='nav-link fw-bold text-white rounded px-2'><i 
                 className="bi bi-cart-plus-fill fs-4 me-1"></i>Carrito</Nav.Link>
-            <Nav.Link as={Link} to={"/login"} className='nav-link fw-bold text-white rounded px-2'><i className="bi bi-person-circle fs-4 me-2"></i>Iniciar Sesión</Nav.Link>
+            {usuarioAdmin.token && usuarioAdmin.rol === "staff" ? (
+              <>
+                <NavLink className="nav-link fw-bold text-white rounded px-2" to={"/administrador"}>
+                  <i className="bi bi-person-vcard fs-4 me-1"></i>
+                  Administrador
+                </NavLink>
+                <Button className="nav-link fw-bold text-white rounded px-2 btn-gold" onClick={logout}>
+                  Logout
+                </Button>
+              </>
+            ) : usuarioAdmin.token && usuarioAdmin.rol === "user" ? (
+              <Button className="nav-link fw-bold text-white rounded px-2 btn-gold" onClick={logout}>
+                Logout
+              </Button>
+            ) : (
+              <Nav.Link as={Link} to={"/login"} className='nav-link fw-bold text-white rounded px-2'>
+                <i className="bi bi-person-circle fs-4 me-2"></i>Iniciar Sesión
+              </Nav.Link>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>
