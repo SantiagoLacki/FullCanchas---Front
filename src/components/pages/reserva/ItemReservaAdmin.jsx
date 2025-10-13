@@ -1,13 +1,13 @@
 import { Button } from "react-bootstrap";
 import { Link } from "react-router";
-import { borrarProductoPorId, leerProductos } from "../helpers/queries";
+import { borrarReservaPorId, leerReservas } from "../helpers/queries";
 import Swal from "sweetalert2";
 
-const ItemReservaAdmin = ({reserva, fila, setListaReserva}) => {
+const ItemReservaAdmin = ({reserva, fila, setListaReservas}) => {
     console.log(reserva)
     const eliminarReserva=()=>{
                 Swal.fire({
-                title: "Eliminar Producto",
+                title: "Eliminar Reserva",
                 text: "No puedes revertir este paso",
                 icon: "warning",
                 showCancelButton: true,
@@ -17,20 +17,20 @@ const ItemReservaAdmin = ({reserva, fila, setListaReserva}) => {
                 cancelButtonText: "Cancelar"
                 }).then(async(result) => {
                 if (result.isConfirmed) {
-                    const respuesta = await borrarProductoPorId(producto._id)
+                    const respuesta = await borrarReservaPorId(reserva._id)
                     if(respuesta.status === 200){
                     Swal.fire({
-                        title: "Usuario eliminado",
-                        text: `El usuario ${producto.nombre} fue eliminado correctamente`,
+                        title: "Reserva Eliminada",
+                        text: `La reserva fue eliminada correctamente`,
                         icon: "success",
                     });
-                    const respuestaProductos = await leerProductos();
-                    const productosActualizados = await respuestaProductos.json()
-                    setListaProductos(productosActualizados)
+                    const respuestaReservas = await leerReservas();
+                    const reservasActualizadas = await respuestaReservas.json()
+                    setListaReservas(reservasActualizadas)
                     }else{
                         Swal.fire({
                         title: "Ocurrio un error",
-                        text: `El usuario ${producto.nombre} no pudo ser eliminado.`,
+                        text: `La reserva no pudo ser eliminada.`,
                         icon: "error",
                     });
                     }
