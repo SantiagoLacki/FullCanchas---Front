@@ -1,17 +1,19 @@
 import { Button } from "react-bootstrap";
 import { Link } from "react-router";
+import Swal from "sweetalert2";
+import { borrarCanchaPorId, leerCanchas } from "../helpers/queries";
 
-const ItemCancha = () => {
+const ItemCancha = ({cancha, fila, setListaCanchas}) => {
     const eliminarCancha=()=>{
     }
     return (
         <tr>
-            <td className="text-center align-middle fw-light">1</td>
-            <td className="align-middle fw-light">Cancha N° 1</td>
-            <td className="text-center align-middle fw-light">$3.000</td>
+            <td className="text-center align-middle fw-light">{fila}</td>
+            <td className="align-middle fw-light">{cancha.nombre}</td>
+            <td className="text-center align-middle fw-light">{cancha.precioPorHora}</td>
             <td className="text-center align-middle">
                 <img
-                    src="https://images.pexels.com/photos/14767661/pexels-photo-14767661.png"
+                    src={cancha.imagen}
                     className="img-thumbnail"
                     alt="cancha"
                 ></img>
