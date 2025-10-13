@@ -90,12 +90,6 @@ main{
   width: 150px;
 }
 
-.btn-fullcanchas-primary {
-    background-color: #007bff !important; 
-    border-color: #007bff !important;
-    color: white !important; 
-}
-
 .login-image {
     height: 100% !important; 
 }
@@ -116,6 +110,9 @@ main{
   color: #fff !important;
 }
 
+.card-register {
+  max-width: 900px;
+}
 .btn-reservar{
   background-color: #40eb40 !important;
 }

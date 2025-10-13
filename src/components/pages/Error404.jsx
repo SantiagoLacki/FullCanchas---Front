@@ -1,5 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
+import Footer from "../shared/Footer"; // ajustá la ruta según tu estructura
 import "./Error404.css";
 
 const Error404 = () => {
