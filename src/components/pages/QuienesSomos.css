@@ -1,0 +1,71 @@
+.quienes-somos-section {
+  background: linear-gradient(to bottom, #ffffff, #f4f4f4);
+  color: #2C3E50; /* Gris oscuro */
+  padding-bottom: 80px;
+}
+
+.quienes-somos-section h2 {
+  font-weight: 800;
+  background: linear-gradient(to right, #008500, #5A9A00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 40px;
+}
+
+.info-card {
+  border: none;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(44, 62, 80, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.info-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(44, 62, 80, 0.25);
+}
+
+.info-card img {
+  height: 200px;
+  object-fit: cover;
+}
+
+.info-card .card-body {
+  background-color: #ffffff;
+  padding: 25px;
+}
+
+.info-card .card-title {
+  color: #008500;
+  font-weight: bold;
+}
+
+.info-card .card-text {
+  color: #2C3E50;
+  font-size: 15px;
+}
+
+/* Bloque final (estado actual del emprendimiento) */
+.quienes-somos-section .text-center.mt-5 {
+  background: linear-gradient(to right, #008500, #5A9A00);
+  color: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Botón coherente con la paleta */
+.quienes-somos-btn {
+  background-color: #D4AC0D;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 25px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+}
+
+.quienes-somos-btn:hover {
+  background-color: #b68c0b;
+}
