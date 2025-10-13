@@ -1,10 +1,11 @@
-import { Form, Button} from "react-bootstrap";
+import { Form, Button, Col} from "react-bootstrap";
 import Swal from 'sweetalert2'
 import { Link, useNavigate, useParams } from "react-router";
 import { useEffect } from "react";
 import { useForm} from "react-hook-form";
+import { obtenerCanchaPorId } from "../helpers/queries";
 
-const FormularioCancha = () => {
+const FormularioCancha = ({titulo}) => {
     const {
       register,
       handleSubmit,
@@ -16,9 +17,38 @@ const FormularioCancha = () => {
     const navegacion = useNavigate()
     const {id} = useParams()
 
-    const onSubmit = async (receta) =>{
+    useEffect(()=>{
+          obtenerCancha();
+    },[])
+
+    const obtenerCancha = async()=>{
+        if(titulo === 'Modificar Cancha'){
+            const respuesta = await obtenerCanchaPorId(id)
+            if(respuesta.status === 200){
+                const canchaBuscada = await respuesta.json()
+                console.log(canchaBuscada)
+            if(canchaBuscada === undefined){
+                navegacion('/administrador')
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "El usuario es inexistente",
+                    });
+            }else{
+                setValue('nombre', canchaBuscada.nombre)
+                setValue('tipoDeSuperficie', canchaBuscada.tipoDeSuperficie)
+                setValue('precioPorHora', canchaBuscada.precioPorHora)
+                setValue('imagen', canchaBuscada.imagen)
+                setValue('disponibilidad', canchaBuscada.disponibilidad)
+            }
+            }
+        }
+    }
+
+    const onSubmit = async (cancha) =>{
 
     }
+
     return (
         <div>
             <div className="text-center mt-3">
@@ -37,7 +67,7 @@ const FormularioCancha = () => {
                             <Form.Control
                                 type="text"
                                 placeholder="Cancha N° 1"
-                                {...register("nombreCancha", {
+                                {...register("nombre", {
                                 required: "El nombre de la cancha es un dato obligatorio",
                                 minLength: {
                                     value: 2,
