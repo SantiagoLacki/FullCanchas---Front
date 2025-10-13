@@ -1,8 +1,27 @@
 import { Container, Row, Col, Form, Button, Card, Image } from 'react-bootstrap';
+import { useForm } from 'react-hook-form';
 import { Link } from 'react-router';
 
 const Register = () => {
+
+  const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+        setValue,
+        watch
+      } = useForm();
   
+  const password = watch("password");
+
+      const onSubmit = (data) => {
+        console.log(data);
+        // Aquí iría tu lógica de registro, por ejemplo:
+        // registerUser(data); 
+        reset();
+    };
+
   return (
     <Container className='d-flex align-items-center justify-content-center my-5'>
       <Card className='card-register shadow-lg border-0'>
@@ -11,36 +30,85 @@ const Register = () => {
           <Col xs={12} md={6}>
             <Card.Body className='p-4 p-md-5'>
               <Card.Title as="h2" className='text-center mb-4'>Crear Cuenta</Card.Title>
-              <Form> 
+              <Form onSubmit={handleSubmit(onSubmit)}> 
                 <Form.Group className="mb-3" controlId="formUserName">
                   <Form.Label className='fw-semibold'>Nombre de Usuario</Form.Label>
-                  <Form.Control type="text" placeholder="Ej: JugadorCrack" required minLength="3" maxLength="50"/>
-                  <Form.Control.Feedback type="invalid">
-                    Ingresa un nombre de usuario válido (mínimo 3 caracteres).
-                  </Form.Control.Feedback>
+                  <Form.Control
+                    type="text"
+                    placeholder="Usuario"
+                    isInvalid={!!errors.nombreUsuario} 
+                    {...register("nombreUsuario", {
+                    required: "El nombre del usuario es un dato obligatorio",
+                    minLength: {
+                      value: 2,
+                      message:
+                      "El nombre del usuario debe tener al menos 2 caracteres",
+                    },
+                    maxLength: {
+                      value: 100,
+                      message:
+                      "El nombre del usuario debe tener como máximo 100 caracteres",
+                    },
+                    })}
+                  />
+                  <Form.Text className="text-danger">
+                    {errors.nombreUsuario?.message}
+                  </Form.Text>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formEmail">
                   <Form.Label className='fw-semibold'>Correo Electrónico</Form.Label>
-                  <Form.Control type="email" placeholder="nombre@dominio.com" required/>
-                  <Form.Control.Feedback type="invalid">
-                    Ingresa un formato de correo electrónico válido.
-                  </Form.Control.Feedback>
+                  <Form.Control
+                    type="text"
+                    placeholder="nombre@dominio.com"
+                    isInvalid={!!errors.email}
+                    {...register("email", {
+                    required: "El Email es un valor obligatorio",
+                    pattern: {
+                      value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                      message: "Por favor ingresa un email válido"
+                    }
+                    })}
+                  />
+                  <Form.Text className="text-danger">
+                    {errors.email?.message}
+                  </Form.Text>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formPassword">
                   <Form.Label className='fw-semibold'>Contraseña</Form.Label>
-                  <Form.Control type="password" placeholder="Contraseña" required minLength="8"/>
-                  <Form.Control.Feedback type="invalid">
-                    La contraseña es obligatoria (mínimo 8 caracteres).
-                  </Form.Control.Feedback>
+                  <Form.Control
+                    type="password"
+                    isInvalid={!!errors.password}
+                    {...register("password", {
+                    required: "La contraseña es un dato obligatorio",
+                    pattern: {
+                      value:
+                      /^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,16}$/,
+                      message:
+                      "La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un número y un caracter especial",
+                    },
+                    })}
+                  />
+                  <Form.Text className="text-danger">
+                    {errors.password?.message}
+                  </Form.Text>
                 </Form.Group>
 
                 <Form.Group className="mb-4" controlId="formConfirmPassword">
                   <Form.Label className='fw-semibold'>Repetir Contraseña</Form.Label>
-                  <Form.Control type="password" placeholder="Repetir Contraseña" required/>
+                  <Form.Control 
+                    type="password" 
+                    placeholder="Repetir Contraseña" 
+                    isInvalid={!!errors.confirmPassword}
+                    {...register("confirmPassword", {
+                      required: "Debes confirmar la contraseña",
+                      validate: (value) => 
+                      value === watch('password') || "Las contraseñas no coinciden",
+                  })}
+                />
                   <Form.Control.Feedback type="invalid">
-                    Debes confirmar la contraseña.
+                    {errors.confirmPassword?.message || "Debes confirmar la contraseña."}
                   </Form.Control.Feedback>
                 </Form.Group>
                 <Button variant="primary" type="submit" className="w-100 mb-3 fw-bold" >Registrarse</Button>
