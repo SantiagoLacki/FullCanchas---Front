@@ -36,7 +36,8 @@ function App() {
               <Route index element={<Administrador usuarioAdmin={usuarioAdmin}></Administrador>}></Route>
               <Route path="crearusuario" element={<FormularioUsuario titulo={'Usuario Nuevo'}></FormularioUsuario>}></Route>
               <Route path="editarusuario/:id" element={<FormularioUsuario titulo={'Modificar Usuario'}></FormularioUsuario>}></Route>
-              <Route path="crearcancha" element={<FormularioCancha></FormularioCancha>}></Route>
+              <Route path="crearcancha" element={<FormularioCancha titulo={'Cancha Nueva'}></FormularioCancha>}></Route>
+              <Route path="editarcancha/:id" element={<FormularioCancha titulo={'Modificar Cancha'}></FormularioCancha>}></Route>
               <Route path="crearproducto" element={<FormularioProducto titulo={'Producto Nuevo'}></FormularioProducto>}></Route>
               <Route path="editarproducto/:id" element={<FormularioProducto titulo={'Modificar Producto'}></FormularioProducto>}></Route>
           </Route>

@@ -1,10 +1,11 @@
-import { Form, Button} from "react-bootstrap";
+import { Form, Button, Col, Row} from "react-bootstrap";
 import Swal from 'sweetalert2'
 import { Link, useNavigate, useParams } from "react-router";
 import { useEffect } from "react";
 import { useForm} from "react-hook-form";
+import { crearCancha, editarCancha, obtenerCanchaPorId } from "../helpers/queries";
 
-const FormularioCancha = () => {
+const FormularioCancha = ({titulo}) => {
     const {
       register,
       handleSubmit,
@@ -16,9 +17,67 @@ const FormularioCancha = () => {
     const navegacion = useNavigate()
     const {id} = useParams()
 
-    const onSubmit = async (receta) =>{
+    useEffect(()=>{
+          obtenerCancha();
+    },[])
 
+    const obtenerCancha = async()=>{
+        if(titulo === 'Modificar Cancha'){
+            const respuesta = await obtenerCanchaPorId(id)
+            if(respuesta.status === 200){
+                const canchaBuscada = await respuesta.json()
+            if(canchaBuscada === undefined){
+                navegacion('/administrador')
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "El usuario es inexistente",
+                    });
+                }else{
+                    setValue('nombre', canchaBuscada.nombre)
+                    setValue('tipoDeSuperficie', canchaBuscada.tipoDeSuperficie)
+                    setValue('precioPorHora', canchaBuscada.precioPorHora)
+                    setValue('imagen', canchaBuscada.imagen)
+                    setValue('disponibilidad', canchaBuscada.disponibilidad === "true")
+                }
+            }
+        }
     }
+
+    const onSubmit = async (cancha) =>{
+        const canchaAEnviar = {
+            ...cancha,
+            disponibilidad: Boolean(cancha.disponibilidad)
+        };
+        if(titulo === 'Cancha Nueva'){
+            const respuesta = await crearCancha(canchaAEnviar)
+            if(respuesta.status === 201){
+              Swal.fire({
+              title: "Cancha creada",
+              text: `La cancha ${cancha.nombre} fue creada correctamente`,
+              icon: "success"
+              });
+            reset()
+            }else{
+              Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "No pudo crearse la cancha",
+            });
+            }
+        }else{
+          const respuesta = await editarCancha(cancha, id)
+            if(respuesta.status === 200){
+                Swal.fire({
+                title: "Cancha editada",
+                text: `La cancha ${cancha.nombre} fue editada correctamente`,
+                icon: "success"
+            });
+            }
+        }
+        navegacion('/administrador')
+    }
+
     return (
         <div>
             <div className="text-center mt-3">
@@ -28,8 +87,8 @@ const FormularioCancha = () => {
                     alt="icono cancha"
                 />
             </div>
-            <section className="container mainSection border text-white rounded-2 py-1 px-4 mt-4 shadow-lg ">
-                <h1 className="display-6 titulo-banner fw-bold text-center me-4 mt-2">Nueva Cancha</h1>
+            <section className="container mainSection border text-white rounded-2 py-1 px-4 my-4 shadow-lg ">
+                <h1 className="display-6 titulo-banner fw-bold text-center me-4 mt-2">{titulo}</h1>
                 <div className="d-flex justify-content-center">
                     <Form className="my-4 w-75" onSubmit={handleSubmit(onSubmit)}>
                         <Form.Group className="mb-4 d-flex align-items-center" controlId="formNombreCancha">
@@ -37,7 +96,7 @@ const FormularioCancha = () => {
                             <Form.Control
                                 type="text"
                                 placeholder="Cancha N° 1"
-                                {...register("nombreCancha", {
+                                {...register("nombre", {
                                 required: "El nombre de la cancha es un dato obligatorio",
                                 minLength: {
                                     value: 2,
@@ -53,6 +112,30 @@ const FormularioCancha = () => {
                             />
                             <Form.Text className="text-danger">
                                 {errors.nombreCancha?.message}
+                            </Form.Text>
+                        </Form.Group>
+
+                        <Form.Group className="mb-4 d-flex align-items-center" controlId="formPrecio">
+                            <Form.Label className="me-2">Precio: </Form.Label>
+                            <Form.Control
+                                type="number"
+                                placeholder="$50"
+                                {...register("precioPorHora", {
+                                required: "El precio es un valor obligatorio",
+                                min: {
+                                    value: 1,
+                                    message:
+                                    "El precio minimo del alquiler debe ser de almenos $50",
+                                },
+                                max: {
+                                    value: 1000000,
+                                    message:
+                                    "El precio maximo del alquilero debe ser de hasta $1000000",
+                                },
+                                })}
+                            />
+                            <Form.Text className="text-danger">
+                                {errors.precio?.message}
                             </Form.Text>
                         </Form.Group>
 
@@ -97,31 +180,31 @@ const FormularioCancha = () => {
 
                         <Form.Group className="mb-3" controlId="formDisponibilidad">
                             <Form.Label>Disponibilidad:</Form.Label>
-                                <div>
-                                    <Form.Switch 
-                                        type="switch"
-                                        label={watch('disponibilidad') ? "Disponible" : "No disponible"}
-                                        {...register("disponibilidad")}
-                                        className="fs-5"
-                                    />
-                                </div>
-                                <Form.Text className="text-white">
-                                    La cancha estará disponible para reservas cuando esté activada
-                                </Form.Text>
-                            </Form.Group>
-
-                            <div className="d-flex justify-content-around mt-5">
-                                <Col xs={12} md={6}>
-                                    <Button type="submit" variant="warning" className="w-25 btn-gold text-white">
-                                        Guardar
-                                    </Button>
-                                </Col>
-                                <Col xs={12} md={6}>
-                                    <Link to={"/administrador"} className="btn btn-danger ms-5 w-25">
-                                        Cancelar
-                                    </Link>
-                                </Col>
+                            <div>
+                                <Form.Switch 
+                                    type="switch"
+                                    label={watch('disponibilidad') ? "Disponible" : "No disponible"}
+                                    {...register("disponibilidad")}
+                                    className="fs-5"
+                                />
                             </div>
+                            <Form.Text className="text-white">
+                                La cancha estará disponible para reservas cuando esté activada
+                            </Form.Text>
+                        </Form.Group>
+
+                        <Row className="mt-5">
+                            <Col xs={12} md={6} className="mb-2 mb-md-0 text-center text-md-end">
+                                <Button type="submit" variant="warning" className="w-50 btn-gold text-white">
+                                    Guardar
+                                </Button>
+                            </Col>
+                            <Col xs={12} md={6} className="text-center text-md-start">
+                                <Link to={"/administrador"} className="btn btn-danger w-50">
+                                    Cancelar
+                                </Link>
+                            </Col>
+                        </Row>   
                     </Form>
                 </div>
             </section>
