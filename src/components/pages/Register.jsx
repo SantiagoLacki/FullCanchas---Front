@@ -17,8 +17,6 @@ const Register = () => {
 
       const onSubmit = (data) => {
         console.log(data);
-        // Aquí iría tu lógica de registro, por ejemplo:
-        // registerUser(data); 
         reset();
     };
 
