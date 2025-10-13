@@ -21,6 +21,7 @@ const Administrador = ({usuarioAdmin}) => {
       obtenerUsuarios();
       obtenerProductos();
       obtenerCanchas();
+      obtenerReservas();
     }, [])
 
     const obtenerUsuarios = async ()=>{
@@ -53,6 +54,17 @@ const Administrador = ({usuarioAdmin}) => {
     }
 
     const obtenerCanchas = async ()=>{
+      const respuesta = await leerCanchas()
+      if(respuesta.status === 200){
+        const datos = await respuesta.json()
+        setListaCanchas(datos)
+      }else{
+        console.info('Ocurrio un error al buscar un producto')
+      }
+      //setMostrarSpinner(false)
+    }
+
+    const obtenerReservas = async ()=>{
       const respuesta = await leerCanchas()
       if(respuesta.status === 200){
         const datos = await respuesta.json()
