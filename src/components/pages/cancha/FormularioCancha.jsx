@@ -1,4 +1,4 @@
-import { Form, Button, Col} from "react-bootstrap";
+import { Form, Button, Col, Row} from "react-bootstrap";
 import Swal from 'sweetalert2'
 import { Link, useNavigate, useParams } from "react-router";
 import { useEffect } from "react";
@@ -87,7 +87,7 @@ const FormularioCancha = ({titulo}) => {
                     alt="icono cancha"
                 />
             </div>
-            <section className="container mainSection border text-white rounded-2 py-1 px-4 mt-4 shadow-lg ">
+            <section className="container mainSection border text-white rounded-2 py-1 px-4 my-4 shadow-lg ">
                 <h1 className="display-6 titulo-banner fw-bold text-center me-4 mt-2">{titulo}</h1>
                 <div className="d-flex justify-content-center">
                     <Form className="my-4 w-75" onSubmit={handleSubmit(onSubmit)}>
@@ -180,31 +180,31 @@ const FormularioCancha = ({titulo}) => {
 
                         <Form.Group className="mb-3" controlId="formDisponibilidad">
                             <Form.Label>Disponibilidad:</Form.Label>
-                                <div>
-                                    <Form.Switch 
-                                        type="switch"
-                                        label={watch('disponibilidad') ? "Disponible" : "No disponible"}
-                                        {...register("disponibilidad")}
-                                        className="fs-5"
-                                    />
-                                </div>
-                                <Form.Text className="text-white">
-                                    La cancha estará disponible para reservas cuando esté activada
-                                </Form.Text>
-                            </Form.Group>
-
-                            <div className="d-flex justify-content-around mt-5">
-                                <Col xs={12} md={6}>
-                                    <Button type="submit" variant="warning" className="w-25 btn-gold text-white">
-                                        Guardar
-                                    </Button>
-                                </Col>
-                                <Col xs={12} md={6}>
-                                    <Link to={"/administrador"} className="btn btn-danger ms-5 w-25">
-                                        Cancelar
-                                    </Link>
-                                </Col>
+                            <div>
+                                <Form.Switch 
+                                    type="switch"
+                                    label={watch('disponibilidad') ? "Disponible" : "No disponible"}
+                                    {...register("disponibilidad")}
+                                    className="fs-5"
+                                />
                             </div>
+                            <Form.Text className="text-white">
+                                La cancha estará disponible para reservas cuando esté activada
+                            </Form.Text>
+                        </Form.Group>
+
+                        <Row className="mt-5">
+                            <Col xs={12} md={6} className="mb-2 mb-md-0 text-center text-md-end">
+                                <Button type="submit" variant="warning" className="w-50 btn-gold text-white">
+                                    Guardar
+                                </Button>
+                            </Col>
+                            <Col xs={12} md={6} className="text-center text-md-start">
+                                <Link to={"/administrador"} className="btn btn-danger w-50">
+                                    Cancelar
+                                </Link>
+                            </Col>
+                        </Row>   
                     </Form>
                 </div>
             </section>
