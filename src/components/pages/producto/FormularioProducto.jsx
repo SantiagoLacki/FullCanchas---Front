@@ -1,10 +1,11 @@
-import { Form, Button} from "react-bootstrap";
+import { Form, Button, Row, Col} from "react-bootstrap";
 import Swal from 'sweetalert2'
 import { Link, useNavigate, useParams } from "react-router";
 import { useEffect } from "react";
 import { useForm} from "react-hook-form";
+import { crearProducto, editarProducto, obtenerProductoPorId } from "../helpers/queries";
 
-const FormularioProducto = () => {
+const FormularioProducto = ({titulo}) => {
     const {
       register,
       handleSubmit,
@@ -15,8 +16,64 @@ const FormularioProducto = () => {
     const navegacion = useNavigate()
     const {id} = useParams()
 
-    const onSubmit = async (receta) =>{
+    useEffect(()=>{
+          obtenerProducto();
+    },[])
+    
+    const obtenerProducto = async()=>{
+        if(titulo === 'Modificar Producto'){
+            const respuesta = await obtenerProductoPorId(id)
+            if(respuesta.status === 200){
+            const productoBuscado = await respuesta.json()
+            console.log(productoBuscado)
+            if(productoBuscado === undefined){
+                navegacion('/administrador')
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "El usuario es inexistente",
+                    });
+            }else{
+                setValue('nombre', productoBuscado.nombre)
+                setValue('precio', productoBuscado.precio)
+                setValue('categoria', productoBuscado.categoria)
+                setValue('imagen', productoBuscado.imagen)
+                setValue('descripcion', productoBuscado.descripcion)
+            }
+            }
+        }
+    }
+    
 
+    const onSubmit = async (producto) =>{
+        console.log(producto)
+        if(titulo === 'Producto Nuevo'){
+            const respuesta = await crearProducto(producto)
+            if(respuesta.status === 201){
+              Swal.fire({
+              title: "Producto creado",
+              text: `El producto ${producto.nombre} fue creado correctamente`,
+              icon: "success"
+              });
+            reset()
+            }else{
+              Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "No pudo crearse el usuario",
+            });
+            }
+        }else{
+          const respuesta = await editarProducto(producto, id)
+            if(respuesta.status === 200){
+                Swal.fire({
+                title: "Producto editado",
+                text: `El producto ${producto.nombre} fue editado correctamente`,
+                icon: "success"
+            });
+            }
+        }
+        navegacion('/administrador')
     }
     return (
         <>
@@ -27,8 +84,8 @@ const FormularioProducto = () => {
                     alt="icono elegí"
                 />
             </div> 
-            <section className="container mainSection border text-white rounded-2 py-1 px-4 mt-4 shadow-lg">
-                <h1 className="display-6 titulo-banner fw-bold text-center me-4 mt-2">Nuevo Producto</h1>
+            <section className="container mainSection border text-white rounded-2 py-1 px-4 my-4 shadow-lg">
+                <h1 className="display-6 titulo-banner fw-bold text-center me-4 mt-2">{titulo}</h1>
                 <div className="d-flex justify-content-center">
                     <Form className="my-4 w-75" onSubmit={handleSubmit(onSubmit)}>
                         <Form.Group className="mb-4 d-flex align-items-center" controlId="formNombreCancha">
@@ -39,7 +96,7 @@ const FormularioProducto = () => {
                                 {...register("nombre", {
                                 required: "El nombre del usuario es un dato obligatorio",
                                 minLength: {
-                                    value: 10,
+                                    value: 2,
                                     message:
                                     "El nombre del producto debe tener al menos 2 caracteres",
                                 },
@@ -99,23 +156,23 @@ const FormularioProducto = () => {
 
                         <Form.Group className="mb-4 d-flex align-items-center" controlId="formImagen">
                             <Form.Label className="me-3">Imagen URL*</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="https://www.pexels.com/imagen"
-                                    {...register("imagen", {
-                                    required: "La url de la imagen es un dato obligatorio",
-                                    pattern: {
-                                        value:
-                                        /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?(\.(jpg|jpeg|png|webp))$/,
-                                        message:
-                                        "La imagen debe ser una url de imagen valida terminada en (jpg|jpeg|png|webp)",
-                                    },
-                                    })}
-                                />
-                                <Form.Text className="text-danger">
-                                    {errors.imagen?.message}
-                                </Form.Text>
-                            </Form.Group>       
+                            <Form.Control
+                                type="text"
+                                placeholder="https://www.pexels.com/imagen"
+                                {...register("imagen", {
+                                required: "La url de la imagen es un dato obligatorio",
+                                pattern: {
+                                    value:
+                                    /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?(\.(jpg|jpeg|png|webp))$/,
+                                    message:
+                                    "La imagen debe ser una url de imagen valida terminada en (jpg|jpeg|png|webp)",
+                                },
+                                })}
+                            />
+                            <Form.Text className="text-danger">
+                                {errors.imagen?.message}
+                            </Form.Text>
+                        </Form.Group>       
 
                             <Form.Group className="mb-4 d-flex align-items-center" controlId="formDescripcion">
                                 <Form.Label className="me-3">Descripción: </Form.Label>
@@ -141,14 +198,18 @@ const FormularioProducto = () => {
                                 </Form.Text>
                             </Form.Group>     
 
-                            <div className="d-flex justify-content-around mt-5">
-                                <Button type="submit" variant="warning" className="w-25 btn-gold text-white">
+                        <Row className="mt-5">
+                            <Col xs={12} md={6} className="mb-2 mb-md-0 text-center text-md-end">
+                                <Button type="submit" variant="warning" className="w-50 btn-gold text-white">
                                     Guardar
                                 </Button>
-                                <Link to={"/administrador"} className="btn btn-danger ms-5 w-25">
+                            </Col>
+                            <Col xs={12} md={6} className="text-center text-md-start">
+                                <Link to={"/administrador"} className="btn btn-danger w-50">
                                     Cancelar
                                 </Link>
-                            </div>      
+                            </Col>
+                        </Row>   
                     </Form>
                 </div>
             </section>

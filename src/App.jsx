@@ -37,7 +37,8 @@ function App() {
               <Route path="crearusuario" element={<FormularioUsuario titulo={'Usuario Nuevo'}></FormularioUsuario>}></Route>
               <Route path="editarusuario/:id" element={<FormularioUsuario titulo={'Modificar Usuario'}></FormularioUsuario>}></Route>
               <Route path="crearcancha" element={<FormularioCancha></FormularioCancha>}></Route>
-              <Route path="crearproducto" element={<FormularioProducto></FormularioProducto>}></Route>
+              <Route path="crearproducto" element={<FormularioProducto titulo={'Producto Nuevo'}></FormularioProducto>}></Route>
+              <Route path="editarproducto/:id" element={<FormularioProducto titulo={'Modificar Producto'}></FormularioProducto>}></Route>
           </Route>
           <Route path="/reserva" element={<ReservaCancha></ReservaCancha>}></Route>
           <Route path="*" element={<Inicio></Inicio>}></Route>
