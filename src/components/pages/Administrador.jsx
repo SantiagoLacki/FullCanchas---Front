@@ -4,7 +4,7 @@ import ItemUsuario from "./usuario/ItemUsuario";
 import { useEffect, useState } from "react";
 import ItemCancha from "./cancha/ItemCancha";
 import ItemProducto from "./producto/ItemProducto";
-import { leerProductos, leerUsuarios } from "./helpers/queries";
+import { leerCanchas, leerProductos, leerUsuarios } from "./helpers/queries";
 
 const Administrador = ({usuarioAdmin}) => {
     const [activeSection, setActiveSection] = useState("usuarios");
@@ -12,10 +12,12 @@ const Administrador = ({usuarioAdmin}) => {
 
     const [listaUsuarios, setListaUsuarios]= useState([]);
     const [listaProductos, setListaProductos]= useState([]);
+    const [listaCanchas, setListaCanchas]= useState([])
 
     useEffect(()=>{
       obtenerUsuarios();
       obtenerProductos();
+      obtenerCanchas();
     }, [])
 
     const obtenerUsuarios = async ()=>{
@@ -42,6 +44,17 @@ const Administrador = ({usuarioAdmin}) => {
       if(respuesta.status === 200){
         const datos = await respuesta.json()
         setListaProductos(datos)
+      }else{
+        console.info('Ocurrio un error al buscar un producto')
+      }
+      //setMostrarSpinner(false)
+    }
+
+    const obtenerCanchas = async ()=>{
+      const respuesta = await leerCanchas()
+      if(respuesta.status === 200){
+        const datos = await respuesta.json()
+        setListaCanchas(datos)
       }else{
         console.info('Ocurrio un error al buscar un producto')
       }
@@ -155,13 +168,7 @@ const Administrador = ({usuarioAdmin}) => {
                     </thead>
                     <tbody>
                     {
-                        <>
-                            <ItemCancha></ItemCancha>
-                            <ItemCancha></ItemCancha>
-                            <ItemCancha></ItemCancha>
-                            <ItemCancha></ItemCancha>
-                            <ItemCancha></ItemCancha>
-                        </>
+                        listaCanchas.map((cancha, indice)=> <ItemCancha key={cancha._id} cancha={cancha} fila={indice+1} setListaCanchas={setListaCanchas}></ItemCancha>)
                     }
                     </tbody>
                 </Table>
