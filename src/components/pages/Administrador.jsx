@@ -4,7 +4,7 @@ import ItemUsuario from "./usuario/ItemUsuario";
 import { useEffect, useState } from "react";
 import ItemCancha from "./cancha/ItemCancha";
 import ItemProducto from "./producto/ItemProducto";
-import { leerCanchas, leerProductos, leerUsuarios } from "./helpers/queries";
+import { leerCanchas, leerProductos, leerReservas, leerUsuarios } from "./helpers/queries";
 import ItemReservaAdmin from "./reserva/ItemReservaAdmin";
 
 const Administrador = ({usuarioAdmin}) => {
@@ -37,7 +37,7 @@ const Administrador = ({usuarioAdmin}) => {
         }
 
       }else{
-        console.info('Ocurrio un error al buscar un producto')
+        console.info('Ocurrio un error al buscar los usuarios')
       }
       //setMostrarSpinner(false)
     }
@@ -59,18 +59,18 @@ const Administrador = ({usuarioAdmin}) => {
         const datos = await respuesta.json()
         setListaCanchas(datos)
       }else{
-        console.info('Ocurrio un error al buscar un producto')
+        console.info('Ocurrio un error al buscar las canchas')
       }
       //setMostrarSpinner(false)
     }
 
     const obtenerReservas = async ()=>{
-      const respuesta = await leerCanchas()
+      const respuesta = await leerReservas()
       if(respuesta.status === 200){
         const datos = await respuesta.json()
-        setListaCanchas(datos)
+        setListaReservas(datos)
       }else{
-        console.info('Ocurrio un error al buscar un producto')
+        console.info('Ocurrio un error al buscar las reservas')
       }
       //setMostrarSpinner(false)
     }

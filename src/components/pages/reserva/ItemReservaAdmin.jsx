@@ -4,7 +4,7 @@ import { borrarProductoPorId, leerProductos } from "../helpers/queries";
 import Swal from "sweetalert2";
 
 const ItemReservaAdmin = ({reserva, fila, setListaReserva}) => {
-    
+    console.log(reserva)
     const eliminarReserva=()=>{
                 Swal.fire({
                 title: "Eliminar Producto",
@@ -40,9 +40,9 @@ const ItemReservaAdmin = ({reserva, fila, setListaReserva}) => {
         return (
         <tr>
             <td className="text-center align-middle fw-light">{fila}</td>
-            <td className="align-middle fw-light">{reserva.idCancha}</td>
-            <td className="text-center align-middle fw-light">{reserva.idUsuario}</td>
-            <td className="text-center align-middle fw-light">{reserva.dia}</td>
+            <td className="align-middle fw-light">{reserva.idCancha?.nombre}</td>
+            <td className="text-center align-middle fw-light">{reserva.idUsuario?.email}</td>
+            <td className="text-center align-middle fw-light">{new Date(reserva.dia).toLocaleDateString('es-ES')}</td>
             <td className="text-center align-middle fw-light">{reserva.hora}</td>
             <td className="text-center align-middle">
                 <Link className="me-lg-2 btn btn-gold text-white" to={'/administrador/editarreserva/'+reserva._id}>
