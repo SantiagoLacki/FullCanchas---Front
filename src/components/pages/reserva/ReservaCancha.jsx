@@ -1,15 +1,23 @@
 import { Table } from "react-bootstrap";
 import ItemReserva from "./ItemReserva";
 import { useNavigate, useParams } from "react-router";
-import { obtenerCanchaPorId } from "../helpers/queries";
+import { leerReservas, obtenerCanchaPorId } from "../helpers/queries";
 import { useEffect, useState } from "react";
 
 const ReservaCancha = () => {
     const [cancha, setCancha]=useState('')
     const [proximosDias, setProximosDias] = useState([]);
     const [listaReservas, setListaReservas]= useState([]);
-    const turnos = ["16:00","17:00", "18:00","19:00", "20:00","21:00", "22:00","23:00"]
-
+    //const turnos = ["04:00 pm","05:00 pm", "06:00 pm","07:00 pm", "08:00 pm","09:00 pm", "10:00 pm","11:00 pm"]
+    const turnos = [
+        {formatoAmPm:"04:00 pm", formato24: "16:00"},
+        {formatoAmPm:"05:00 pm", formato24: "17:00"},
+        {formatoAmPm:"06:00 pm", formato24: "18:00"},
+        {formatoAmPm:"07:00 pm", formato24: "19:00"},
+        {formatoAmPm:"08:00 pm", formato24: "20:00"},
+        {formatoAmPm:"09:00 pm", formato24: "21:00"},
+        {formatoAmPm:"10:00 pm", formato24: "22:00"},
+        {formatoAmPm:"11:00 pm", formato24: "23:00"},]
 
     const navegacion = useNavigate()
     const {id} = useParams()
@@ -105,15 +113,9 @@ const ReservaCancha = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {
-                            <>
-                                <ItemReserva></ItemReserva>
-                                <ItemReserva></ItemReserva>
-                                <ItemReserva></ItemReserva>
-                                <ItemReserva></ItemReserva>
-                                <ItemReserva></ItemReserva>
-                            </>
-                        }
+                        {turnos.map((turno, index) => (
+                            <ItemReserva key={index} turno={turno} dias={proximosDias} listaReservas={listaReservas} idCancha={id}></ItemReserva>
+                        ))}
                     </tbody>
                 </Table>
                     <div className="d-flex justify-content-end">

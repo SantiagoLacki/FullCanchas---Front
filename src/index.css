@@ -125,6 +125,10 @@ main{
   background-color: #b4b4b4 !important;
 }
 
+.btn-no-disponible{
+  background-color: #8f8e8e !important;
+}
+
 .box-referencia{
   width: 25px;
   height: 25px;
