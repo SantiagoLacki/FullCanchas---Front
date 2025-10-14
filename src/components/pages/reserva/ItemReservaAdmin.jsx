@@ -4,7 +4,6 @@ import { borrarReservaPorId, leerReservas } from "../helpers/queries";
 import Swal from "sweetalert2";
 
 const ItemReservaAdmin = ({reserva, fila, setListaReservas}) => {
-    console.log(reserva)
     const eliminarReserva=()=>{
                 Swal.fire({
                 title: "Eliminar Reserva",

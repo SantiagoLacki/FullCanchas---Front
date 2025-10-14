@@ -75,11 +75,26 @@ const Administrador = ({usuarioAdmin}) => {
       //setMostrarSpinner(false)
     }
 
-    const handleBuscarChange=(e)=>{
+    const handleBuscarChange= async (e)=>{
         setTerminoBusqueda(e.target.value)
     }
-    const handleFechaChange=(e)=>{
-        setFechaBusqueda(e.target.value)
+    const handleFechaChange= async (e)=>{
+        console.log("handle buscar")
+        const fechaSeleccionada = e.target.value;
+        setFechaBusqueda(fechaSeleccionada);
+        const respuesta = await leerReservas();
+        if (respuesta.status === 200) {
+            const todasLasReservas = await respuesta.json();
+            if (!fechaSeleccionada) {
+                setListaReservas(todasLasReservas);
+            } else {
+                const reservasFiltradas = todasLasReservas.filter(reserva => {
+                    const fechaReserva = new Date(reserva.dia).toISOString().split('T')[0];
+                    return fechaReserva === fechaSeleccionada;
+                });
+                setListaReservas(reservasFiltradas);
+            }
+        }
     }
 
     return (
@@ -267,8 +282,8 @@ const Administrador = ({usuarioAdmin}) => {
                                             type="date"
                                             placeholder="Buscar por cancha"
                                             className=" mr-sm-2"
-                                            onChange={handleBuscarChange}
-                                            value={terminoBusqueda}
+                                            onChange={handleFechaChange}
+                                            value={fechaBusqueda}
                                         />
                                     </Col>
                                 </Row>
