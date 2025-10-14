@@ -1,6 +1,7 @@
 const urlUsuario = import.meta.env.VITE_API_USUARIOS
 const urlProductos = import.meta.env.VITE_API_PRODUCTOS
 const urlCanchas = import.meta.env.VITE_API_CANCHAS
+const urlReservas = import.meta.env.VITE_API_RESERVAS
 
 export const login = async(datosUsuarios)=>{
     try{
@@ -238,6 +239,77 @@ export const editarCancha = async(canchaEditada, id)=>{
 export const borrarCanchaPorId = async(id)=>{
     try{
         const respuesta = await fetch(urlCanchas+`/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'x-token': JSON.parse(sessionStorage.getItem('userKey')).token
+            },
+        })
+        return respuesta
+    }catch(error){
+        console.error(error);
+        return null
+    }
+}
+
+export const leerReservas = async()=>{
+    try{
+        const respuesta = await fetch(urlReservas)
+        return respuesta
+    }catch(error){
+        console.error(error);
+        return null
+    }
+}
+
+export const obtenerReservaPorId = async(id)=>{
+    try{
+        const respuesta = await fetch(urlReservas+`/${id}`)
+        return respuesta
+    }catch(error){
+        console.error(error);
+        return null
+    }
+}
+
+export const crearReserva = async(reservaNueva)=>{
+    try{
+        const respuesta = await fetch(urlReservas, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-token': JSON.parse(sessionStorage.getItem('userKey')).token
+            },
+            body: JSON.stringify(reservaNueva)
+        })
+        console.log(respuesta)
+        return respuesta
+    }catch(error){
+        console.error(error);
+        return null
+    }
+}
+
+
+export const editarReserva = async(reservaEditada, id)=>{
+    try{
+        const respuesta = await fetch(urlReservas+`/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-token': JSON.parse(sessionStorage.getItem('userKey')).token
+            },
+            body: JSON.stringify(reservaEditada)
+        })
+        return respuesta
+    }catch(error){
+        console.error(error);
+        return null
+    }
+}
+
+export const borrarReservaPorId = async(id)=>{
+    try{
+        const respuesta = await fetch(urlReservas+`/${id}`, {
             method: 'DELETE',
             headers: {
                 'x-token': JSON.parse(sessionStorage.getItem('userKey')).token

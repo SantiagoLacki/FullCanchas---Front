@@ -4,20 +4,24 @@ import ItemUsuario from "./usuario/ItemUsuario";
 import { useEffect, useState } from "react";
 import ItemCancha from "./cancha/ItemCancha";
 import ItemProducto from "./producto/ItemProducto";
-import { leerCanchas, leerProductos, leerUsuarios } from "./helpers/queries";
+import { leerCanchas, leerProductos, leerReservas, leerUsuarios } from "./helpers/queries";
+import ItemReservaAdmin from "./reserva/ItemReservaAdmin";
 
 const Administrador = ({usuarioAdmin}) => {
     const [activeSection, setActiveSection] = useState("usuarios");
     const [terminoBusqueda, setTerminoBusqueda] = useState('')
+    const [fechaBusqueda, setFechaBusqueda] = useState('');
 
     const [listaUsuarios, setListaUsuarios]= useState([]);
     const [listaProductos, setListaProductos]= useState([]);
-    const [listaCanchas, setListaCanchas]= useState([])
+    const [listaCanchas, setListaCanchas]= useState([]);
+    const [listaReservas, setListaReservas]= useState([])
 
     useEffect(()=>{
       obtenerUsuarios();
       obtenerProductos();
       obtenerCanchas();
+      obtenerReservas();
     }, [])
 
     const obtenerUsuarios = async ()=>{
@@ -33,7 +37,7 @@ const Administrador = ({usuarioAdmin}) => {
         }
 
       }else{
-        console.info('Ocurrio un error al buscar un producto')
+        console.info('Ocurrio un error al buscar los usuarios')
       }
       //setMostrarSpinner(false)
     }
@@ -55,13 +59,42 @@ const Administrador = ({usuarioAdmin}) => {
         const datos = await respuesta.json()
         setListaCanchas(datos)
       }else{
-        console.info('Ocurrio un error al buscar un producto')
+        console.info('Ocurrio un error al buscar las canchas')
       }
       //setMostrarSpinner(false)
     }
 
-    const handleBuscarChange=(e)=>{
+    const obtenerReservas = async ()=>{
+      const respuesta = await leerReservas()
+      if(respuesta.status === 200){
+        const datos = await respuesta.json()
+        setListaReservas(datos)
+      }else{
+        console.info('Ocurrio un error al buscar las reservas')
+      }
+      //setMostrarSpinner(false)
+    }
+
+    const handleBuscarChange= async (e)=>{
         setTerminoBusqueda(e.target.value)
+    }
+    const handleFechaChange= async (e)=>{
+        console.log("handle buscar")
+        const fechaSeleccionada = e.target.value;
+        setFechaBusqueda(fechaSeleccionada);
+        const respuesta = await leerReservas();
+        if (respuesta.status === 200) {
+            const todasLasReservas = await respuesta.json();
+            if (!fechaSeleccionada) {
+                setListaReservas(todasLasReservas);
+            } else {
+                const reservasFiltradas = todasLasReservas.filter(reserva => {
+                    const fechaReserva = new Date(reserva.dia).toISOString().split('T')[0];
+                    return fechaReserva === fechaSeleccionada;
+                });
+                setListaReservas(reservasFiltradas);
+            }
+        }
     }
 
     return (
@@ -71,6 +104,7 @@ const Administrador = ({usuarioAdmin}) => {
                     {activeSection === 'usuarios' && 'Usuarios'}
                     {activeSection === 'canchas' && 'Canchas'}
                     {activeSection === 'productos' && 'Productos'}
+                    {activeSection === 'reservas' && 'Reservas'}
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
@@ -94,6 +128,13 @@ const Administrador = ({usuarioAdmin}) => {
                         className={activeSection === 'productos' ? 'btn-gold' : ''}
                     >
                         Productos
+                    </Dropdown.Item>
+                    <Dropdown.Item 
+                        onClick={() => setActiveSection('reservas')}
+                        active={activeSection === 'reservas'}
+                        className={activeSection === 'reservas' ? 'btn-gold' : ''}
+                    >
+                        Reservas
                     </Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
@@ -119,7 +160,7 @@ const Administrador = ({usuarioAdmin}) => {
                                             type="text"
                                             placeholder="Buscar"
                                             className=" mr-sm-2"
-                                            onChange={handleBuscarChange}
+                                            onChange={handleFechaChange}
                                             value={terminoBusqueda}
                                         />
                                     </Col>
@@ -218,6 +259,52 @@ const Administrador = ({usuarioAdmin}) => {
                     <tbody>
                     {
                         listaProductos.map((producto, indice)=> <ItemProducto key={producto._id} producto={producto} fila={indice+1} setListaProductos={setListaProductos}></ItemProducto>)
+                    }
+                    </tbody>
+                </Table>
+            </div>
+            )}
+            {activeSection === 'reservas' && ( 
+            <div className="border text-white rounded-2 py-3 px-4 my-4 shadow-lg">
+                <div className="  align-items-center mt-2 mb-3">
+                    <Row className="d-flex justify-content-between align-items-center mb-3">
+                        <Col xs={12} md={6} className="mb-2 mb-md-0">
+                            <div className="d-flex align-items-center">
+                                <h2 className="display-6 titulo-banner fw-bold text-white me-4">Reservas</h2>
+                            </div>
+                        </Col>
+                        <Col xs={12} md={6}>
+                            <Form>
+                                <Row className="justify-content-start justify-content-md-end">
+                                    <Col xs="auto d-flex">
+                                        <i className="bi bi-search fs-3 me-2 text-secondary"></i>
+                                        <Form.Control
+                                            type="date"
+                                            placeholder="Buscar por cancha"
+                                            className=" mr-sm-2"
+                                            onChange={handleFechaChange}
+                                            value={fechaBusqueda}
+                                        />
+                                    </Col>
+                                </Row>
+                            </Form>
+                        </Col>
+                    </Row>
+                </div>
+                <Table responsive striped bordered hover>
+                    <thead>
+                    <tr className="text-center">
+                        <th className="text-secondary">#</th>
+                        <th className="text-secondary">Cancha</th>
+                        <th className="text-secondary">Cliente</th>
+                        <th className="text-secondary">Fecha</th>
+                        <th className="text-secondary">Turno</th>
+                        <th className="text-secondary">Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {
+                        listaReservas.map((reserva, indice)=> <ItemReservaAdmin key={reserva._id} reserva={reserva} fila={indice+1} setListaReservas={setListaReservas}></ItemReservaAdmin>)
                     }
                     </tbody>
                 </Table>
