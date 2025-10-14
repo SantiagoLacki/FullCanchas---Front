@@ -13,6 +13,7 @@ import ReservaCancha from "./components/pages/reserva/ReservaCancha";
 import FormularioProducto from "./components/pages/producto/FormularioProducto";
 import { useEffect, useState } from "react";
 import ProtectorAdmin from "./components/routes/ProtectorAdmin";
+import FormularioReserva from "./components/pages/reserva/FormularioReserva";
 
 function App() {
   const usuarioLogueado = JSON.parse(sessionStorage.getItem('userKey')) || {}
@@ -40,6 +41,7 @@ function App() {
               <Route path="editarcancha/:id" element={<FormularioCancha titulo={'Modificar Cancha'}></FormularioCancha>}></Route>
               <Route path="crearproducto" element={<FormularioProducto titulo={'Producto Nuevo'}></FormularioProducto>}></Route>
               <Route path="editarproducto/:id" element={<FormularioProducto titulo={'Modificar Producto'}></FormularioProducto>}></Route>
+              <Route path="editarreserva/:id" element={<FormularioReserva titulo={'Modificar Reserva'}></FormularioReserva>}></Route>
           </Route>
           <Route path="/reserva" element={<ReservaCancha></ReservaCancha>}></Route>
           <Route path="*" element={<Inicio></Inicio>}></Route>

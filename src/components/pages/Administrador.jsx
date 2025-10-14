@@ -256,10 +256,6 @@ const Administrador = ({usuarioAdmin}) => {
                         <Col xs={12} md={6} className="mb-2 mb-md-0">
                             <div className="d-flex align-items-center">
                                 <h2 className="display-6 titulo-banner fw-bold text-white me-4">Reservas</h2>
-                                <div>
-                                <Link className="btn btn-gold text-white" to={'/administrador/crearreserva'} ><i class="bi bi-plus-circle"></i> Agregar     
-                                </Link>
-                                </div>
                             </div>
                         </Col>
                         <Col xs={12} md={6}>
