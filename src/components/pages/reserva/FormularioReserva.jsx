@@ -1,9 +1,9 @@
 import { Form, Button, Row, Col} from "react-bootstrap";
 import Swal from 'sweetalert2'
 import { Link, useNavigate, useParams } from "react-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm} from "react-hook-form";
-import { obtenerReservaPorId } from "../helpers/queries";
+import { leerCanchas, leerUsuarios, obtenerReservaPorId } from "../helpers/queries";
 
 const FormularioReserva = ({titulo}) => {
     const {
@@ -16,9 +16,29 @@ const FormularioReserva = ({titulo}) => {
     const navegacion = useNavigate()
     const {id} = useParams()
 
+    const [usuarios, setUsuarios] = useState([]);
+    const [canchas, setCanchas] = useState([]);
+
     useEffect(()=>{
-          obtenerReserva();
+          cargarFormulario();
     },[])
+
+    const cargarFormulario = async () => {
+        const [respuestaUsuarios, respuestaCanchas] = await Promise.all([
+                leerUsuarios(),
+                leerCanchas(),
+            ]);
+        if (respuestaUsuarios.status === 200) {
+            const usuariosBuscados = await respuestaUsuarios.json();
+            const usuariosFiltrados = usuariosBuscados.filter(usuario => usuario.rol === 'user');
+            setUsuarios(usuariosFiltrados);
+        }
+        if (respuestaCanchas.status === 200) {
+            const canchasBuscadas = await respuestaCanchas.json();
+            setCanchas(canchasBuscadas);
+        }
+        obtenerReserva()
+    }
 
     const obtenerReserva = async()=>{
         if(titulo === 'Modificar Reserva'){
@@ -37,8 +57,8 @@ const FormularioReserva = ({titulo}) => {
                     .toISOString()
                     .split('T')[0];
                 
-                    setValue('idUsuario', reservaBuscada.idUsuario?.email)
-                    setValue('idCancha', reservaBuscada.idCancha?.nombre)
+                    setValue('idUsuario', reservaBuscada.idUsuario?._id)
+                    setValue('idCancha', reservaBuscada.idCancha?._id)
                     setValue('dia', fechaFormateada)
                     setValue('hora', reservaBuscada.hora)
                     console.log(reservaBuscada.hora)
@@ -66,13 +86,18 @@ const FormularioReserva = ({titulo}) => {
                     <Form className="my-4 w-75" onSubmit={handleSubmit(onSubmit)}>
                         <Form.Group className="mb-4 d-flex align-items-center" controlId="formCliente">
                             <Form.Label className="me-2">Cliente:</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Pelota Futbol 5"
+                            <Form.Select
+                            disabled
                                 {...register("idUsuario", {
-                                required: "El nombre del cliente es un dato obligatorio",
+                                    required: "Debe seleccionar un cliente",
                                 })}
-                            />
+                            >
+                                <option value="">Seleccione un cliente</option>
+                                {usuarios.map(usuario => ( <option key={usuario._id} value={usuario._id}>
+                                        {usuario.email}
+                                    </option>
+                                ))}
+                            </Form.Select>
                             <Form.Text className="text-danger">
                                 {errors.idUsuario?.message}
                             </Form.Text>
@@ -80,13 +105,17 @@ const FormularioReserva = ({titulo}) => {
 
                         <Form.Group className="mb-4 d-flex align-items-center" controlId="formCancha">
                             <Form.Label className="me-2">Cancha: </Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="$50"
+                            <Form.Select
                                 {...register("idCancha", {
-                                required: "La cancha es un valor obligatorio",
+                                    required: "Debe seleccionar una cancha",
                                 })}
-                            />
+                            >
+                                <option value="">Seleccione una cancha</option>
+                                {canchas.map(cancha => (<option key={cancha._id} value={cancha._id}>
+                                        {cancha.nombre} - ${cancha.precioPorHora} - {cancha.tipoDeSuperficie}
+                                    </option>
+                                ))}
+                            </Form.Select>
                             <Form.Text className="text-danger">
                                 {errors.idCancha?.message}
                             </Form.Text>
