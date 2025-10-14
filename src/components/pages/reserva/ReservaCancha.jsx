@@ -1,7 +1,35 @@
 import { Table } from "react-bootstrap";
 import ItemReserva from "./ItemReserva";
+import { useNavigate, useParams } from "react-router";
+import { obtenerCanchaPorId } from "../helpers/queries";
+import { useEffect, useState } from "react";
 
-const ReservaCancha = ({cancha}) => {
+const ReservaCancha = () => {
+    const [cancha, setCancha]=useState('')
+    const navegacion = useNavigate()
+    const {id} = useParams()
+
+    useEffect(()=>{
+              obtenerCancha();
+    },[])
+
+    const obtenerCancha = async()=>{
+        const respuesta = await obtenerCanchaPorId(id)
+        if(respuesta.status === 200){
+            const canchaBuscada = await respuesta.json()
+            setCancha(canchaBuscada)
+        if(canchaBuscada === undefined){
+            navegacion('/administrador')
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "La cancha es inexistente",
+                });
+            }
+        }
+        
+    }
+
     return (
         <>
         <div className="position-relative">
@@ -18,8 +46,8 @@ const ReservaCancha = ({cancha}) => {
         <section className='container mainSection'>
             
             <div className="border rounded-2 py-1 px-4 my-4 shadow-lg bg">
-                <h4 className="mt-4 text-white fw-bolder">Cancha N° 1</h4>
-                <p className="fw-light text-white">Cancha de Futbol 5 | Césped sintético | Con iluminación</p>
+                <h4 className="mt-4 text-white fw-bolder">{cancha.nombre}</h4>
+                <p className="fw-light text-white">{cancha.tipoDeSuperficie}</p>
                 <Table responsive striped bordered hover >
                       <colgroup>
                         <col style={{ width: "10%" }} />
