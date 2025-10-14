@@ -42,7 +42,7 @@ const ItemReservaAdmin = ({reserva, fila, setListaReservas}) => {
             <td className="text-center align-middle fw-light">{fila}</td>
             <td className="align-middle fw-light">{reserva.idCancha?.nombre}</td>
             <td className="text-center align-middle fw-light">{reserva.idUsuario?.email}</td>
-            <td className="text-center align-middle fw-light">{new Date(reserva.dia).toLocaleDateString('es-ES')}</td>
+            <td className="text-center align-middle fw-light"> {new Date(reserva.dia).toLocaleDateString('es-ES', { timeZone: 'UTC' })}</td>
             <td className="text-center align-middle fw-light">{reserva.hora}</td>
             <td className="text-center align-middle">
                 <Link className="me-lg-2 btn btn-gold text-white" to={'/administrador/editarreserva/'+reserva._id}>

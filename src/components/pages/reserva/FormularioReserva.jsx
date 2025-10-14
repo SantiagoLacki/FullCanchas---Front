@@ -3,7 +3,7 @@ import Swal from 'sweetalert2'
 import { Link, useNavigate, useParams } from "react-router";
 import { useEffect, useState } from "react";
 import { useForm} from "react-hook-form";
-import { leerCanchas, leerUsuarios, obtenerReservaPorId } from "../helpers/queries";
+import { crearReserva, editarReserva, leerCanchas, leerUsuarios, obtenerReservaPorId } from "../helpers/queries";
 
 const FormularioReserva = ({titulo}) => {
     const {
@@ -67,9 +67,42 @@ const FormularioReserva = ({titulo}) => {
         }
     }
 
-    const onSubmit = async (producto) =>{
+    const onSubmit = async (reserva) =>{
+        const fechaUTC = new Date(reserva.dia + 'T00:00:00.000Z');
+        const reservaFechaUTC = {
+            ...reserva,
+            dia: fechaUTC.toISOString()
+        };
         
+        if(titulo === 'Reserva Nueva'){
+            const respuesta = await crearReserva(reservaFechaUTC)
+            if(respuesta.status === 201){
+                Swal.fire({
+                title: "Reserva creada",
+                text: `La reserva fue creada correctamente`,
+                icon: "success"
+                });
+            reset()
+            }else{
+                Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "No pudo crearse la reserva",
+            });
+            }
+        }else{
+            const respuesta = await editarReserva(reservaFechaUTC, id)
+            if(respuesta.status === 200){
+                Swal.fire({
+                title: "Reserva editada",
+                text: `La reserva fue editada correctamente`,
+                icon: "success"
+            });
+            }
+        }
+        navegacion('/administrador')
     }
+
 
     return (
         <>
@@ -125,7 +158,6 @@ const FormularioReserva = ({titulo}) => {
                             <Form.Label className="me-2">Dia: </Form.Label>
                             <Form.Control
                                 type="date"
-                                placeholder="$50"
                                 {...register("dia", {
                                 required: "El día es un valor obligatorio",
                                 })}
