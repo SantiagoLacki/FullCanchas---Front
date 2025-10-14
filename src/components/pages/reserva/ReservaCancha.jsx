@@ -1,7 +1,7 @@
 import { Table } from "react-bootstrap";
 import ItemReserva from "./ItemReserva";
 
-const ReservaCancha = () => {
+const ReservaCancha = ({cancha}) => {
     return (
         <>
         <div className="position-relative">
