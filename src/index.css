@@ -125,6 +125,10 @@ main{
   background-color: #b4b4b4 !important;
 }
 
+.btn-no-disponible{
+  background-color: #8f8e8e !important;
+}
+
 .box-referencia{
   width: 25px;
   height: 25px;
@@ -133,12 +137,10 @@ main{
 
 /* Estilos modal Publicidad */
 .popup-header {
-  /* background:linear-gradient(to top, #008500, #5A9A00); */
   color: rgb(0, 0, 0);
 }
 
 .popup-body {
-  /* background-color: #2C3E50; */
   text-align: center;
   color: white;
 }
@@ -148,16 +150,6 @@ main{
   height: auto;
   display: block;
 }
-
-/* .popup-footer {
-  background:linear-gradient(to top, #008500, #5A9A00) !important;
-} 
-
-.ad-footer {
-  background:linear-gradient(to top, #008500, #5A9A00);
-  text-align: center;
-  color: white;
-} */
 
 .modal-content {
     border: 1px solid rgba(0, 0, 0, 0.3); 

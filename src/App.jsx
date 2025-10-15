@@ -45,7 +45,7 @@ function App() {
               <Route path="editarproducto/:id" element={<FormularioProducto titulo={'Modificar Producto'}></FormularioProducto>}></Route>
               <Route path="editarreserva/:id" element={<FormularioReserva titulo={'Modificar Reserva'}></FormularioReserva>}></Route>
           </Route>
-          <Route path="/reserva" element={<ReservaCancha></ReservaCancha>}></Route>
+          <Route path="/reserva/:id" element={<ReservaCancha></ReservaCancha>}></Route>
           <Route path="*" element={<Inicio></Inicio>}></Route>
         </Routes>
       </main>
