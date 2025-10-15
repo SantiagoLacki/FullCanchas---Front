@@ -1,13 +1,30 @@
-import { Link } from "react-router";
+import { useState } from "react";
+import { Button, Modal } from "react-bootstrap";
 
-const ItemReserva = ({ turno, dias, listaReservas, idCancha}) => {
+const ItemReserva = ({ turno, dias, listaReservas, cancha}) => {
+    const [show, setShow] = useState(false);
+    const [reservaSeleccionada, setReservaSeleccionada] = useState(null);
+
+     const handleClose = () => setShow(false);
+    const handleShow = (dia) => {
+        setReservaSeleccionada({
+            fecha: new Date(dia.fecha).toLocaleDateString('es-ES'),
+            fechaISO: dia.fechaISO,
+            horario: turno.formato24,
+            horarioAmPm: turno.formatoAmPm,
+            nombreDia: dia.nombre,
+            nombreCancha: cancha?.nombre || 'Cancha',
+            precio: cancha?.precioPorHora || 0
+        });
+        setShow(true);
+    };
     const estaReservado = (dia) => {
         const fechaDia = new Date(dia.fecha).toISOString().split('T')[0];
         const existeReserva = listaReservas.some(reserva => {
             const fechaReserva = new Date(reserva.dia).toISOString().split('T')[0];
             return fechaReserva === fechaDia && 
                    reserva.hora === turno.formatoAmPm && 
-                   reserva.idCancha._id === idCancha;
+                   reserva.idCancha._id === cancha._id;
         });
         return existeReserva
     };
@@ -40,37 +57,63 @@ const ItemReserva = ({ turno, dias, listaReservas, idCancha}) => {
     };
 
     return (
-        <tr>
-            <td className="col-hora text-center align-middle fw-light">{turno.formato24}</td>
-            {dias.map((dia, diaIndex) => {
-                const reservado = estaReservado(dia);
-                const horarioPasado = esHorarioPasado(dia);
+        <>
+            <tr>
+                <td className="col-hora text-center align-middle fw-light">{turno.formato24}</td>
+                {dias.map((dia, diaIndex) => {
+                    const reservado = estaReservado(dia);
+                    const horarioPasado = esHorarioPasado(dia);
 
-                let claseCelda = 'align-middle fw-light text-center p-0 ';
-                let contenido = null;
-                
-                if (reservado) {
-                    claseCelda += 'btn-reservado';
-                } else if (horarioPasado) {
-                    claseCelda += 'btn-no-disponible';
-                    contenido = null;
-                } else {
-                    claseCelda += 'btn-reservar';
-                    contenido = (
-                        <Link 
-                            className="d-block w-100 h-100 text-decoration-none text-white py-3" 
-                            to={`/reserva/?dia=${dia.fechaISO}&hora=${turno}&cancha=${idCancha}`}
-                        >   
-                        </Link>
+                    let claseCelda = 'align-middle fw-light text-center p-0 ';
+                    let contenido = null;
+                    
+                    if (reservado) {
+                        claseCelda += 'btn-reservado';
+                    } else if (horarioPasado) {
+                        claseCelda += 'btn-no-disponible';
+                        contenido = null;
+                    } else {
+                        claseCelda += 'btn-reservar';
+                        contenido = (
+                            <Button variant="outline-success"
+                                className="d-block border-0 w-100 h-100 text-decoration-none text-white py-3" 
+                                onClick={() => handleShow(dia)}
+                                style={{ cursor: 'pointer' }}
+                            >   
+                            </Button>
+                        );
+                    }
+                    return (
+                        <td key={diaIndex} className={claseCelda}>
+                            {contenido}
+                        </td>
                     );
-                }
-                return (
-                    <td key={diaIndex} className={claseCelda}>
-                        {contenido}
-                    </td>
-                );
-            })}
-        </tr>
+                })}
+            </tr>
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                <Modal.Title>Reserva</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                   {reservaSeleccionada && (
+                    <div>
+                        <p><strong>Cancha:</strong> {reservaSeleccionada.nombreCancha}</p>
+                        <p><strong>Día:</strong> {reservaSeleccionada.nombreDia} {reservaSeleccionada.fecha}</p>
+                        <p><strong>Horario:</strong> {reservaSeleccionada.horario}</p>
+                        <p><strong>Precio:</strong> ${reservaSeleccionada.precio}</p>
+                    </div>
+                    )}
+                </Modal.Body>
+                <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                    Close
+                </Button>
+                <Button variant="primary" onClick={handleClose}>
+                    Save Changes
+                </Button>
+                </Modal.Footer>
+            </Modal>
+        </>
     );
 };
 
