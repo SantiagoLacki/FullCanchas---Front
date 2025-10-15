@@ -1,22 +1,45 @@
 import { useState } from "react";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Form, Modal } from "react-bootstrap";
+import { Link } from "react-router";
+import Swal from "sweetalert2";
 
-const ItemReserva = ({ turno, dias, listaReservas, cancha}) => {
+const ItemReserva = ({ turno, dias, listaReservas, cancha, usuarioAdmin}) => {
     const [show, setShow] = useState(false);
     const [reservaSeleccionada, setReservaSeleccionada] = useState(null);
-
      const handleClose = () => setShow(false);
+     console.log(usuarioAdmin.email)
     const handleShow = (dia) => {
-        setReservaSeleccionada({
-            fecha: new Date(dia.fecha).toLocaleDateString('es-ES'),
-            fechaISO: dia.fechaISO,
-            horario: turno.formato24,
-            horarioAmPm: turno.formatoAmPm,
-            nombreDia: dia.nombre,
-            nombreCancha: cancha?.nombre || 'Cancha',
-            precio: cancha?.precioPorHora || 0
-        });
-        setShow(true);
+        if(usuarioAdmin.rol === "user"){
+            setReservaSeleccionada({
+                fecha: new Date(dia.fecha).toLocaleDateString('es-ES'),
+                fechaISO: dia.fechaISO,
+                horario: turno.formato24,
+                horarioAmPm: turno.formatoAmPm,
+                nombreDia: dia.nombre,
+                nombreCancha: cancha?.nombre || 'Cancha',
+                precio: cancha?.precioPorHora || 0,
+                cliente: usuarioAdmin.email
+            });
+            console.log(reservaSeleccionada.cliente)
+            setShow(true);
+        }else{
+            Swal.fire({
+                title: 'Iniciar Sesión',
+                text: 'Debes iniciar sesión para poder reservar un turno',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ir a Iniciar Sesión',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '/login';
+                }
+            });
+
+        }
+        
     };
     const estaReservado = (dia) => {
         const fechaDia = new Date(dia.fecha).toISOString().split('T')[0];
@@ -100,8 +123,9 @@ const ItemReserva = ({ turno, dias, listaReservas, cancha}) => {
                 </Modal.Header>
                 <Modal.Body className="border-0">
                    {reservaSeleccionada && (
+                    <>
                     <div>
-                        <p className="text-end me-4 modal-text fs-6 mb-1"><i className="bi bi-person-circle fw-bold modal-icon me-1"></i>Cliente: <strong>Omar Mattos</strong> </p>
+                        <p className="text-end me-4 modal-text fs-6 mb-1"><i className="bi bi-person-circle fw-bold modal-icon me-1"></i>Cliente: <strong>{reservaSeleccionada.cliente}</strong> </p>
                         <div className="border p-4 rounded-2 shadow mx-3 modal-text">
                             <p className="fw-bold modal-icon">{reservaSeleccionada.nombreCancha}</p>
                             <hr />
@@ -119,10 +143,16 @@ const ItemReserva = ({ turno, dias, listaReservas, cancha}) => {
                                 <p><i className="bi bi-cash-coin me-2 modal-icon"></i>Precio:</p> 
                                 <p className="fw-bolder">${reservaSeleccionada.precio}</p>
                             </div>
-           
                         </div>
                     </div>
+                    <div>
+                        <div className="border p-4 rounded-2 shadow mx-3 my-3 modal-text">
+                         <Form></Form>   
+                        </div>
+                    </div> 
+                    </> 
                     )}
+                    <p className="fw-light fs-6">Al hacer click en reservar declaras haber leido y aceptado los <Link>Terminos y Condiciones</Link> </p>
                 </Modal.Body>
                 <Modal.Footer className="border-0 d-flex justify-content-between">
                 <Button variant="danger" onClick={handleClose} className="w-25 text-white">

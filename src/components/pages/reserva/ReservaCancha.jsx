@@ -4,8 +4,9 @@ import { useNavigate, useParams } from "react-router";
 import { leerReservas, obtenerCanchaPorId } from "../helpers/queries";
 import { useEffect, useState } from "react";
 
-const ReservaCancha = () => {
+const ReservaCancha = ({usuarioAdmin}) => {
     const [cancha, setCancha]=useState('')
+    console.log(usuarioAdmin)
     const [proximosDias, setProximosDias] = useState([]);
     const [listaReservas, setListaReservas]= useState([]);
     //const turnos = ["04:00 pm","05:00 pm", "06:00 pm","07:00 pm", "08:00 pm","09:00 pm", "10:00 pm","11:00 pm"]
@@ -114,7 +115,7 @@ const ReservaCancha = () => {
                     </thead>
                     <tbody>
                         {turnos.map((turno, index) => (
-                            <ItemReserva key={index} turno={turno} dias={proximosDias} listaReservas={listaReservas} cancha={cancha}></ItemReserva>
+                            <ItemReserva key={index} turno={turno} dias={proximosDias} listaReservas={listaReservas} cancha={cancha} usuarioAdmin={usuarioAdmin}></ItemReserva>
                         ))}
                     </tbody>
                 </Table>
