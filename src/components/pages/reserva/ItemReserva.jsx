@@ -91,25 +91,45 @@ const ItemReserva = ({ turno, dias, listaReservas, cancha}) => {
                 })}
             </tr>
             <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                <Modal.Title>Reserva</Modal.Title>
+
+                <Modal.Header className="border-0 bg-shopp">
+                <Modal.Title>
+                    <p  className="modal-titulo shadow-none fw-bold fs-3 mb-0">Reservar</p>
+                    <p className="fw-lighter fs-6 mb-0 text-light">Para completar tu reserva en FullCanchas, por favor chequeá tus datos y luego confirmá.</p>
+                </Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body className="border-0">
                    {reservaSeleccionada && (
                     <div>
-                        <p><strong>Cancha:</strong> {reservaSeleccionada.nombreCancha}</p>
-                        <p><strong>Día:</strong> {reservaSeleccionada.nombreDia} {reservaSeleccionada.fecha}</p>
-                        <p><strong>Horario:</strong> {reservaSeleccionada.horario}</p>
-                        <p><strong>Precio:</strong> ${reservaSeleccionada.precio}</p>
+                        <p className="text-end me-4 modal-text fs-6 mb-1"><i className="bi bi-person-circle fw-bold modal-icon me-1"></i>Cliente: <strong>Omar Mattos</strong> </p>
+                        <div className="border p-4 rounded-2 shadow mx-3 modal-text">
+                            <p className="fw-bold modal-icon">{reservaSeleccionada.nombreCancha}</p>
+                            <hr />
+                            <div className="d-flex  justify-content-between">
+                                <p><i className="bi bi-calendar-event me-2 fw-bold modal-icon"></i>Día:</p> 
+                                <p className="fw-bolder">{reservaSeleccionada.nombreDia} {reservaSeleccionada.fecha}</p>
+                            </div>
+                            <hr className="mt-0" />
+                            <div className="d-flex justify-content-between">
+                                <p><i className="bi bi-clock me-2 fw-bold modal-icon"></i>Turno:</p> 
+                                <p className="fw-bolder">{reservaSeleccionada.horario}</p>
+                            </div>
+                            <hr className="mt-0" />
+                            <div className="d-flex  justify-content-between">
+                                <p><i className="bi bi-cash-coin me-2 modal-icon"></i>Precio:</p> 
+                                <p className="fw-bolder">${reservaSeleccionada.precio}</p>
+                            </div>
+           
+                        </div>
                     </div>
                     )}
                 </Modal.Body>
-                <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Close
+                <Modal.Footer className="border-0 d-flex justify-content-between">
+                <Button variant="danger" onClick={handleClose} className="w-25 text-white">
+                    Cancelar
                 </Button>
-                <Button variant="primary" onClick={handleClose}>
-                    Save Changes
+                <Button variant="warning" onClick={handleClose} className="w-25">
+                    Reservar
                 </Button>
                 </Modal.Footer>
             </Modal>

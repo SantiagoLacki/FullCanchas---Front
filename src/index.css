@@ -156,3 +156,17 @@ main{
     border-radius: 0.5rem;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4); 
 }
+
+.modal-text{
+  font-family: "Nunito", sans-serif !important;
+  color: #2C3E50 !important; 
+}
+
+.modal-icon{
+  color: #008500 !important;
+}
+
+.modal-titulo{
+  font-family: "Open Sans", sans-serif !important;
+  color: #dadada !important;
+}
