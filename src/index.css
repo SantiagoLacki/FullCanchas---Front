@@ -129,3 +129,38 @@ main{
   width: 25px;
   height: 25px;
 }
+
+
+/* Estilos modal Publicidad */
+.popup-header {
+  /* background:linear-gradient(to top, #008500, #5A9A00); */
+  color: rgb(0, 0, 0);
+}
+
+.popup-body {
+  /* background-color: #2C3E50; */
+  text-align: center;
+  color: white;
+}
+
+.ad-content img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* .popup-footer {
+  background:linear-gradient(to top, #008500, #5A9A00) !important;
+} 
+
+.ad-footer {
+  background:linear-gradient(to top, #008500, #5A9A00);
+  text-align: center;
+  color: white;
+} */
+
+.modal-content {
+    border: 1px solid rgba(0, 0, 0, 0.3); 
+    border-radius: 0.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4); 
+}
