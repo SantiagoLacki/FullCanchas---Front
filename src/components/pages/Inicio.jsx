@@ -4,10 +4,12 @@ import CardCancha from "./cancha/CardCancha";
 import CardProducto from "./producto/CardProducto";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { leerCanchas } from "./helpers/queries";
 
 const Inicio = () => {
     const [showModal, setShowModal] = useState(false);
     const [selectedImage, setSelectedImage] = useState("");
+    const [listaCanchas, setListaCanchas]= useState([]);
 
     useEffect(() => {
     AOS.init({
@@ -15,6 +17,7 @@ const Inicio = () => {
         once: true,
         offset: 100
         });
+        obtenerCanchas();
     }, []);
 
     const galleryImages = [
@@ -35,6 +38,17 @@ const Inicio = () => {
         setShowModal(false);
         setSelectedImage("");
     };
+
+    const obtenerCanchas = async ()=>{
+          const respuesta = await leerCanchas()
+          if(respuesta.status === 200){
+            const datos = await respuesta.json()
+            setListaCanchas(datos)
+          }else{
+            console.info('Ocurrio un error al buscar las canchas')
+          }
+          //setMostrarSpinner(false)
+    }
 
     return (
         <section className="mainSection">
@@ -93,31 +107,14 @@ const Inicio = () => {
                 <Container className="mt-2">
                     <h1 className="titulo-seccion text-center mt-5 mb-4 text-white">Nuestras Canchas</h1>
                     <Row className="justify-content-center">
-                                <Col xl={3} lg={4} md={6}>
+                        {
+                        listaCanchas.map((cancha)=> 
+                            <Col key={cancha._id} xl={3} lg={4} md={6}>
                                     <div>
-                                        <CardCancha></CardCancha>
+                                        <CardCancha cancha={cancha}></CardCancha>
                                     </div>
                                 </Col>
-                                <Col xl={3} lg={4} md={6} >
-                                    <div>
-                                        <CardCancha></CardCancha>
-                                    </div>
-                                </Col>
-                                <Col xl={3} lg={4} md={6}>
-                                    <div>
-                                        <CardCancha></CardCancha>
-                                    </div>
-                                </Col>
-                                <Col xl={3} lg={4} md={6} >
-                                    <div>
-                                        <CardCancha></CardCancha>
-                                    </div>
-                                </Col>
-                                <Col xl={3} lg={4} md={6} >
-                                    <div>
-                                        <CardCancha></CardCancha>
-                                    </div>
-                                </Col>
+                        )}
                     </Row>
 
 
