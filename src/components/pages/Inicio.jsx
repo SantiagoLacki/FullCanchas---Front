@@ -1,15 +1,20 @@
-import { Container, Row, Col, Form, Modal } from "react-bootstrap";
+import { Container, Row, Col, Modal, Button } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import CardCancha from "./cancha/CardCancha";
 import CardProducto from "./producto/CardProducto";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { leerCanchas } from "./helpers/queries";
+import { leerCanchas, leerProductosPaginados } from "./helpers/queries";
+import Swal from "sweetalert2";
 
 const Inicio = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
   const [listaCanchas, setListaCanchas] = useState([]);
+  const [listaProductos, setListaProductos] = useState([]);
+  const [page, setPage] = useState(1);
+  const [limit] = useState(6);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     AOS.init({
@@ -18,7 +23,8 @@ const Inicio = () => {
       offset: 100,
     });
     obtenerCanchas();
-  }, []);
+    obtenerProductos();
+  }, [page]);
 
   const galleryImages = [
     "https://images.pexels.com/photos/274422/pexels-photo-274422.jpeg",
@@ -48,6 +54,21 @@ const Inicio = () => {
       console.info("Ocurrio un error al buscar las canchas");
     }
     //setMostrarSpinner(false)
+  };
+
+  const obtenerProductos = async () => {
+    const respuesta = await leerProductosPaginados(page, limit);
+    if (respuesta.status === 200) {
+      const datos = await respuesta.json();
+      setListaProductos(datos.productos);
+      setTotalPages(datos.totalPages);
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Intenta esta operación en unos minutos",
+      });
+    }
   };
 
   return (
@@ -124,19 +145,45 @@ const Inicio = () => {
             ))}
           </Row>
         </Container>
-        <div className="bg-shopp px-5  pt-3">
+
+        <div className="bg-shopp px-5 py-3">
           <h2 className="titulo-seccion text-center mt-3 mb-4 text-white fs-1">
             Productos
           </h2>
           <Container>
-            <Row>
-              <Col xl={3} lg={4} md={6} className="mb-4">
-                <div>
-                  <CardProducto></CardProducto>
-                </div>
-              </Col>
+            <Row className="justify-content-center">
+              {listaProductos.length > 0 ? (
+                listaProductos.map((producto) => (
+                  <Col key={producto._id} xl={3} lg={4} md={6} className="mb-4">
+                    <CardProducto producto={producto} />
+                  </Col>
+                ))
+              ) : (
+                <p className="text-center text-light">
+                  No hay productos disponibles
+                </p>
+              )}
             </Row>
           </Container>
+          <div className="d-flex justify-content-center align-items-center">
+            <Button
+              variant="secondary"
+              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+              disabled={page === 1}
+            >
+              Anterior
+            </Button>
+            <span className="mx-3 text-light">
+              Pagina {page} a {totalPages}
+            </span>
+            <Button
+              variant="secondary"
+              onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+              disabled={page === totalPages}
+            >
+              Siguiente
+            </Button>
+          </div>
         </div>
       </section>
 
