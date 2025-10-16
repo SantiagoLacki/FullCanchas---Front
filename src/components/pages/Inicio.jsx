@@ -4,16 +4,13 @@ import CardCancha from "./cancha/CardCancha";
 import CardProducto from "./producto/CardProducto";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { leerCanchas, leerProductosPaginados } from "./helpers/queries";
-import Swal from "sweetalert2";
+import { leerCanchas } from "./helpers/queries";
 
-const Inicio = ({ listaProductos, setListaProductos }) => {
+
+const Inicio = ({ listaProductos, page, totalPages }) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
   const [listaCanchas, setListaCanchas] = useState([]);
-  const [page, setPage] = useState(1);
-  const [limit] = useState(6);
-  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     AOS.init({
@@ -22,8 +19,7 @@ const Inicio = ({ listaProductos, setListaProductos }) => {
       offset: 100,
     });
     obtenerCanchas();
-    obtenerProductos();
-  }, [page]);
+  }, []);
 
   const galleryImages = [
     "https://images.pexels.com/photos/274422/pexels-photo-274422.jpeg",
@@ -53,21 +49,6 @@ const Inicio = ({ listaProductos, setListaProductos }) => {
       console.info("Ocurrio un error al buscar las canchas");
     }
     //setMostrarSpinner(false)
-  };
-
-  const obtenerProductos = async () => {
-    const respuesta = await leerProductosPaginados(page, limit);
-    if (respuesta.status === 200) {
-      const datos = await respuesta.json();
-      setListaProductos(datos.productos);
-      setTotalPages(datos.totalPages);
-    } else {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Intenta esta operación en unos minutos",
-      });
-    }
   };
 
   return (

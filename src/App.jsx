@@ -16,15 +16,36 @@ import ProtectorAdmin from "./components/routes/ProtectorAdmin";
 import FormularioReserva from "./components/pages/reserva/FormularioReserva";
 import PopupAd from "./components/shared/Publicidad/Publicidad.jsx"; // Importar el componente
 import Productos from "./components/pages/Productos.jsx";
+import Swal from "sweetalert2";
+import { leerProductosPaginados } from "./components/pages/helpers/queries.js";
 
 function App() {
   const usuarioLogueado = JSON.parse(sessionStorage.getItem("userKey")) || {};
   const [usuarioAdmin, setUsuarioAdmin] = useState(usuarioLogueado);
   const [listaProductos, setListaProductos] = useState([]);
+  const [page, setPage] = useState(1);
+  const [limit] = useState(6);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     sessionStorage.setItem("userKey", JSON.stringify(usuarioAdmin));
-  }, [usuarioAdmin]);
+    obtenerProductos();
+  }, [usuarioAdmin, page]);
+
+  const obtenerProductos = async () => {
+    const respuesta = await leerProductosPaginados(page, limit);
+    if (respuesta.status === 200) {
+      const datos = await respuesta.json();
+      setListaProductos(datos.productos);
+      setTotalPages(datos.totalPages);
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Intenta esta operación en unos minutos",
+      });
+    }
+  };
 
   return (
     <>
@@ -33,7 +54,7 @@ function App() {
         <main>
           <PopupAd />
           <Routes>
-            <Route path="/" element={<Inicio listaProductos={listaProductos} setListaProductos={setListaProductos}></Inicio>}></Route>
+            <Route path="/" element={<Inicio listaProductos={listaProductos} page={page} totalPages={totalPages}></Inicio>}></Route>
             <Route path="/productos" element={<Productos listaProductos={listaProductos}></Productos>}></Route>
             <Route path="/login" element={<Login setUsuarioAdmin={setUsuarioAdmin}></Login>}></Route>
             <Route path="/quienesSomos" element={<QuienesSomos></QuienesSomos>}></Route>
