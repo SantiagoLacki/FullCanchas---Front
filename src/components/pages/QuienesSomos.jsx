@@ -6,7 +6,7 @@ const QuienesSomos = () => {
   return (
     <section className="quienes-somos-section py-5">
       <Container>
-        <h2 className="text-center mb-4">Quiénes Somos</h2>
+        <h2 className="text-center mb-4">¿Quiénes Somos?</h2>
         <p className="text-center mb-5">
           Nacimos con el objetivo de unir a las personas a través del fútbol. 
           Lo que comenzó como un pequeño grupo de amigos jugando los fines de semana 
@@ -16,7 +16,7 @@ const QuienesSomos = () => {
         <Row className="mb-5">
           <Col md={4}>
             <Card className="info-card">
-              <Card.Img variant="top" src="img/futbol.jpg" alt="Nuestra Historia" />
+              <Card.Img variant="top" src="primera_cancha.png" alt="Nuestra Historia" />
               <Card.Body>
                 <Card.Title>Nuestro Comienzo</Card.Title>
                 <Card.Text>
@@ -28,7 +28,7 @@ const QuienesSomos = () => {
           </Col>
           <Col md={4}>
             <Card className="info-card">
-              <Card.Img variant="top" src="img/instalaciones.jpg" alt="Instalaciones" />
+              <Card.Img variant="top" src="Colage_instalaciones.jpg" alt="Instalaciones" />
               <Card.Body>
                 <Card.Title>Instalaciones</Card.Title>
                 <Card.Text>
@@ -40,7 +40,7 @@ const QuienesSomos = () => {
           </Col>
           <Col md={4}>
             <Card className="info-card">
-              <Card.Img variant="top" src="img/meta.jpg" alt="Nuestra Meta" />
+              <Card.Img variant="top" src="boceto_proyecto_futuro.png" alt="Nuestra Meta" />
               <Card.Body>
                 <Card.Title>Nuestra Meta</Card.Title>
                 <Card.Text>
