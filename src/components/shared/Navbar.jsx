@@ -34,7 +34,7 @@ function Menu({usuarioAdmin, setUsuarioAdmin}) {
               </>
             ) : usuarioAdmin.token && usuarioAdmin.rol === "user" ? (
               <Button className="nav-link fw-bold text-white rounded px-2 btn-gold" onClick={logout}>
-                Logout
+                Cerrar Sesión
               </Button>
             ) : (
               <Nav.Link as={Link} to={"/login"} className='nav-link fw-bold text-white rounded px-2'>

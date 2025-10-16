@@ -114,19 +114,19 @@ main{
   max-width: 900px;
 }
 .btn-reservar{
-  background-color: #40eb40 !important;
+  background-color: #f1f1f1 !important;
 }
 
 .btn-reservar:hover{
-  background-color: #45c245 !important;
+  background-color: #40eb40 !important;
 }
 
 .btn-reservado{
-  background-color: #b4b4b4 !important;
+  background-color: #e79292 !important;
 }
 
 .btn-no-disponible{
-  background-color: #8f8e8e !important;
+  background-color: #965a5a !important;
 }
 
 .box-referencia{
@@ -155,4 +155,24 @@ main{
     border: 1px solid rgba(0, 0, 0, 0.3); 
     border-radius: 0.5rem;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4); 
+}
+
+.modal-text{
+  font-family: "Nunito", sans-serif !important;
+  color: #2C3E50 !important; 
+}
+
+.modal-icon{
+  color: #008500 !important;
+}
+
+.modal-titulo{
+  font-family: "Open Sans", sans-serif !important;
+  color: #dadada !important;
+}
+
+.custom-hover:hover {
+    background-color: #40eb40 !important;
+    border-color: #40eb40 !important;
+    color: white !important;
 }

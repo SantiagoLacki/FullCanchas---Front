@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router";
 import { leerReservas, obtenerCanchaPorId } from "../helpers/queries";
 import { useEffect, useState } from "react";
 
-const ReservaCancha = () => {
+const ReservaCancha = ({usuarioAdmin}) => {
     const [cancha, setCancha]=useState('')
     const [proximosDias, setProximosDias] = useState([]);
     const [listaReservas, setListaReservas]= useState([]);
@@ -74,7 +74,6 @@ const ReservaCancha = () => {
             }
             fecha.setDate(fecha.getDate() + 1);
         }
-
         setProximosDias(dias);
     };
 
@@ -93,8 +92,8 @@ const ReservaCancha = () => {
         <section className='container mainSection'>
             <div className="border rounded-2 py-1 px-4 my-4 shadow-lg bg">
                 <h4 className="mt-4 text-white fw-bolder">{cancha.nombre}</h4>
-                <p className="fw-light text-white">{cancha.tipoDeSuperficie}</p>
-                <Table responsive striped bordered hover >
+                <p className="fw-light text-white">Cancha de futbol 5 / {cancha.tipoDeSuperficie} / Con iluminación</p>
+                <Table responsive bordered hover >
                       <colgroup>
                         <col style={{ width: "10%" }} />
                         {proximosDias.map((_, index) => (
@@ -114,13 +113,13 @@ const ReservaCancha = () => {
                     </thead>
                     <tbody>
                         {turnos.map((turno, index) => (
-                            <ItemReserva key={index} turno={turno} dias={proximosDias} listaReservas={listaReservas} cancha={cancha}></ItemReserva>
+                            <ItemReserva key={index} turno={turno} dias={proximosDias} listaReservas={listaReservas} setListaReservas={setListaReservas} cancha={cancha} usuarioAdmin={usuarioAdmin}></ItemReserva>
                         ))}
                     </tbody>
                 </Table>
                     <div className="d-flex justify-content-end">
                         <div className="border rounded-1 btn-reservar box-referencia me-1">.</div>
-                        <p className="me-5">Reservar</p>
+                        <p className="me-5">Turno Disponible</p>
                         <div className="border rounded-1 btn-reservado box-referencia me-1">.</div>
                         <p >Ocupado</p>
                     </div>
