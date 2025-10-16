@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import ProtectorAdmin from "./components/routes/ProtectorAdmin";
 import FormularioReserva from "./components/pages/reserva/FormularioReserva";
 import PopupAd from './components/shared/Publicidad/Publicidad.jsx'; // Importar el componente
+import Productos from "./components/pages/Productos.jsx";
 
 function App() {
   const usuarioLogueado = JSON.parse(sessionStorage.getItem('userKey')) || {}
@@ -32,6 +33,7 @@ function App() {
         <PopupAd/>
         <Routes>
           <Route path="/" element={<Inicio></Inicio>}></Route>
+          <Route path="/productos" element={<Productos></Productos>}></Route>
           <Route path="/login" element={<Login setUsuarioAdmin={setUsuarioAdmin}></Login>}></Route>
           <Route path="/quienesSomos" element={<QuienesSomos></QuienesSomos>}></Route>
           <Route path="/registro" element={<Register></Register>}></Route>
