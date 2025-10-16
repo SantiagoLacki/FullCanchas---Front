@@ -113,7 +113,7 @@ const ReservaCancha = ({usuarioAdmin}) => {
                     </thead>
                     <tbody>
                         {turnos.map((turno, index) => (
-                            <ItemReserva key={index} turno={turno} dias={proximosDias} listaReservas={listaReservas} cancha={cancha} usuarioAdmin={usuarioAdmin}></ItemReserva>
+                            <ItemReserva key={index} turno={turno} dias={proximosDias} listaReservas={listaReservas} setListaReservas={setListaReservas} cancha={cancha} usuarioAdmin={usuarioAdmin}></ItemReserva>
                         ))}
                     </tbody>
                 </Table>

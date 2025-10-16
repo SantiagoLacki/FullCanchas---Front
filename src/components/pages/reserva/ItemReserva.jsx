@@ -2,11 +2,32 @@ import { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
+import { crearReserva, leerReservas } from "../helpers/queries";
 
-const ItemReserva = ({ turno, dias, listaReservas, cancha, usuarioAdmin}) => {
+const ItemReserva = ({ turno, dias, listaReservas, setListaReservas, cancha, usuarioAdmin}) => {
     const [show, setShow] = useState(false);
     const [reservaSeleccionada, setReservaSeleccionada] = useState(null);
-    const handleClose = () => setShow(false);
+    
+    const handleClose = async () => {
+        setShow(false);
+        setReservaSeleccionada(null);
+    }
+
+    const handleReservar = async () => {
+        if (!reservaSeleccionada) return;
+        const reserva = {idUsuario: usuarioAdmin.id, idCancha:cancha._id, dia: reservaSeleccionada.fechaISO, hora: reservaSeleccionada.horarioAmPm}
+        const respuesta = await crearReserva(reserva)
+        if(respuesta.status === 201){
+            Swal.fire({
+            title: "Reserva creada",
+            text: `Tu reserva para el ${reservaSeleccionada.fecha} a las ${reservaSeleccionada.horario} fue creada correctamente`,
+            icon: "success"
+            });}
+        const respuestaReservas = await leerReservas();
+        const reservasActualizadas = await respuestaReservas.json()
+        setListaReservas(reservasActualizadas)
+        handleClose();
+    }
     
      const handleShow = (dia) => {
         if(usuarioAdmin.rol === "user"){
@@ -152,7 +173,7 @@ const ItemReserva = ({ turno, dias, listaReservas, cancha, usuarioAdmin}) => {
                 <Button variant="danger" onClick={handleClose} className="w-25">
                     Cancelar
                 </Button>
-                <Button variant="warning" onClick={handleClose} className="w-25">
+                <Button variant="warning" onClick={handleReservar} className="w-25">
                     Reservar
                 </Button>
                 </Modal.Footer>

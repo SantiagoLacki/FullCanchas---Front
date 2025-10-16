@@ -24,7 +24,10 @@ const ItemUsuario = ({usuario, fila, setListaUsuarios, obtenerUsuarios}) => {
                 text: `El usuario ${usuario.nombreUsuario} fue eliminado correctamente`,
                 icon: "success",
             });
-            obtenerUsuarios()
+            const respuestaUsuarios = await leerUsuarios();
+            const usuariosActualizados = await respuestaUsuarios.json()
+            setListaProductos(usuariosActualizados)
+            setListaUsuarios(usuariosActualizados)
             }else{
                 Swal.fire({
                 title: "Ocurrio un error",
