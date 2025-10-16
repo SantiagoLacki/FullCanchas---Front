@@ -24,7 +24,7 @@ function App() {
   const [usuarioAdmin, setUsuarioAdmin] = useState(usuarioLogueado);
   const [listaProductos, setListaProductos] = useState([]);
   const [page, setPage] = useState(1);
-  const [limit] = useState(6);
+  const [limit, setLimit] = useState(6);
   const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
