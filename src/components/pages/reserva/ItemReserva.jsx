@@ -15,7 +15,8 @@ const ItemReserva = ({ turno, dias, listaReservas, setListaReservas, cancha, usu
 
     const handleReservar = async () => {
         if (!reservaSeleccionada) return;
-        const reserva = {idUsuario: usuarioAdmin.id, idCancha:cancha._id, dia: reservaSeleccionada.fechaISO, hora: reservaSeleccionada.horarioAmPm}
+        const fechaUTC = new Date(reservaSeleccionada.fechaISO + 'T00:00:00.000Z');
+        const reserva = {idUsuario: usuarioAdmin.id, idCancha:cancha._id, dia: fechaUTC.toISOString(), hora: reservaSeleccionada.horarioAmPm}
         const respuesta = await crearReserva(reserva)
         if(respuesta.status === 201){
             Swal.fire({

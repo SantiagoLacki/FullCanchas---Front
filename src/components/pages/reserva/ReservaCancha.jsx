@@ -92,7 +92,7 @@ const ReservaCancha = ({usuarioAdmin}) => {
         <section className='container mainSection'>
             <div className="border rounded-2 py-1 px-4 my-4 shadow-lg bg">
                 <h4 className="mt-4 text-white fw-bolder">{cancha.nombre}</h4>
-                <p className="fw-light text-white">{cancha.tipoDeSuperficie}</p>
+                <p className="fw-light text-white">Cancha de futbol 5 / {cancha.tipoDeSuperficie} / Con iluminación</p>
                 <Table responsive bordered hover >
                       <colgroup>
                         <col style={{ width: "10%" }} />
