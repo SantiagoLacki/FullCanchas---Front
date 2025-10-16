@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 
 const ReservaCancha = ({usuarioAdmin}) => {
     const [cancha, setCancha]=useState('')
-    console.log(usuarioAdmin)
     const [proximosDias, setProximosDias] = useState([]);
     const [listaReservas, setListaReservas]= useState([]);
     //const turnos = ["04:00 pm","05:00 pm", "06:00 pm","07:00 pm", "08:00 pm","09:00 pm", "10:00 pm","11:00 pm"]
@@ -75,7 +74,6 @@ const ReservaCancha = ({usuarioAdmin}) => {
             }
             fecha.setDate(fecha.getDate() + 1);
         }
-
         setProximosDias(dias);
     };
 
@@ -95,7 +93,7 @@ const ReservaCancha = ({usuarioAdmin}) => {
             <div className="border rounded-2 py-1 px-4 my-4 shadow-lg bg">
                 <h4 className="mt-4 text-white fw-bolder">{cancha.nombre}</h4>
                 <p className="fw-light text-white">{cancha.tipoDeSuperficie}</p>
-                <Table responsive striped bordered hover >
+                <Table responsive bordered hover >
                       <colgroup>
                         <col style={{ width: "10%" }} />
                         {proximosDias.map((_, index) => (
@@ -121,7 +119,7 @@ const ReservaCancha = ({usuarioAdmin}) => {
                 </Table>
                     <div className="d-flex justify-content-end">
                         <div className="border rounded-1 btn-reservar box-referencia me-1">.</div>
-                        <p className="me-5">Reservar</p>
+                        <p className="me-5">Turno Disponible</p>
                         <div className="border rounded-1 btn-reservado box-referencia me-1">.</div>
                         <p >Ocupado</p>
                     </div>

@@ -6,9 +6,9 @@ import Swal from "sweetalert2";
 const ItemReserva = ({ turno, dias, listaReservas, cancha, usuarioAdmin}) => {
     const [show, setShow] = useState(false);
     const [reservaSeleccionada, setReservaSeleccionada] = useState(null);
-     const handleClose = () => setShow(false);
-     console.log(usuarioAdmin.email)
-    const handleShow = (dia) => {
+    const handleClose = () => setShow(false);
+    
+     const handleShow = (dia) => {
         if(usuarioAdmin.rol === "user"){
             setReservaSeleccionada({
                 fecha: new Date(dia.fecha).toLocaleDateString('es-ES'),
@@ -20,7 +20,6 @@ const ItemReserva = ({ turno, dias, listaReservas, cancha, usuarioAdmin}) => {
                 precio: cancha?.precioPorHora || 0,
                 cliente: usuarioAdmin.email
             });
-            console.log(reservaSeleccionada.cliente)
             setShow(true);
         }else{
             Swal.fire({
@@ -96,12 +95,12 @@ const ItemReserva = ({ turno, dias, listaReservas, cancha, usuarioAdmin}) => {
                         claseCelda += 'btn-no-disponible';
                         contenido = null;
                     } else {
-                        claseCelda += 'btn-reservar';
+                        claseCelda += '';
                         contenido = (
                             <Button variant="outline-success"
-                                className="d-block border-0 w-100 h-100 text-decoration-none text-white py-3" 
+                                className="d-block border-0 w-100 h-100 text-decoration-none text-white py-3 custom-hover" 
                                 onClick={() => handleShow(dia)}
-                                style={{ cursor: 'pointer' }}
+                                
                             >   
                             </Button>
                         );
@@ -125,9 +124,9 @@ const ItemReserva = ({ turno, dias, listaReservas, cancha, usuarioAdmin}) => {
                    {reservaSeleccionada && (
                     <>
                     <div>
-                        <p className="text-end me-4 modal-text fs-6 mb-1"><i className="bi bi-person-circle fw-bold modal-icon me-1"></i>Cliente: <strong>{reservaSeleccionada.cliente}</strong> </p>
-                        <div className="border p-4 rounded-2 shadow mx-3 modal-text">
-                            <p className="fw-bold modal-icon">{reservaSeleccionada.nombreCancha}</p>
+                        <p className="text-end me-4 modal-text fs-6 mb-1 mt-2"><i className="bi bi-person-circle fw-bold modal-icon me-1"></i>Cliente: <strong>{reservaSeleccionada.cliente}</strong> </p>
+                        <div className="border p-4 rounded-2 shadow mx-3 mt-3 modal-text">
+                            <p className="fw-bold modal-icon fs-5">{reservaSeleccionada.nombreCancha}</p>
                             <hr />
                             <div className="d-flex  justify-content-between">
                                 <p><i className="bi bi-calendar-event me-2 fw-bold modal-icon"></i>Día:</p> 
@@ -145,17 +144,12 @@ const ItemReserva = ({ turno, dias, listaReservas, cancha, usuarioAdmin}) => {
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <div className="border p-4 rounded-2 shadow mx-3 my-3 modal-text">
-                         <Form></Form>   
-                        </div>
-                    </div> 
                     </> 
                     )}
-                    <p className="fw-light fs-6">Al hacer click en reservar declaras haber leido y aceptado los <Link>Terminos y Condiciones</Link> </p>
+                    <p className="ms-4 mt-3 fw-light fs-6">Al hacer click en reservar declaras haber leido y aceptado los <Link>Terminos y Condiciones</Link> </p>
                 </Modal.Body>
-                <Modal.Footer className="border-0 d-flex justify-content-between">
-                <Button variant="danger" onClick={handleClose} className="w-25 text-white">
+                <Modal.Footer className="border-0 d-flex justify-content-between mb-3">
+                <Button variant="danger" onClick={handleClose} className="w-25">
                     Cancelar
                 </Button>
                 <Button variant="warning" onClick={handleClose} className="w-25">
