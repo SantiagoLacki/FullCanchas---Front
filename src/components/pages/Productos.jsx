@@ -4,9 +4,8 @@ import CardProducto from "./producto/CardProducto.jsx";
 import "./Productos.css";
 
 function Productos({ listaProductos }) {
-  const productosPorPagina = 3;
+  const productosPorPagina = 4;
 
-  // estados independientes por categoría
   const [pageRemeras, setPageRemeras] = useState(1);
   const [pageBebidas, setPageBebidas] = useState(1);
   const [pageSnacks, setPageSnacks] = useState(1);

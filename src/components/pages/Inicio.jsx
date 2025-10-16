@@ -6,7 +6,6 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { leerCanchas } from "./helpers/queries";
 
-
 const Inicio = ({ listaProductos, page, totalPages }) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
