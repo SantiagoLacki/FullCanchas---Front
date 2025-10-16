@@ -4,7 +4,7 @@ import CardProducto from "./producto/CardProducto.jsx";
 import "./Productos.css";
 
 function Productos({ listaProductos }) {
-  const productosPorPagina = 4;
+  const productosPorPagina = 8;
 
   const [pageRemeras, setPageRemeras] = useState(1);
   const [pageBebidas, setPageBebidas] = useState(1);
