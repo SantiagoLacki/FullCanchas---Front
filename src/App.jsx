@@ -20,6 +20,7 @@ import Productos from "./components/pages/Productos.jsx";
 function App() {
   const usuarioLogueado = JSON.parse(sessionStorage.getItem("userKey")) || {};
   const [usuarioAdmin, setUsuarioAdmin] = useState(usuarioLogueado);
+  const [listaProductos, setListaProductos] = useState([]);
 
   useEffect(() => {
     sessionStorage.setItem("userKey", JSON.stringify(usuarioAdmin));
@@ -32,8 +33,8 @@ function App() {
         <main>
           <PopupAd />
           <Routes>
-            <Route path="/" element={<Inicio></Inicio>}></Route>
-            <Route path="/productos" element={<Productos></Productos>}></Route>
+            <Route path="/" element={<Inicio listaProductos={listaProductos} setListaProductos={setListaProductos}></Inicio>}></Route>
+            <Route path="/productos" element={<Productos listaProductos={listaProductos}></Productos>}></Route>
             <Route path="/login" element={<Login setUsuarioAdmin={setUsuarioAdmin}></Login>}></Route>
             <Route path="/quienesSomos" element={<QuienesSomos></QuienesSomos>}></Route>
             <Route path="/registro" element={<Register></Register>}></Route>

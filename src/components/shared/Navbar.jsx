@@ -21,7 +21,7 @@ function Menu({ usuarioAdmin, setUsuarioAdmin }) {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
             <Nav.Link as={Link} to={"/"} className="nav-link fw-bold text-white rounded px-2">
-              <i class="bi bi-house-fill fs-4 me-1"></i>Inicio
+              <i className="bi bi-house-fill fs-4 me-1"></i>Inicio
             </Nav.Link>
             <Nav.Link as={Link} to={"/productos"} className="nav-link fw-bold text-white rounded px-2">
               <i className="bi bi-bag-fill fs-4 me-1"></i>Catalogo

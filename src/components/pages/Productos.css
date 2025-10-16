@@ -1,0 +1,27 @@
+.productos-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+  font-family: Arial, sans-serif;
+}
+
+.categoria {
+  margin-bottom: 40px;
+}
+
+.categoria h2 {
+  font-size: 24px;
+  margin-bottom: 16px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 8px;
+}
+
+.productos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  min-height: 100px; /* visualmente separa el espacio aunque esté vacío */
+  background-color: #fafafa;
+  padding: 12px;
+  border-radius: 8px;
+}
