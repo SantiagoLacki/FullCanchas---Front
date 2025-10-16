@@ -1,27 +1,88 @@
-.productos-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 24px;
-  font-family: Arial, sans-serif;
+/* 🧩 CONTENEDOR GENERAL */
+section.container {
+  padding: 40px 20px;
 }
 
-.categoria {
+/* 💙 TÍTULO PRINCIPAL */
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #007bff;
+  text-shadow: rgba(0, 0, 0, 0.1) 2px 2px 4px;
   margin-bottom: 40px;
+  letter-spacing: 1px;
+  text-align: center;
 }
 
+/* 📦 CATEGORÍA */
+.categoria {
+  margin-bottom: 30px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 16px 12px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* 🔠 TÍTULO DE CATEGORÍA */
 .categoria h2 {
-  font-size: 24px;
-  margin-bottom: 16px;
-  border-bottom: 2px solid #eee;
-  padding-bottom: 8px;
+  font-size: 28px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #222;
+  position: relative;
 }
 
-.productos-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
-  min-height: 100px; /* visualmente separa el espacio aunque esté vacío */
-  background-color: #fafafa;
-  padding: 12px;
+.categoria h2::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: #007bff;
+  margin: 6px auto 0;
+  border-radius: 2px;
+}
+
+/* 🧱 GRID DE PRODUCTOS */
+.categoria .row {
+  border-radius: 12px;
+  padding: 16px;
+}
+
+/* 🛍️ PAGINACIÓN */
+.categoria .d-flex {
+  margin-top: 12px;
+}
+
+.categoria button {
+  font-weight: 600;
   border-radius: 8px;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.categoria button:hover {
+  background-color: #0056b3;
+}
+
+.categoria span {
+  font-size: 1rem;
+  font-weight: 500;
+  background: #007bff;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 8px;
+}
+
+/* 🧩 TARJETAS DE PRODUCTO */
+.card-producto {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.2s ease;
+  width: 100%;
+  max-width: 280px;
+}
+
+.card-producto:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
