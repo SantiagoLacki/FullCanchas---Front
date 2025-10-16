@@ -8,8 +8,26 @@ import { Button } from "react-bootstrap";
 function Menu({ usuarioAdmin, setUsuarioAdmin }) {
   const navegacion = useNavigate();
   const logout = () => {
-    setUsuarioAdmin({});
-    navegacion("/");
+    Swal.fire({
+      title: 'Cerrar Sesión',
+      html: `
+        <div class="text-center">
+          <p>¿Estás seguro de que quieres cerrar tu sesión?</p>
+        </div>
+      `,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#ca5118ff',
+      cancelButtonColor: '#dfb134ff',
+      confirmButtonText: '<i class="bi bi-box-arrow-right"></i> Cerrar Sesión',
+      cancelButtonText: '<i class="bi bi-x-circle"></i> Cancelar',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setUsuarioAdmin({});
+        navegacion("/");
+      }
+    });
   };
   return (
     <Navbar expand="lg" className="navbar ps-4 pe-5">
