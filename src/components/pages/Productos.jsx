@@ -7,30 +7,22 @@ function Productos({ listaProductos }) {
 
       <div className="categoria">
         <h2 className="text-black">Remeras</h2>
-        <div className="productos-grid">
-          
-        </div>
+        <div className="productos-grid"></div>
       </div>
 
       <div className="categoria">
         <h2 className="text-black">Bebidas</h2>
-        <div className="productos-grid">
-          
-        </div>
+        <div className="productos-grid"></div>
       </div>
 
       <div className="categoria">
         <h2 className="text-black">Snacks</h2>
-        <div className="productos-grid">
-          
-        </div>
+        <div className="productos-grid"></div>
       </div>
 
       <div className="categoria">
         <h2 className="text-black">Pelotas</h2>
-        <div className="productos-grid">
-          
-        </div>
+        <div className="productos-grid"></div>
       </div>
     </section>
   );
