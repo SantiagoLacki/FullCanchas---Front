@@ -7,11 +7,10 @@ import "aos/dist/aos.css";
 import { leerCanchas, leerProductosPaginados } from "./helpers/queries";
 import Swal from "sweetalert2";
 
-const Inicio = () => {
+const Inicio = ({ listaProductos, setListaProductos }) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
   const [listaCanchas, setListaCanchas] = useState([]);
-  const [listaProductos, setListaProductos] = useState([]);
   const [page, setPage] = useState(1);
   const [limit] = useState(6);
   const [totalPages, setTotalPages] = useState(1);
@@ -75,17 +74,12 @@ const Inicio = () => {
     <section className="mainSection">
       <div className="carousel-inner">
         <div className="carousel-item active">
-          <img
-            className="banner"
-            src="https://images.pexels.com/photos/274506/pexels-photo-274506.jpeg"
-            alt="fondo cancha"
-          />
+          <img className="banner" src="https://images.pexels.com/photos/274506/pexels-photo-274506.jpeg" alt="fondo cancha" />
           <div className="carousel-caption position-absolute end-50 bottom-0 text-start w-50 fadeInTexto">
             <h3 className="titulo-banner fs-1 mb-0 fw-light">Viví el futbol</h3>
             <h3 className="titulo-banner shadow-sm fw-bold">FULLCANCHAS</h3>
             <p className="fs-5 fw-light">
-              Aquí, la pasión por la pelota se enciende en cada partido. Tenemos
-              el espacio perfecto para vos. Conéctate, elige tu horario y
+              Aquí, la pasión por la pelota se enciende en cada partido. Tenemos el espacio perfecto para vos. Conéctate, elige tu horario y
               preparate para jugar.
             </p>
           </div>
@@ -93,9 +87,7 @@ const Inicio = () => {
       </div>
       <section>
         <div className="bg-shopp">
-          <h3 className="container text-white text-center fs-5 pt-3 mb-0">
-            Reservá tu cancha en 3 simples pasos
-          </h3>
+          <h3 className="container text-white text-center fs-5 pt-3 mb-0">Reservá tu cancha en 3 simples pasos</h3>
           <Container>
             <Row className=" pt-3 rounded-2 mb-4">
               <Col className="d-flex flex-column align-items-center mx-4">
@@ -114,9 +106,7 @@ const Inicio = () => {
                   src="https://res.cloudinary.com/duwi53e7z/image/upload/v1759154741/Horario2_satb47.png"
                   alt="icono elegí"
                 />
-                <p className="fw-bolder fs-5 text-white">
-                  Elegí el día y la hora
-                </p>
+                <p className="fw-bolder fs-5 text-white">Elegí el día y la hora</p>
               </Col>
               <Col className="d-flex flex-column align-items-center mx-4">
                 <p className="fw-bold fs-5 text-white">PASO 3</p>
@@ -132,9 +122,7 @@ const Inicio = () => {
         </div>
 
         <Container className="mt-2">
-          <h1 className="titulo-seccion text-center mt-5 mb-4 text-white">
-            Nuestras Canchas
-          </h1>
+          <h1 className="titulo-seccion text-center mt-5 mb-4 text-white">Nuestras Canchas</h1>
           <Row className="justify-content-center">
             {listaCanchas.map((cancha) => (
               <Col key={cancha._id} xl={3} lg={4} md={6}>
@@ -147,9 +135,7 @@ const Inicio = () => {
         </Container>
 
         <div className="bg-shopp px-5 py-3">
-          <h2 className="titulo-seccion text-center mt-3 mb-4 text-white fs-1">
-            Productos
-          </h2>
+          <h2 className="titulo-seccion text-center mt-3 mb-4 text-white fs-1">Productos</h2>
           <Container>
             <Row className="justify-content-center">
               {listaProductos.length > 0 ? (
@@ -159,28 +145,18 @@ const Inicio = () => {
                   </Col>
                 ))
               ) : (
-                <p className="text-center text-light">
-                  No hay productos disponibles
-                </p>
+                <p className="text-center text-light">No hay productos disponibles</p>
               )}
             </Row>
           </Container>
           <div className="d-flex justify-content-center align-items-center">
-            <Button
-              variant="secondary"
-              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-              disabled={page === 1}
-            >
+            <Button variant="secondary" onClick={() => setPage((prev) => Math.max(prev - 1, 1))} disabled={page === 1}>
               Anterior
             </Button>
             <span className="mx-3 text-light">
               Pagina {page} a {totalPages}
             </span>
-            <Button
-              variant="secondary"
-              onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
-              disabled={page === totalPages}
-            >
+            <Button variant="secondary" onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))} disabled={page === totalPages}>
               Siguiente
             </Button>
           </div>
@@ -201,19 +177,9 @@ const Inicio = () => {
         ))}
       </Row>
 
-      <Modal
-        show={showModal}
-        onHide={handleCloseModal}
-        size="lg"
-        centered
-        className="image-modal"
-      >
+      <Modal show={showModal} onHide={handleCloseModal} size="lg" centered className="image-modal">
         <Modal.Body className="text-center p-0">
-          <img
-            src={selectedImage}
-            alt="Vista ampliada"
-            className="modal-imagen-ampliada"
-          />
+          <img src={selectedImage} alt="Vista ampliada" className="modal-imagen-ampliada" />
         </Modal.Body>
       </Modal>
 
@@ -221,9 +187,7 @@ const Inicio = () => {
         <h3 className="titulo-seccion text-white">Donde estamos</h3>
         <div className="d-flex align-items-center">
           <i className="bi bi-geo-alt fs-2 text-white"></i>
-          <p className="fs-6 mx-2 mb-0 fw-light text-white">
-            Gral. José María Paz 1544, San Miguel de Tucumán, Tucumán
-          </p>
+          <p className="fs-6 mx-2 mb-0 fw-light text-white">Gral. José María Paz 1544, San Miguel de Tucumán, Tucumán</p>
         </div>
       </div>
       <div>
