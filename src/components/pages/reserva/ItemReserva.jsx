@@ -50,7 +50,8 @@ const ItemReserva = ({ turno, dias, listaReservas, setListaReservas, cancha, usu
         }
 
         const fechaUTC = new Date(reservaSeleccionada.fechaISO + 'T00:00:00.000Z');
-        const reserva = {idUsuario: usuarioAdmin.id, idCancha:cancha._id, dia: fechaUTC.toISOString(), hora: reservaSeleccionada.horarioAmPm}
+        const reserva = {idUsuario: usuarioAdmin.id, idCancha:cancha._id, dia: fechaUTC.toISOString(), hora: reservaSeleccionada.horario}
+        console.log(reserva)
         const respuesta = await crearReserva(reserva)
         if(respuesta.status === 201){
             localStorage.setItem('ultimaReserva', JSON.stringify({
@@ -106,8 +107,15 @@ const ItemReserva = ({ turno, dias, listaReservas, setListaReservas, cancha, usu
         const fechaDia = new Date(dia.fecha).toISOString().split('T')[0];
         const existeReserva = listaReservas.some(reserva => {
             const fechaReserva = new Date(reserva.dia).toISOString().split('T')[0];
+            const [horaMinuto, periodo] = turno.formatoAmPm.split(' ');
+            const [horas, minutos] = horaMinuto.split(':').map(Number);
+            let horas24 = horas;
+            if (periodo.toLowerCase() === 'pm' && horas !== 12) {
+                horas24 = horas + 12;
+            }
+            const turno24h = `${horas24.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}`;
             return fechaReserva === fechaDia && 
-                   reserva.hora === turno.formatoAmPm && 
+                   reserva.hora === turno24h && 
                    reserva.idCancha._id === cancha._id;
         });
         return existeReserva
