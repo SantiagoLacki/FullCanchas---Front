@@ -29,14 +29,14 @@ function Menu({ usuarioAdmin, setUsuarioAdmin }) {
             <Nav.Link as={Link} to={"/carrito"} className="nav-link fw-bold text-white rounded px-2">
               <i className="bi bi-cart-plus-fill fs-4 me-1"></i>Carrito
             </Nav.Link>
-            {usuarioAdmin.token && usuarioAdmin.rol === "staff" ? (
+            {usuarioAdmin.token && (usuarioAdmin.rol === "admin" || usuarioAdmin.rol === "staff")  ? (
               <>
                 <NavLink className="nav-link fw-bold text-white rounded px-2" to={"/administrador"}>
                   <i className="bi bi-person-vcard fs-4 me-1"></i>
                   Administrador
                 </NavLink>
                 <Button className="nav-link fw-bold text-white rounded px-2 btn-gold" onClick={logout}>
-                  Logout
+                  Cerrar Sesión
                 </Button>
               </>
             ) : usuarioAdmin.token && usuarioAdmin.rol === "user" ? (
