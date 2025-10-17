@@ -17,7 +17,7 @@ const Administrador = ({ usuarioAdmin }) => {
   const [listaCanchas, setListaCanchas] = useState([]);
   const [listaReservas, setListaReservas] = useState([]);
 
-  const [limit] = useState(4);
+  const [limit] = useState(10);
   const [pageUsuarios, setPageUsuarios] = useState(1);
   const [totalPagesUsuarios, setTotalPagesUsuarios] = useState(1);
   const [pageProductos, setPageProductos] = useState(1);
@@ -269,6 +269,8 @@ const Administrador = ({ usuarioAdmin }) => {
                       fila={(pageUsuarios - 1) * limit + indice + 1}
                       setListaUsuarios={setListaUsuarios}
                       obtenerUsuarios={obtenerUsuarios}
+                      pageUsuarios={pageUsuarios}
+                      limit={limit}
                     ></ItemUsuario>
                   ))}
                 </tbody>
@@ -370,6 +372,8 @@ const Administrador = ({ usuarioAdmin }) => {
                       producto={producto}
                       fila={(pageProductos - 1) * limit + indice + 1}
                       setListaProductos={setListaProductos}
+                      pageProductos={pageProductos}
+                      limit={limit}
                     ></ItemProducto>
                   ))}
                 </tbody>
@@ -442,6 +446,8 @@ const Administrador = ({ usuarioAdmin }) => {
                       reserva={reserva}
                       fila={(pageReservas - 1) * limit + indice + 1}
                       setListaReservas={setListaReservas}
+                      pageReservas={pageReservas}
+                      limit={limit}
                     ></ItemReservaAdmin>
                   ))}
                 </tbody>
