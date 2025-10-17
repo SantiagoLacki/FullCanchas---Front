@@ -41,6 +41,7 @@ const Inicio = ({ listaProductos, page, totalPages, setPage }) => {
 
   const obtenerCanchas = async () => {
     const respuesta = await leerCanchas();
+    
     if (respuesta.status === 200) {
       const datos = await respuesta.json();
       setListaCanchas(datos);
