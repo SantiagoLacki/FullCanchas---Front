@@ -22,12 +22,12 @@ const Inicio = ({ listaProductos, page, totalPages, setPage }) => {
   }, []);
 
   const galleryImages = [
-    "https://res.cloudinary.com/duwi53e7z/image/upload/v1760671045/pexels-photo-274422_k3xwts.jpg",
-    "https://res.cloudinary.com/duwi53e7z/image/upload/v1760671056/pexels-photo-1378425_ufiisy.jpg",
-    "https://res.cloudinary.com/duwi53e7z/image/upload/v1760671051/pexels-photo-774321_ihnbdf.jpg",
-    "https://res.cloudinary.com/duwi53e7z/image/upload/v1760671039/pexels-photo-114296_okrl35.jpg",
-    "https://res.cloudinary.com/duwi53e7z/image/upload/v1760671043/the-ball-stadion-football-the-pitch-46798_pbehrb.jpg",
-    "https://res.cloudinary.com/duwi53e7z/image/upload/v1760671042/pexels-photo-3621104_uvezzi.jpg",
+    "https://res.cloudinary.com/duwi53e7z/image/upload/c_pad,w_600/v1760671045/pexels-photo-274422_k3xwts.jpg",
+    "https://res.cloudinary.com/duwi53e7z/image/upload/c_pad,w_600/v1760671056/pexels-photo-1378425_ufiisy.jpg",
+    "https://res.cloudinary.com/duwi53e7z/image/upload/c_pad,w_600/v1760671051/pexels-photo-774321_ihnbdf.jpg",
+    "https://res.cloudinary.com/duwi53e7z/image/upload/c_pad,w_600/v1760671039/pexels-photo-114296_okrl35.jpg",
+    "https://res.cloudinary.com/duwi53e7z/image/upload/c_pad,w_600/v1760671043/the-ball-stadion-football-the-pitch-46798_pbehrb.jpg",
+    "https://res.cloudinary.com/duwi53e7z/image/upload/c_pad,w_600/v1760671042/pexels-photo-3621104_uvezzi.jpg",
   ];
 
   const handleImageClick = (imageUrl) => {
