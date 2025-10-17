@@ -266,7 +266,7 @@ const Administrador = ({ usuarioAdmin }) => {
                     <ItemUsuario
                       key={usuario._id}
                       usuario={usuario}
-                      fila={indice + 1}
+                      fila={(pageUsuarios - 1) * limit + indice + 1}
                       setListaUsuarios={setListaUsuarios}
                       obtenerUsuarios={obtenerUsuarios}
                     ></ItemUsuario>
@@ -368,7 +368,7 @@ const Administrador = ({ usuarioAdmin }) => {
                     <ItemProducto
                       key={producto._id}
                       producto={producto}
-                      fila={indice + 1}
+                      fila={(pageProductos - 1) * limit + indice + 1}
                       setListaProductos={setListaProductos}
                     ></ItemProducto>
                   ))}
@@ -440,7 +440,7 @@ const Administrador = ({ usuarioAdmin }) => {
                     <ItemReservaAdmin
                       key={reserva._id}
                       reserva={reserva}
-                      fila={indice + 1}
+                      fila={(pageReservas - 1) * limit + indice + 1}
                       setListaReservas={setListaReservas}
                     ></ItemReservaAdmin>
                   ))}
