@@ -1,30 +1,47 @@
 import { Container, Row, Col, Form, Button, Card, Image } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
+import { crearUsuario } from './helpers/queries';
+import Swal from 'sweetalert2';
 
 const Register = () => {
 
   const {
-        register,
-        handleSubmit,
-        reset,
-        formState: { errors },
-        setValue,
-        watch
-      } = useForm();
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+    setValue,
+    watch
+  } = useForm();
+  
+  const navegacion = useNavigate()
   
   const password = watch("password");
 
-      const onSubmit = (data) => {
-        console.log(data);
-        reset();
-    };
+  const onSubmit = async (usuario) => {
+    const respuesta = await crearUsuario(usuario)
+    if(respuesta.status === 201){
+      Swal.fire({
+      title: "Usuario creado",
+      text: `El usuario ${usuario.nombreUsuario} fue creado correctamente`,
+      icon: "success"
+      });
+    reset()
+    }else{
+      Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "No pudo crearse el usuario",
+    });
+    }
+    navegacion('/login')
+  };
 
   return (
     <Container className='d-flex align-items-center justify-content-center my-5'>
       <Card className='card-register shadow-lg border-0'>
         <Row className='g-0'>
-          
           <Col xs={12} md={6}>
             <Card.Body className='p-4 p-md-5'>
               <Card.Title as="h2" className='text-center mb-4'>Crear Cuenta</Card.Title>
