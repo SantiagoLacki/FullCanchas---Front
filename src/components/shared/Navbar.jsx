@@ -4,12 +4,31 @@ import Navbar from "react-bootstrap/Navbar";
 import { NavLink, Link, useNavigate } from "react-router";
 import FullCanchaLogo from "../../assets/logo-canchasfull-nav.png";
 import { Button } from "react-bootstrap";
+import Swal from "sweetalert2";
 
 function Menu({ usuarioAdmin, setUsuarioAdmin }) {
   const navegacion = useNavigate();
   const logout = () => {
-    setUsuarioAdmin({});
-    navegacion("/");
+    Swal.fire({
+      title: 'Cerrar Sesión',
+      html: `
+        <div class="text-center">
+          <p>¿Estás seguro de que quieres cerrar tu sesión?</p>
+        </div>
+      `,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#ca5118ff',
+      cancelButtonColor: '#dfb134ff',
+      confirmButtonText: '<i class="bi bi-box-arrow-right"></i> Cerrar Sesión',
+      cancelButtonText: '<i class="bi bi-x-circle"></i> Cancelar',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setUsuarioAdmin({});
+        navegacion("/");
+      }
+    });
   };
   return (
     <Navbar expand="lg" className="navbar ps-4 pe-5">
@@ -29,14 +48,14 @@ function Menu({ usuarioAdmin, setUsuarioAdmin }) {
             <Nav.Link as={Link} to={"/carrito"} className="nav-link fw-bold text-white rounded px-2">
               <i className="bi bi-cart-plus-fill fs-4 me-1"></i>Carrito
             </Nav.Link>
-            {usuarioAdmin.token && usuarioAdmin.rol === "staff" ? (
+            {usuarioAdmin.token && (usuarioAdmin.rol === "admin" || usuarioAdmin.rol === "staff")  ? (
               <>
                 <NavLink className="nav-link fw-bold text-white rounded px-2" to={"/administrador"}>
                   <i className="bi bi-person-vcard fs-4 me-1"></i>
                   Administrador
                 </NavLink>
                 <Button className="nav-link fw-bold text-white rounded px-2 btn-gold" onClick={logout}>
-                  Logout
+                  Cerrar Sesión
                 </Button>
               </>
             ) : usuarioAdmin.token && usuarioAdmin.rol === "user" ? (

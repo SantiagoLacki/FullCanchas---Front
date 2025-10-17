@@ -26,7 +26,7 @@ function Login({setUsuarioAdmin}) {
           icon: "success"
       });
       console.log(datosUsuario)
-      if(datosUsuario.rol === "staff"){
+      if(datosUsuario.rol === "staff" || datosUsuario.rol === "admin"){
         navegacion('/administrador')
       }else{
         navegacion('/')
