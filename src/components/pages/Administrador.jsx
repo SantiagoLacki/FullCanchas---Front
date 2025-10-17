@@ -46,7 +46,11 @@ const Administrador = ({ usuarioAdmin }) => {
         setTotalPagesUsuarios(datos.totalPages);
       }
     } else {
-      console.info("Ocurrio un error al buscar los usuarios");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Intenta esta operación en unos minutos",
+      });
     }
     //setMostrarSpinner(false)
   };
@@ -72,7 +76,11 @@ const Administrador = ({ usuarioAdmin }) => {
       const datos = await respuesta.json();
       setListaCanchas(datos);
     } else {
-      console.info("Ocurrio un error al buscar las canchas");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Intenta esta operación en unos minutos",
+      });
     }
     //setMostrarSpinner(false)
   };
@@ -84,7 +92,11 @@ const Administrador = ({ usuarioAdmin }) => {
       setListaReservas(datos);
       setTotalPagesReservas(datos.pages);
     } else {
-      console.info("Ocurrio un error al buscar las reservas");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Intenta esta operación en unos minutos",
+      });
     }
     //setMostrarSpinner(false)
   };
