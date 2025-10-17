@@ -36,6 +36,10 @@ const Administrador = ({ usuarioAdmin }) => {
     const respuesta = await leerUsuariosPaginados(pageUsuarios, limit);
     if (respuesta.status === 200) {
       const datos = await respuesta.json();
+      if (datos.usuario.length === 0 && pageUsuarios > 1) {
+        setPageUsuarios((prev) => prev - 1);
+        return;
+      }
       if (usuarioAdmin.rol === "admin") {
         const datosFiltrados = datos.usuario.filter((usuario) => usuario.rol === "user");
         setListaUsuarios(datosFiltrados);
