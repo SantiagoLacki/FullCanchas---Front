@@ -1,25 +1,34 @@
-import { Button, Card, Col} from "react-bootstrap";
-import { Link } from "react-router";
+import { Button, Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
-const CardCancha = ({cancha}) => {
-    return (
-        <Col md={6} lg={4} className="mb-5">
-            <Card style={{ width: '20rem' }} border="0" className="shadow-sm">
-            <Card.Img variant="top" className="imagenGaleria" src="https://images.pexels.com/photos/14767661/pexels-photo-14767661.png" />
-            <div className="position-absolute top-50 start-50 translate-middle text-center w-100 p-3 bg-dark bg-opacity-75">
-                <h5 className="text-white fw-bold mb-0 text-shadow">{cancha.nombre}</h5>
-            </div>
-            <Card.Body className="border-0">
-                <Card.Text className="fw-light text-center">
-                {cancha.tipoDeSuperficie}
-                </Card.Text>
-                <div className="text-center">
-                    <Link variant="primary" className="btn btn-gold text-white" to={'/reserva/'+cancha._id}>Reservar</Link>
-                </div>
-            </Card.Body>
-            </Card>
-        </Col>
-    );
+const CardCancha = ({ cancha }) => {
+  return (
+    <Card className="shadow-sm h-100 border border-1 border-black mb-3">
+      <div className="overflow-hidden">
+        <Card.Img variant="top" src={cancha.imagen} alt={cancha.nombre} className="imagenGaleria" />
+      </div>
+
+      <Card.Body className="border-0 d-flex flex-column justify-content-between">
+        <div>
+          <Card.Title className="fw-bold fs-5 mb-2 text-dark text-center">{cancha.nombre}</Card.Title>
+
+          <Card.Subtitle className="mb-2 text-muted text-center">{cancha.tipoDeSuperficie}</Card.Subtitle>
+
+          <Card.Text className="text-secondary small text-center">
+            {cancha.disponibilidad ? "Disponible para reserva" : "No disponible actualmente"}
+          </Card.Text>
+        </div>
+
+        <div className="text-center mt-3">
+          <Card.Text className="fw-bold fs-4 text-dark mb-3">${cancha.precioPorHora.toLocaleString("es-AR")}/hora</Card.Text>
+
+          <Button as={Link} to={`/reserva/${cancha._id}`} className="w-100 btn-gold text-white" disabled={!cancha.disponibilidad}>
+            {cancha.disponibilidad ? "Reservar" : "No disponible"}
+          </Button>
+        </div>
+      </Card.Body>
+    </Card>
+  );
 };
 
 export default CardCancha;

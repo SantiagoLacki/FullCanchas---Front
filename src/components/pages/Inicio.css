@@ -1,0 +1,13 @@
+.unionSuave1 {
+  height: 40px;
+  background: linear-gradient(to bottom, #8b99a8, #2c3e50);
+}
+.unionSuave2 {
+  height: 40px;
+  background: linear-gradient(to bottom, #2c3e50, #8b99a8);
+}
+.googleMap {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

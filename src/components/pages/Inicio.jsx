@@ -5,6 +5,7 @@ import CardProducto from "./producto/CardProducto";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { leerCanchas } from "./helpers/queries";
+import "./Inicio.css";
 
 const Inicio = ({ listaProductos, page, totalPages, setPage }) => {
   const [showModal, setShowModal] = useState(false);
@@ -41,7 +42,7 @@ const Inicio = ({ listaProductos, page, totalPages, setPage }) => {
 
   const obtenerCanchas = async () => {
     const respuesta = await leerCanchas();
-    
+
     if (respuesta.status === 200) {
       const datos = await respuesta.json();
       setListaCanchas(datos);
@@ -70,7 +71,7 @@ const Inicio = ({ listaProductos, page, totalPages, setPage }) => {
         <div className="bg-shopp">
           <h3 className="container text-white text-center fs-5 pt-3 mb-0">Reservá tu cancha en 3 simples pasos</h3>
           <Container>
-            <Row className=" pt-3 rounded-2 mb-4">
+            <Row className=" pt-3 rounded-2">
               <Col className="d-flex flex-column align-items-center mx-4">
                 <p className="fw-bold fs-5 text-white">PASO 1</p>
                 <img
@@ -101,27 +102,27 @@ const Inicio = ({ listaProductos, page, totalPages, setPage }) => {
             </Row>
           </Container>
         </div>
-
-        <Container className="mt-2">
-          <h1 className="titulo-seccion text-center mt-5 mb-4 text-white">Nuestras Canchas</h1>
-          <Row className="justify-content-center">
-            {listaCanchas.map((cancha) => (
-              <Col key={cancha._id} xl={3} lg={4} md={6}>
-                <div>
-                  <CardCancha cancha={cancha}></CardCancha>
-                </div>
-              </Col>
-            ))}
-          </Row>
-        </Container>
-
-        <div className="bg-shopp px-5 py-3">
-          <h2 className="titulo-seccion text-center mt-3 mb-4 text-white fs-1">Productos</h2>
+        <div className="unionSuave2"></div>
+        <div className="px-5 py-3">
           <Container>
+            <h1 className="titulo-seccion text-center mt-3 mb-4 text-white fs-1">Nuestras Canchas</h1>
+            <Row className="justify-content-center">
+              {listaCanchas.map((cancha) => (
+                <Col key={cancha._id} xl={3} lg={4} md={6} sm={12} className="mb-4">
+                  <CardCancha cancha={cancha} />
+                </Col>
+              ))}
+            </Row>
+          </Container>
+        </div>
+        <div className="unionSuave1"></div>
+        <div className="bg-shopp px-5 py-3">
+          <Container>
+            <h2 className="titulo-seccion text-center mt-3 mb-4 text-white fs-1">Productos</h2>
             <Row className="justify-content-center">
               {listaProductos.length > 0 ? (
                 listaProductos.map((producto) => (
-                  <Col key={producto._id} xl={3} lg={4} md={6} className="mb-4">
+                  <Col key={producto._id} xl={3} lg={4} md={6} sm={12} className="mb-4">
                     <CardProducto producto={producto} />
                   </Col>
                 ))
@@ -129,20 +130,21 @@ const Inicio = ({ listaProductos, page, totalPages, setPage }) => {
                 <p className="text-center text-light">No hay productos disponibles</p>
               )}
             </Row>
+
+            {totalPages > 1 && (
+              <div className="d-flex justify-content-center align-items-center">
+                <Button variant="primary" onClick={() => setPage((prev) => Math.max(prev - 1, 1))} disabled={page === 1}>
+                  Anterior
+                </Button>
+                <span className="mx-3 text-light">
+                  Página {page} de {totalPages}
+                </span>
+                <Button variant="primary" onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))} disabled={page === totalPages}>
+                  Siguiente
+                </Button>
+              </div>
+            )}
           </Container>
-          {totalPages > 1 && (
-            <div className="d-flex justify-content-center align-items-center">
-              <Button variant="primary" onClick={() => setPage((prev) => Math.max(prev - 1, 1))} disabled={page === 1}>
-                Anterior
-              </Button>
-              <span className="mx-3 text-light">
-                Pagina {page} a {totalPages}
-              </span>
-              <Button variant="primary" onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))} disabled={page === totalPages}>
-                Siguiente
-              </Button>
-            </div>
-          )}
         </div>
       </section>
 
@@ -166,8 +168,8 @@ const Inicio = ({ listaProductos, page, totalPages, setPage }) => {
         </Modal.Body>
       </Modal>
 
-      <div className="container mt-5 ">
-        <h3 className="titulo-seccion text-white">Donde estamos</h3>
+      <div className="container mt-5">
+        <h3 className="titulo-seccion text-white text-center">Donde estamos</h3>
         <div className="d-flex align-items-center">
           <i className="bi bi-geo-alt fs-2 text-white"></i>
           <p className="fs-6 mx-2 mb-0 fw-light text-white">Gral. José María Paz 1544, San Miguel de Tucumán, Tucumán</p>
@@ -176,9 +178,7 @@ const Inicio = ({ listaProductos, page, totalPages, setPage }) => {
       <div>
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13836.007794024403!2d-65.23461743173766!3d-26.82855015704578!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94225c6e58a8deab%3A0x889e3702172a7141!2sEl%20Abasto%20Futbol%205!5e0!3m2!1ses-419!2sar!4v1759030578317!5m2!1ses-419!2sar"
-          width="100%"
-          height="200"
-          style={{ border: 0 }}
+          className="googleMap"
           allowFullScreen
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
