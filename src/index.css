@@ -176,3 +176,37 @@ main{
     border-color: #40eb40 !important;
     color: white !important;
 }
+
+html {
+  overflow-x: hidden !important; 
+  overflow-y: auto !important;
+}
+
+body.modal-open {
+  overflow: hidden !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.custom-responsive-popup .modal-dialog {
+  max-height: 95vh !important; 
+  margin-top: 2.5vh !important;
+  margin-bottom: 2.5vh !important;
+  max-width: 450px !important; 
+  width: 90% !important; 
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.custom-responsive-popup .modal-body {
+  max-height: 80vh !important; 
+  overflow-y: auto !important; 
+}
+
+@media (max-width: 576px) {
+  .custom-responsive-popup .modal-dialog {
+    max-width: 98vw !important; 
+    width: 98vw !important;
+    margin: 0.5rem auto !important; 
+  }
+}
