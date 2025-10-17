@@ -22,12 +22,12 @@ const Inicio = ({ listaProductos, page, totalPages, setPage }) => {
   }, []);
 
   const galleryImages = [
-    "https://images.pexels.com/photos/274422/pexels-photo-274422.jpeg",
-    "https://images.pexels.com/photos/1378425/pexels-photo-1378425.jpeg",
-    "https://images.pexels.com/photos/774321/pexels-photo-774321.jpeg",
-    "https://images.pexels.com/photos/114296/pexels-photo-114296.jpeg",
-    "https://images.pexels.com/photos/46798/the-ball-stadion-football-the-pitch-46798.jpeg",
-    "https://images.pexels.com/photos/3621104/pexels-photo-3621104.jpeg",
+    "https://res.cloudinary.com/duwi53e7z/image/upload/v1760671045/pexels-photo-274422_k3xwts.jpg",
+    "https://res.cloudinary.com/duwi53e7z/image/upload/v1760671056/pexels-photo-1378425_ufiisy.jpg",
+    "https://res.cloudinary.com/duwi53e7z/image/upload/v1760671051/pexels-photo-774321_ihnbdf.jpg",
+    "https://res.cloudinary.com/duwi53e7z/image/upload/v1760671039/pexels-photo-114296_okrl35.jpg",
+    "https://res.cloudinary.com/duwi53e7z/image/upload/v1760671043/the-ball-stadion-football-the-pitch-46798_pbehrb.jpg",
+    "https://res.cloudinary.com/duwi53e7z/image/upload/v1760671042/pexels-photo-3621104_uvezzi.jpg",
   ];
 
   const handleImageClick = (imageUrl) => {
@@ -56,10 +56,10 @@ const Inicio = ({ listaProductos, page, totalPages, setPage }) => {
     <section className="mainSection">
       <div className="carousel-inner">
         <div className="carousel-item active">
-          <img className="banner" src="https://images.pexels.com/photos/274506/pexels-photo-274506.jpeg" alt="fondo cancha" />
+          <img className="banner" src="https://res.cloudinary.com/duwi53e7z/image/upload/v1760671426/pexels-photo-274506_km7e0r.jpg" alt="fondo cancha" />
           <div className="carousel-caption position-absolute end-50 bottom-0 text-start w-50 fadeInTexto">
             <h3 className="titulo-banner fs-1 mb-0 fw-light">Viví el futbol</h3>
-            <h3 className="titulo-banner shadow-sm fw-bold">FULLCANCHAS</h3>
+            <h3 className="titulo-banner shadow-sm fw-bold display-3 display-md-1">FULLCANCHAS</h3>
             <p className="fs-5 fw-light">
               Aquí, la pasión por la pelota se enciende en cada partido. Tenemos el espacio perfecto para vos. Conéctate, elige tu horario y
               preparate para jugar.
@@ -71,36 +71,36 @@ const Inicio = ({ listaProductos, page, totalPages, setPage }) => {
         <div className="bg-shopp">
           <h3 className="container text-white text-center fs-5 pt-3 mb-0">Reservá tu cancha en 3 simples pasos</h3>
           <Container>
-            <Row className=" pt-3 rounded-2">
-              <Col className="d-flex flex-column align-items-center mx-4">
-                <p className="fw-bold fs-5 text-white">PASO 1</p>
-                <img
-                  className="imagen-icono"
-                  src="https://res.cloudinary.com/duwi53e7z/image/upload/v1759154741/Elegir2_t2ykcl.png"
-                  alt="icono elegí"
-                />
-                <p className="fw-bolder fs-5 text-white">Elegí tu cancha</p>
-              </Col>
-              <Col className="d-flex flex-column align-items-center mx-4">
-                <p className="fw-bold fs-5 text-white">PASO 2</p>
-                <img
-                  className="imagen-icono"
-                  src="https://res.cloudinary.com/duwi53e7z/image/upload/v1759154741/Horario2_satb47.png"
-                  alt="icono elegí"
-                />
-                <p className="fw-bolder fs-5 text-white">Elegí el día y la hora</p>
-              </Col>
-              <Col className="d-flex flex-column align-items-center mx-4">
-                <p className="fw-bold fs-5 text-white">PASO 3</p>
-                <img
-                  className="imagen-icono"
-                  src="https://res.cloudinary.com/duwi53e7z/image/upload/v1759154741/Juga2_xw0qnm.png"
-                  alt="icono elegí"
-                />
-                <p className="fw-bolder fs-5 text-white">Vení a Jugar!!!</p>
-              </Col>
-            </Row>
-          </Container>
+    <Row className="pt-3 rounded-2 justify-content-center">
+        <Col xs={12} md={4} className="d-flex flex-column align-items-center mb-3 mb-md-0">
+            <p className="fw-bold fs-6 fs-md-5 text-white d-none d-md-block">PASO 1</p>
+            <img
+            className="imagen-icono"
+            src="https://res.cloudinary.com/duwi53e7z/image/upload/v1759154741/Elegir2_t2ykcl.png"
+            alt="icono elegí"
+            />
+            <p className="fw-bolder fs-6 fs-md-5 text-white text-center">Elegí tu cancha</p>
+        </Col>
+        <Col xs={12} md={4} className="d-flex flex-column align-items-center mb-3 mb-md-0">
+            <p className="fw-bold fs-6 fs-md-5 text-white d-none d-md-block">PASO 2</p>
+            <img
+            className="imagen-icono"
+            src="https://res.cloudinary.com/duwi53e7z/image/upload/v1759154741/Horario2_satb47.png"
+            alt="icono elegí"
+            />
+            <p className="fw-bolder fs-6 fs-md-5 text-white text-center">Elegí el día y la hora</p>
+        </Col>
+        <Col xs={12} md={4} className="d-flex flex-column align-items-center">
+            <p className="fw-bold fs-6 fs-md-5 text-white d-none d-md-block">PASO 3</p>
+            <img
+            className="imagen-icono"
+            src="https://res.cloudinary.com/duwi53e7z/image/upload/v1759154741/Juga2_xw0qnm.png"
+            alt="icono elegí"
+            />
+            <p className="fw-bolder fs-6 fs-md-5 text-white text-center">Vení a Jugar!!!</p>
+        </Col>
+    </Row>
+</Container>
         </div>
         <div className="unionSuave2"></div>
         <div className="px-5 py-3">
@@ -148,19 +148,21 @@ const Inicio = ({ listaProductos, page, totalPages, setPage }) => {
         </div>
       </section>
 
-      <Row className="mt-0">
-        {galleryImages.map((imageUrl, index) => (
-          <Col key={index} xs={12} md={4} lg={2} className="p-0">
-            <img
-              className="contenedor-imagen imagenGaleria w-100"
-              src={imageUrl}
-              alt={`imagen galería ${index + 1}`}
-              style={{ cursor: "pointer" }}
-              onClick={() => handleImageClick(imageUrl)}
-            />
-          </Col>
-        ))}
-      </Row>
+      <Container fluid>
+            <Row className="mt-0">
+                {galleryImages.map((imageUrl, index) => (
+                <Col key={index} xs={12} md={4} lg={2} className="p-0">
+                    <img
+                    className="contenedor-imagen imagenGaleria w-100"
+                    src={imageUrl}
+                    alt={`imagen galería ${index + 1}`}
+                    style={{ cursor: "pointer" }}
+                    onClick={() => handleImageClick(imageUrl)}
+                    />
+                </Col>
+                ))}
+            </Row>
+        </Container>
 
       <Modal show={showModal} onHide={handleCloseModal} size="lg" centered className="image-modal">
         <Modal.Body className="text-center p-0">
