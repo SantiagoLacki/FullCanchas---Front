@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useForm} from "react-hook-form";
 import { obtenerUsuarioPorId, editarUsuario, crearUsuario } from "../helpers/queries";
 
-const FormularioUsuario = ({titulo}) => {
+const FormularioUsuario = ({titulo, usuarioAdmin}) => {
     const {
       register,
       handleSubmit,
@@ -42,9 +42,10 @@ const FormularioUsuario = ({titulo}) => {
     }
 
     const onSubmit = async (usuario) =>{
-        console.log(usuario)
         if(titulo === 'Usuario Nuevo'){
-          const respuesta = await crearUsuario(usuario)
+            const rol = usuarioAdmin.rol === "staff" ? "admin" : "user";
+            const usuarioNuevo = {nombreUsuario: usuario.nombreUsuario, email: usuario.email, password:usuario.password, rol:rol}
+            const respuesta = await crearUsuario(usuarioNuevo)
             if(respuesta.status === 201){
               Swal.fire({
               title: "Usuario creado",
