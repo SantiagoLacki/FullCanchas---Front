@@ -61,7 +61,7 @@ function App() {
             <Route path="/registro" element={<Register></Register>}></Route>
             <Route path="/administrador" element={<ProtectorAdmin isAdmin={usuarioAdmin}></ProtectorAdmin>}>
               <Route index element={<Administrador usuarioAdmin={usuarioAdmin}></Administrador>}></Route>
-              <Route path="crearusuario" element={<FormularioUsuario titulo={"Usuario Nuevo"}></FormularioUsuario>}></Route>
+              <Route path="crearusuario" element={<FormularioUsuario titulo={"Usuario Nuevo"} usuarioAdmin={usuarioAdmin}></FormularioUsuario>}></Route>
               <Route path="editarusuario/:id" element={<FormularioUsuario titulo={"Modificar Usuario"}></FormularioUsuario>}></Route>
               <Route path="crearcancha" element={<FormularioCancha titulo={"Cancha Nueva"}></FormularioCancha>}></Route>
               <Route path="editarcancha/:id" element={<FormularioCancha titulo={"Modificar Cancha"}></FormularioCancha>}></Route>

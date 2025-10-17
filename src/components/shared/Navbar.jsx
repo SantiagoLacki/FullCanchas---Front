@@ -4,6 +4,7 @@ import Navbar from "react-bootstrap/Navbar";
 import { NavLink, Link, useNavigate } from "react-router";
 import FullCanchaLogo from "../../assets/logo-canchasfull-nav.png";
 import { Button } from "react-bootstrap";
+import Swal from "sweetalert2";
 
 function Menu({ usuarioAdmin, setUsuarioAdmin }) {
   const navegacion = useNavigate();
