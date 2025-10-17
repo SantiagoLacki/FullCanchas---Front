@@ -24,7 +24,7 @@ function App() {
   const [usuarioAdmin, setUsuarioAdmin] = useState(usuarioLogueado);
   const [listaProductos, setListaProductos] = useState([]);
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(6);
+  const [limit] = useState(6);
   const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
@@ -54,7 +54,10 @@ function App() {
         <main>
           <PopupAd />
           <Routes>
-            <Route path="/" element={<Inicio listaProductos={listaProductos} page={page} totalPages={totalPages}></Inicio>}></Route>
+            <Route
+              path="/"
+              element={<Inicio listaProductos={listaProductos} page={page} totalPages={totalPages} setPage={setPage}></Inicio>}
+            ></Route>
             <Route path="/productos" element={<Productos listaProductos={listaProductos}></Productos>}></Route>
             <Route path="/login" element={<Login setUsuarioAdmin={setUsuarioAdmin}></Login>}></Route>
             <Route path="/quienesSomos" element={<QuienesSomos></QuienesSomos>}></Route>

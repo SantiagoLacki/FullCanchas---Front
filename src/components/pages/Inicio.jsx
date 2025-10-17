@@ -6,7 +6,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { leerCanchas } from "./helpers/queries";
 
-const Inicio = ({ listaProductos, page, totalPages }) => {
+const Inicio = ({ listaProductos, page, totalPages, setPage }) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
   const [listaCanchas, setListaCanchas] = useState([]);
@@ -130,17 +130,19 @@ const Inicio = ({ listaProductos, page, totalPages }) => {
               )}
             </Row>
           </Container>
-          <div className="d-flex justify-content-center align-items-center">
-            <Button variant="secondary" onClick={() => setPage((prev) => Math.max(prev - 1, 1))} disabled={page === 1}>
-              Anterior
-            </Button>
-            <span className="mx-3 text-light">
-              Pagina {page} a {totalPages}
-            </span>
-            <Button variant="secondary" onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))} disabled={page === totalPages}>
-              Siguiente
-            </Button>
-          </div>
+          {totalPages > 1 && (
+            <div className="d-flex justify-content-center align-items-center">
+              <Button variant="primary" onClick={() => setPage((prev) => Math.max(prev - 1, 1))} disabled={page === 1}>
+                Anterior
+              </Button>
+              <span className="mx-3 text-light">
+                Pagina {page} a {totalPages}
+              </span>
+              <Button variant="primary" onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))} disabled={page === totalPages}>
+                Siguiente
+              </Button>
+            </div>
+          )}
         </div>
       </section>
 
