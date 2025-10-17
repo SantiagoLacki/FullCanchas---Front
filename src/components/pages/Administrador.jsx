@@ -267,10 +267,7 @@ const Administrador = ({ usuarioAdmin }) => {
                       key={usuario._id}
                       usuario={usuario}
                       fila={(pageUsuarios - 1) * limit + indice + 1}
-                      setListaUsuarios={setListaUsuarios}
                       obtenerUsuarios={obtenerUsuarios}
-                      pageUsuarios={pageUsuarios}
-                      limit={limit}
                     ></ItemUsuario>
                   ))}
                 </tbody>
