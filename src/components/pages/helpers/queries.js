@@ -90,9 +90,7 @@ export const borrarUsuarioPorId = async (id) => {
 
 export const leerUsuariosPaginados = async (page, limit) => {
   try {
-    const respuesta = await fetch(
-      `${urlUsuario}/paginacion?page=${page}&limit=${limit}`
-    );
+    const respuesta = await fetch(`${urlUsuario}/paginado?page=${page}&limit=${limit}`);
     return respuesta;
   } catch (error) {
     console.error(error);
@@ -171,9 +169,7 @@ export const borrarProductoPorId = async (id) => {
 
 export const leerProductosPaginados = async (page, limit) => {
   try {
-    const respuesta = await fetch(
-      `${urlProductos}/paginacion?page=${page}&limit=${limit}`
-    );
+    const respuesta = await fetch(`${urlProductos}/paginacion?page=${page}&limit=${limit}`);
     return respuesta;
   } catch (error) {
     console.error(error);
@@ -314,6 +310,16 @@ export const borrarReservaPorId = async (id) => {
         "x-token": JSON.parse(sessionStorage.getItem("userKey")).token,
       },
     });
+    return respuesta;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const leerReservasPaginadas = async (page, limit) => {
+  try {
+    const respuesta = await fetch(`${urlReservas}/paginacion?page=${page}&limit=${limit}`);
     return respuesta;
   } catch (error) {
     console.error(error);
