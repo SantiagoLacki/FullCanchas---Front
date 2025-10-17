@@ -17,7 +17,7 @@ const CardCancha = ({ cancha }) => {
           <Card.Subtitle className="mb-2 text-muted text-center">{cancha.tipoDeSuperficie}</Card.Subtitle>
 
           <Card.Text className="text-secondary small text-center">
-            {cancha.disponibilidad ? "Disponible para reserva" : "No disponible actualmente"}
+            {estaDisponible ? "Disponible para reserva" : "No disponible actualmente"}
           </Card.Text>
         </div>
 

@@ -170,9 +170,9 @@ const Inicio = ({ listaProductos, page, totalPages, setPage }) => {
         </Modal.Body>
       </Modal>
 
-      <div className="container mt-5">
-        <h3 className="titulo-seccion text-white text-center">Donde estamos</h3>
-        <div className="d-flex align-items-center">
+      <div className="container mt-5 text-center">
+        <h3 className="titulo-seccion text-white">Donde estamos</h3>
+        <div className="d-flex justify-content-center align-items-center mb-2">
           <i className="bi bi-geo-alt fs-2 text-white"></i>
           <p className="fs-6 mx-2 mb-0 fw-light text-white">Gral. José María Paz 1544, San Miguel de Tucumán, Tucumán</p>
         </div>
