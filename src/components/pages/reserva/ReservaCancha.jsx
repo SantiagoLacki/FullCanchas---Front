@@ -61,7 +61,6 @@ const ReservaCancha = ({usuarioAdmin}) => {
         let diasEncontrados = 0;
 
         while (diasEncontrados < 6) {
-            // Saltar sábados (6) y domingos (0)
             if (fecha.getDay() !== 0) {
                 dias.push({
                     nombre: diasSemana[fecha.getDay()],

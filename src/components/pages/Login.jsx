@@ -13,25 +13,20 @@ function Login({setUsuarioAdmin}) {
   const navegacion = useNavigate()
 
   const iniciarSesion= async (usuario)=>{
-    console.log(usuario)
     const respuesta = await login(usuario)
-    console.log(respuesta)
     if(respuesta.status === 200){
       const datosUsuario = await respuesta.json()
-      console.log(datosUsuario)
       setUsuarioAdmin(datosUsuario)
       Swal.fire({
           title: "Incio de sesión correcto",
           text: `Bienvenido ${datosUsuario.nombreUsuario}`,
           icon: "success"
       });
-      console.log(datosUsuario)
       if(datosUsuario.rol === "staff" || datosUsuario.rol === "admin"){
         navegacion('/administrador')
       }else{
         navegacion('/')
       }
-
     }else{        
       Swal.fire({
         title: "Error al iniciar sesion",

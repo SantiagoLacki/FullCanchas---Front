@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
-import { crearReserva, leerReservas, leerReservasPaginadas } from "../helpers/queries";
+import { crearReserva, leerReservas } from "../helpers/queries";
 
 const ItemReserva = ({ turno, dias, listaReservas, setListaReservas, cancha, usuarioAdmin, pageReservas, limit }) => {
   const [show, setShow] = useState(false);
@@ -18,8 +18,6 @@ const ItemReserva = ({ turno, dias, listaReservas, setListaReservas, cancha, usu
     const ultimaReservaStr = localStorage.getItem("ultimaReserva");
     if (ultimaReservaStr) {
       const ultimaReserva = JSON.parse(ultimaReservaStr);
-      console.log(ultimaReserva.cliente)
-      console.log(usuarioAdmin.id)
       if(ultimaReserva.cliente === usuarioAdmin._id){
           const tiempoTranscurrido = Date.now() - ultimaReserva.timestamp;
           const minutos = Math.floor(tiempoTranscurrido / 60000);
@@ -76,9 +74,9 @@ const ItemReserva = ({ turno, dias, listaReservas, setListaReservas, cancha, usu
         icon: "success",
       });
     }
-    const respuestaReservas = await leerReservasPaginadas(pageReservas, limit);
+    const respuestaReservas = await leerReservas();
     const reservasActualizadas = await respuestaReservas.json();
-    setListaReservas(reservasActualizadas.reservas);
+    setListaReservas(reservasActualizadas);
     handleClose();
   };
 
