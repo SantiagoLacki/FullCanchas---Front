@@ -72,8 +72,14 @@ const ItemReserva = ({ turno, dias, listaReservas, setListaReservas, cancha, usu
       );
       Swal.fire({
         title: "Reserva creada",
-        text: `Tu reserva para el ${reservaSeleccionada.fecha} a las ${reservaSeleccionada.horario} fue creada correctamente`,
+        html: `
+          <div class="text-start">
+            <p>Tu reserva para el <strong>${reservaSeleccionada.fecha}</strong> a las <strong>${reservaSeleccionada.horario}</strong> fue creada correctamente.</p>
+          </div>
+        `,
+        confirmButtonColor: "#28a745",
         icon: "success",
+        footer: '<div class="text-warning fw-bold">💰 Recuerda: Debes abonar la reserva en las instalaciones del complejo</div>',
       });
     }
     const respuestaReservas = await leerReservas();
