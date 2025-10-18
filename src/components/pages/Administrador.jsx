@@ -4,13 +4,14 @@ import ItemUsuario from "./usuario/ItemUsuario";
 import { useEffect, useState } from "react";
 import ItemCancha from "./cancha/ItemCancha";
 import ItemProducto from "./producto/ItemProducto";
-import { leerCanchas, leerProductosPaginados, leerReservas, leerReservasPaginadas, leerUsuariosPaginados } from "./helpers/queries";
+import { leerCanchas, leerProductos, leerProductosPaginados, leerReservas, leerReservasPaginadas, leerUsuarios, leerUsuariosPaginados } from "./helpers/queries";
 import ItemReservaAdmin from "./reserva/ItemReservaAdmin";
 import Swal from "sweetalert2";
 
 const Administrador = ({ usuarioAdmin }) => {
   const [activeSection, setActiveSection] = useState("usuarios");
-  const [terminoBusqueda, setTerminoBusqueda] = useState("");
+  const [terminoBusquedaUsuario, setTerminoBusquedaUsuario] = useState("");
+  const [terminoBusquedaProducto, setTerminoBusquedaProducto] = useState("");
   const [fechaBusqueda, setFechaBusqueda] = useState("");
 
   const [listaUsuarios, setListaUsuarios] = useState([]);
@@ -106,9 +107,42 @@ const Administrador = ({ usuarioAdmin }) => {
     //setMostrarSpinner(false)
   };
 
-  const handleBuscarChange = async (e) => {
-    setTerminoBusqueda(e.target.value);
-  };
+  const handleBuscarUsuario = async (e) => {
+    const termino = e.target.value;
+    setTerminoBusquedaUsuario(termino);
+    if(!termino){ 
+        obtenerUsuarios();
+    }else{
+        const respuesta = await leerUsuarios()
+        if(respuesta.status === 200){
+            const datos = await respuesta.json();
+            const usuariosResultado = datos || [];
+            const usuariosFiltrados = usuariosResultado.filter((usuario) =>
+                usuario.email.toLowerCase().includes(termino.toLowerCase())
+            );
+            setListaUsuarios(usuariosFiltrados);
+        }
+    }
+    };
+
+    const handleBuscarProducto = async (e) => {
+    const termino = e.target.value;
+    setTerminoBusquedaProducto(termino);
+    if(!termino){ 
+        obtenerProductos();
+    }else{
+        const respuesta = await leerProductos()
+        if(respuesta.status === 200){
+            const datos = await respuesta.json();
+            const productosResultado = datos || [];
+
+            const productosFiltrados = productosResultado.filter((producto) =>
+                producto.nombre.toLowerCase().includes(termino.toLowerCase())
+            );
+            setListaProductos(productosFiltrados);
+        }
+    }
+    };
 
   const handleFechaChange = async (e) => {
     const fechaSeleccionada = e.target.value;
@@ -119,9 +153,8 @@ const Administrador = ({ usuarioAdmin }) => {
         const arrayReservas = todasLasReservas.reservas || todasLasReservas;
         
         if (!fechaSeleccionada) {
-        // Cuando se limpia la búsqueda, volver a la paginación normal
-        setPageReservas(1); // ← Resetear a página 1
-        obtenerReservas(); // ← Cargar reservas paginadas
+        setPageReservas(1); 
+        obtenerReservas(); 
         } else {
         const reservasFiltradas = arrayReservas.filter((reserva) => {
             const fechaReserva = new Date(reserva.dia).toISOString().split("T")[0];
@@ -257,8 +290,8 @@ const Administrador = ({ usuarioAdmin }) => {
                             type="text"
                             placeholder="Buscar"
                             className=" mr-sm-2"
-                            onChange={handleFechaChange}
-                            value={terminoBusqueda}
+                            onChange={handleBuscarUsuario}
+                            value={terminoBusquedaUsuario}
                           />
                         </Col>
                       </Row>
@@ -357,8 +390,8 @@ const Administrador = ({ usuarioAdmin }) => {
                             type="text"
                             placeholder="Buscar"
                             className=" mr-sm-2"
-                            onChange={handleBuscarChange}
-                            value={terminoBusqueda}
+                            onChange={handleBuscarProducto}
+                            value={terminoBusquedaProducto}
                           />
                         </Col>
                       </Row>
