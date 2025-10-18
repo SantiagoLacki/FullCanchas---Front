@@ -1,0 +1,137 @@
+.quienes-somos-section {
+  background: linear-gradient(to bottom, #ffffff, #2C3E50);
+  color: #2C3E50; /* Gris oscuro */
+  padding-bottom: 80px;
+}
+
+.quienes-somos-section h2 {
+  font-weight: 800;
+  background: linear-gradient(to right, #008500, #5A9A00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 40px;
+}
+
+.info-card {
+  border: none;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(44, 62, 80, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* --- Asegura que todas las cards tengan la misma altura --- */
+.info-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.info-card .card-body {
+  flex-grow: 1; /* hace que el contenido crezca para ocupar el espacio */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* distribuye el contenido */
+}
+
+.info-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(44, 62, 80, 0.25);
+}
+
+.info-card img {
+  height: 350px;
+  object-fit: cover;
+}
+
+.info-card .card-body {
+  background-color: #ffffff;
+  padding: 25px;
+}
+
+.info-card .card-title {
+  color: #008500;
+  font-weight: bold;
+}
+
+.info-card .card-text {
+  color: #2C3E50;
+  font-size: 15px;
+}
+
+/* Bloque final (estado actual del emprendimiento) */
+.quienes-somos-section .text-center.mt-5 {
+  background: linear-gradient(to right, #008500, #5A9A00);
+  color: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Botón coherente con la paleta */
+.quienes-somos-btn {
+  background-color: #D4AC0D;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 25px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+}
+
+.quienes-somos-btn:hover {
+  background-color: #b68c0b;
+}
+
+/* ===============================
+   🌐 RESPONSIVE DESIGN
+================================ */
+
+/* Tablets (pantallas medianas) */
+@media (max-width: 992px) {
+  .info-card img {
+    height: 180px;
+  }
+
+  .info-card .card-body {
+    padding: 20px;
+  }
+
+  .quienes-somos-section h2 {
+    font-size: 28px;
+    text-align: center;
+  }
+
+  .quienes-somos-section .text-center.mt-5 {
+    padding: 30px 20px;
+  }
+}
+
+/* Celulares (pantallas pequeñas) */
+@media (max-width: 576px) {
+  .info-card {
+    margin-bottom: 20px;
+  }
+
+  .info-card img {
+    height: 160px;
+  }
+
+  .info-card .card-body {
+    padding: 18px;
+  }
+
+  .quienes-somos-section h2 {
+    font-size: 24px;
+  }
+
+  .quienes-somos-section .text-center.mt-5 {
+    padding: 25px 15px;
+  }
+
+  .quienes-somos-btn {
+    width: 100%;
+    padding: 14px;
+  }
+}
