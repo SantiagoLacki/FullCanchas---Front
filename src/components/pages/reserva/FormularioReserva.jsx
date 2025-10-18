@@ -91,7 +91,9 @@ const FormularioReserva = ({titulo}) => {
             });
             }
         }else{
+            console.log(reservaFechaUTC)
             const respuesta = await editarReserva(reservaFechaUTC, id)
+            console.log(respuesta.status)
             if(respuesta.status === 200){
                 Swal.fire({
                 title: "Reserva editada",
@@ -175,14 +177,14 @@ const FormularioReserva = ({titulo}) => {
                                 })}
                             >
                                 <option value="">Seleccione una opción</option>
-                                <option value="04:00 pm">16:00</option>
-                                <option value="05:00 pm">17:00</option>
-                                <option value="06:00 pm">18:00</option>
-                                <option value="07:00 pm">19:00</option>
-                                <option value="08:00 pm">20:00</option>
-                                <option value="09:00 pm">21:00</option>
-                                <option value="10:00 pm">22:00</option>
-                                <option value="11:00 pm">23:00</option>
+                                <option value="16:00">16:00</option>
+                                <option value="17:00">17:00</option>
+                                <option value="18:00">18:00</option>
+                                <option value="19:00">19:00</option>
+                                <option value="20:00">20:00</option>
+                                <option value="21:00">21:00</option>
+                                <option value="22:00">22:00</option>
+                                <option value="23:00">23:00</option>
                             </Form.Select>
                             <Form.Text className="text-danger">
                                 {errors.hora?.message}

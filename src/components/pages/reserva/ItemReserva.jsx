@@ -18,7 +18,9 @@ const ItemReserva = ({ turno, dias, listaReservas, setListaReservas, cancha, usu
     const ultimaReservaStr = localStorage.getItem("ultimaReserva");
     if (ultimaReservaStr) {
       const ultimaReserva = JSON.parse(ultimaReservaStr);
-      if(ultimaReserva.cliente === usuarioAdmin._id){
+      console.log(ultimaReserva.cliente)
+      console.log(usuarioAdmin.id)
+      if(ultimaReserva.cliente === usuarioAdmin.id){
           const tiempoTranscurrido = Date.now() - ultimaReserva.timestamp;
           const minutos = Math.floor(tiempoTranscurrido / 60000);
           const segundos = Math.floor((tiempoTranscurrido % 60000) / 1000);

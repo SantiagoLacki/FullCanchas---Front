@@ -186,7 +186,7 @@ const Administrador = ({ usuarioAdmin }) => {
         </div>
       ) : (
         <>
-          <Dropdown className="mt-5">
+          <Dropdown className="mt-2">
             <Dropdown.Toggle variant="gold" className="text-white btn-gold">
               {activeSection === "usuarios" && "Usuarios"}
               {activeSection === "canchas" && "Canchas"}
