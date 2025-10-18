@@ -109,24 +109,33 @@ const Administrador = ({ usuarioAdmin }) => {
   const handleBuscarChange = async (e) => {
     setTerminoBusqueda(e.target.value);
   };
+
   const handleFechaChange = async (e) => {
-    console.log("handle buscar");
     const fechaSeleccionada = e.target.value;
     setFechaBusqueda(fechaSeleccionada);
     const respuesta = await leerReservas();
     if (respuesta.status === 200) {
-      const todasLasReservas = await respuesta.json();
-      if (!fechaSeleccionada) {
-        setListaReservas(todasLasReservas);
-      } else {
-        const reservasFiltradas = todasLasReservas.filter((reserva) => {
-          const fechaReserva = new Date(reserva.dia).toISOString().split("T")[0];
-          return fechaReserva === fechaSeleccionada;
+        const todasLasReservas = await respuesta.json();
+        const arrayReservas = todasLasReservas.reservas || todasLasReservas;
+        
+        if (!fechaSeleccionada) {
+        // Cuando se limpia la búsqueda, volver a la paginación normal
+        setPageReservas(1); // ← Resetear a página 1
+        obtenerReservas(); // ← Cargar reservas paginadas
+        } else {
+        const reservasFiltradas = arrayReservas.filter((reserva) => {
+            const fechaReserva = new Date(reserva.dia).toISOString().split("T")[0];
+            return fechaReserva === fechaSeleccionada;
         });
-        setListaReservas(reservasFiltradas);
-      }
+
+        setListaReservas({
+            reservas: reservasFiltradas,
+            totalPages: 1,
+            page: 1
+            });
+        }
     }
-  };
+};
 
   return (
     <section className="container mainSection">
@@ -414,21 +423,35 @@ const Administrador = ({ usuarioAdmin }) => {
                     </div>
                   </Col>
                   <Col xs={12} md={6}>
-                    <Form>
-                      <Row className="justify-content-start justify-content-md-end">
-                        <Col xs="auto d-flex">
-                          <i className="bi bi-search fs-3 me-2 text-secondary"></i>
-                          <Form.Control
-                            type="date"
-                            placeholder="Buscar por cancha"
-                            className=" mr-sm-2"
-                            onChange={handleFechaChange}
-                            value={fechaBusqueda}
-                          />
-                        </Col>
-                      </Row>
-                    </Form>
-                  </Col>
+                        <Form>
+                            <Row className="justify-content-start justify-content-md-end">
+                            <Col xs="auto" className="d-flex align-items-center">
+                                <i className="bi bi-search fs-3 me-2 text-secondary"></i>
+                                <Form.Control
+                                type="date"
+                                placeholder="Buscar por fecha"
+                                className="mr-sm-2"
+                                onChange={handleFechaChange}
+                                value={fechaBusqueda}
+                                />
+                                <Button 
+                                    variant={fechaBusqueda ? "outline-danger" : "outline-secondary"}
+                                    className="border-0"
+                                    disabled={!fechaBusqueda}
+                                    onClick={() => {
+                                        setFechaBusqueda("");
+                                        setPageReservas(1);
+                                        obtenerReservas();
+                                    }}
+                                    title={fechaBusqueda ? "Limpiar búsqueda" : "Selecciona una fecha para limpiar"}
+                                    >
+                                    <i className="bi bi-x-circle"></i>
+                                </Button>
+                                
+                            </Col>
+                            </Row>
+                        </Form>
+                    </Col>
                 </Row>
               </div>
               <Table responsive striped bordered hover>
@@ -443,19 +466,27 @@ const Administrador = ({ usuarioAdmin }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {listaReservas.reservas.map((reserva, indice) => (
-                    <ItemReservaAdmin
-                      key={reserva._id}
-                      reserva={reserva}
-                      fila={(pageReservas - 1) * limit + indice + 1}
-                      setListaReservas={setListaReservas}
-                      pageReservas={pageReservas}
-                      limit={limit}
-                    ></ItemReservaAdmin>
-                  ))}
+                    {listaReservas.reservas && listaReservas.reservas.length > 0 ? (
+                    listaReservas.reservas.map((reserva, indice) => (
+                        <ItemReservaAdmin
+                        key={reserva._id}
+                        reserva={reserva}
+                        fila={(pageReservas - 1) * limit + indice + 1}
+                        setListaReservas={setListaReservas}
+                        pageReservas={pageReservas}
+                        limit={limit}
+                        ></ItemReservaAdmin>
+                    ))
+                    ) : (
+                    <tr>
+                        <td colSpan="6" className="text-center text-muted py-4">
+                        {fechaBusqueda ? "No se encontraron reservas para la fecha seleccionada" : "No hay reservas disponibles"}
+                        </td>
+                    </tr>
+                    )}
                 </tbody>
               </Table>
-              {totalPagesReservas > 1 && (
+              {!fechaBusqueda && totalPagesReservas > 1 && (
                 <div className="d-flex justify-content-center align-items-center mt-3">
                   <Button variant="primary" onClick={() => setPageReservas((prev) => Math.max(prev - 1, 1))} disabled={pageReservas === 1}>
                     Anterior
