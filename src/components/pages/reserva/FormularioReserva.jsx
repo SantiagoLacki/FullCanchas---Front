@@ -3,7 +3,7 @@ import Swal from 'sweetalert2'
 import { Link, useNavigate, useParams } from "react-router";
 import { useEffect, useState } from "react";
 import { useForm} from "react-hook-form";
-import { crearReserva, editarReserva, leerCanchas, leerUsuarios, obtenerReservaPorId } from "../helpers/queries";
+import { crearReserva, editarReserva, leerCanchas, leerReservas, leerUsuarios, obtenerReservaPorId } from "../helpers/queries";
 
 const FormularioReserva = ({titulo}) => {
     const {
@@ -18,10 +18,22 @@ const FormularioReserva = ({titulo}) => {
 
     const [usuarios, setUsuarios] = useState([]);
     const [canchas, setCanchas] = useState([]);
+    const [listaReservas, setListaReservas]= useState([]);
 
     useEffect(()=>{
           cargarFormulario();
+          obtenerReservas();
     },[])
+
+    const obtenerReservas = async () => {
+        const respuesta = await leerReservas();
+        if(respuesta.status === 200){
+            const datos = await respuesta.json()
+            setListaReservas(datos)
+        }else{
+        console.info('Ocurrio un error al buscar los usuarios')
+        }
+    }
 
     const cargarFormulario = async () => {
         const [respuestaUsuarios, respuestaCanchas] = await Promise.all([
@@ -37,10 +49,10 @@ const FormularioReserva = ({titulo}) => {
             const canchasBuscadas = await respuestaCanchas.json();
             setCanchas(canchasBuscadas);
         }
-        obtenerReserva()
+        obtenerReservaSeleccionada()
     }
 
-    const obtenerReserva = async()=>{
+    const obtenerReservaSeleccionada = async()=>{
         if(titulo === 'Modificar Reserva'){
             const respuesta = await obtenerReservaPorId(id)
             if(respuesta.status === 200){
@@ -61,11 +73,25 @@ const FormularioReserva = ({titulo}) => {
                     setValue('idCancha', reservaBuscada.idCancha?._id)
                     setValue('dia', fechaFormateada)
                     setValue('hora', reservaBuscada.hora)
-                    console.log(reservaBuscada.hora)
                 }
             }
         }
     }
+
+    const estaReservado = (fecha, horario, idCancha, reservaActualId = null) => {
+        const fechaDia = new Date(fecha).toISOString().split("T")[0];
+    
+        const existeReserva = listaReservas.some((reserva) => {
+        const fechaReserva = new Date(reserva.dia).toISOString().split("T")[0];
+        const mismaCancha = reserva.idCancha._id === idCancha;
+        const mismoHorario = reserva.hora === horario;
+        const noEsLaMismaReserva = reserva._id !== reservaActualId; 
+        
+        return fechaReserva === fechaDia && mismoHorario && mismaCancha && noEsLaMismaReserva;
+        });
+
+        return existeReserva;
+    };
 
     const onSubmit = async (reserva) =>{
         const fechaUTC = new Date(reserva.dia + 'T00:00:00.000Z');
@@ -91,14 +117,26 @@ const FormularioReserva = ({titulo}) => {
             });
             }
         }else{
-            const respuesta = await editarReserva(reservaFechaUTC, id)
-            if(respuesta.status === 200){
-                Swal.fire({
-                title: "Reserva editada",
-                text: `La reserva fue editada correctamente`,
-                icon: "success"
-            });
-            }
+            const turnoOcupado = estaReservado(reserva.dia, reserva.hora, reserva.idCancha, id);
+            if(!turnoOcupado){
+                const respuesta = await editarReserva(reservaFechaUTC, id)
+                if(respuesta.status === 200){
+                    Swal.fire({
+                    title: "Reserva editada",
+                    text: `La reserva fue editada correctamente`,
+                    icon: "success"
+                    });
+                }
+            }else{
+                await Swal.fire({
+                    title: "Turno Ocupado",
+                    text: "El turno seleccionado ya está reservado. Por favor, elige otro horario o dia.",
+                    icon: "warning",
+                    confirmButtonColor: "#3085d6",
+                    confirmButtonText: "Entendido"
+                    });
+                    return;
+            } 
         }
         navegacion('/administrador')
     }
@@ -175,14 +213,14 @@ const FormularioReserva = ({titulo}) => {
                                 })}
                             >
                                 <option value="">Seleccione una opción</option>
-                                <option value="04:00 pm">16:00</option>
-                                <option value="05:00 pm">17:00</option>
-                                <option value="06:00 pm">18:00</option>
-                                <option value="07:00 pm">19:00</option>
-                                <option value="08:00 pm">20:00</option>
-                                <option value="09:00 pm">21:00</option>
-                                <option value="10:00 pm">22:00</option>
-                                <option value="11:00 pm">23:00</option>
+                                <option value="16:00">16:00</option>
+                                <option value="17:00">17:00</option>
+                                <option value="18:00">18:00</option>
+                                <option value="19:00">19:00</option>
+                                <option value="20:00">20:00</option>
+                                <option value="21:00">21:00</option>
+                                <option value="22:00">22:00</option>
+                                <option value="23:00">23:00</option>
                             </Form.Select>
                             <Form.Text className="text-danger">
                                 {errors.hora?.message}

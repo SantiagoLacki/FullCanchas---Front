@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
-import { crearReserva, leerReservas, leerReservasPaginadas } from "../helpers/queries";
+import { crearReserva, leerReservas } from "../helpers/queries";
 
 const ItemReserva = ({ turno, dias, listaReservas, setListaReservas, cancha, usuarioAdmin, pageReservas, limit }) => {
   const [show, setShow] = useState(false);
@@ -16,45 +16,48 @@ const ItemReserva = ({ turno, dias, listaReservas, setListaReservas, cancha, usu
   const handleReservar = async () => {
     if (!reservaSeleccionada) return;
     const ultimaReservaStr = localStorage.getItem("ultimaReserva");
-
     if (ultimaReservaStr) {
       const ultimaReserva = JSON.parse(ultimaReservaStr);
-      const tiempoTranscurrido = Date.now() - ultimaReserva.timestamp;
-      const minutos = Math.floor(tiempoTranscurrido / 60000);
-      const segundos = Math.floor((tiempoTranscurrido % 60000) / 1000);
+      console.log(ultimaReserva.cliente)
+      console.log(usuarioAdmin.id)
+      if(ultimaReserva.cliente === usuarioAdmin.id){
+          const tiempoTranscurrido = Date.now() - ultimaReserva.timestamp;
+          const minutos = Math.floor(tiempoTranscurrido / 60000);
+          const segundos = Math.floor((tiempoTranscurrido % 60000) / 1000);
 
-      if (tiempoTranscurrido < 300000) {
-        const result = await Swal.fire({
-          title: "¿Otra reserva?",
-          html: `
-                        <div class="text-center">
-                            <p>Hiciste una reserva hace <strong>${minutos}:${segundos.toString().padStart(2, "0")}</strong> minutos</p>
-                            <p class="small text-muted"><strong>${ultimaReserva.cancha} - ${ultimaReserva.fecha} ${
-            ultimaReserva.hora
-          }</strong></p>
-                            <p>¿Quieres reservar otro turno?</p>
-                        </div>
-                    `,
-          icon: "info",
-          showCancelButton: true,
-          confirmButtonColor: "#28a745",
-          cancelButtonColor: "#ca5118ff",
-          confirmButtonText: "Sí, reservar",
-          cancelButtonText: "Cancelar",
-          footer:
-            "<small>💡 <strong>Recordá:</strong> Cada reserva debe ser abonada. Si acumulás reservas sin pago, podrías perder el acceso para hacer nuevas reservas.</small>",
-        });
+          if (tiempoTranscurrido < 300000) {
+            const result = await Swal.fire({
+              title: "¿Otra reserva?",
+              html: `
+                            <div class="text-center">
+                                <p>Hiciste una reserva hace <strong>${minutos}:${segundos.toString().padStart(2, "0")}</strong> minutos</p>
+                                <p class="small text-muted"><strong>${ultimaReserva.cancha} - ${ultimaReserva.fecha} ${
+                ultimaReserva.hora
+              }</strong></p>
+                                <p>¿Quieres reservar otro turno?</p>
+                            </div>
+                        `,
+              icon: "info",
+              showCancelButton: true,
+              confirmButtonColor: "#28a745",
+              cancelButtonColor: "#ca5118ff",
+              confirmButtonText: "Sí, reservar",
+              cancelButtonText: "Cancelar",
+              footer:
+                "<small>💡 <strong>Recordá:</strong> Cada reserva debe ser abonada. Si acumulás reservas sin pago, podrías perder el acceso para hacer nuevas reservas.</small>",
+            });
 
-        if (!result.isConfirmed) {
-          handleClose();
-          return;
-        }
+            if (!result.isConfirmed) {
+              handleClose();
+              return;
+            }
+          }
       }
+      
     }
 
     const fechaUTC = new Date(reservaSeleccionada.fechaISO + "T00:00:00.000Z");
     const reserva = { idUsuario: usuarioAdmin.id, idCancha: cancha._id, dia: fechaUTC.toISOString(), hora: reservaSeleccionada.horario };
-    console.log(reserva);
     const respuesta = await crearReserva(reserva);
     if (respuesta.status === 201) {
       localStorage.setItem(
@@ -64,17 +67,24 @@ const ItemReserva = ({ turno, dias, listaReservas, setListaReservas, cancha, usu
           cancha: reservaSeleccionada.nombreCancha,
           fecha: reservaSeleccionada.fecha,
           hora: reservaSeleccionada.horario,
+          cliente: usuarioAdmin.id,
         })
       );
       Swal.fire({
         title: "Reserva creada",
-        text: `Tu reserva para el ${reservaSeleccionada.fecha} a las ${reservaSeleccionada.horario} fue creada correctamente`,
+        html: `
+          <div class="text-start">
+            <p>Tu reserva para el <strong>${reservaSeleccionada.fecha}</strong> a las <strong>${reservaSeleccionada.horario}</strong> fue creada correctamente.</p>
+          </div>
+        `,
+        confirmButtonColor: "#28a745",
         icon: "success",
+        footer: '<div class="text-warning fw-bold">💰 Recuerda: Debes abonar la reserva en las instalaciones del complejo</div>',
       });
     }
-    const respuestaReservas = await leerReservasPaginadas(pageReservas, limit);
+    const respuestaReservas = await leerReservas();
     const reservasActualizadas = await respuestaReservas.json();
-    setListaReservas(reservasActualizadas.reservas);
+    setListaReservas(reservasActualizadas);
     handleClose();
   };
 
