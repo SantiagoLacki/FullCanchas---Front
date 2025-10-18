@@ -41,6 +41,7 @@ const ItemCancha = ({cancha, fila, setListaCanchas}) => {
             <td className="text-center align-middle fw-light">{fila}</td>
             <td className="align-middle fw-light">{cancha.nombre}</td>
             <td className="text-center align-middle fw-light">{cancha.precioPorHora}</td>
+            <td className="text-center align-middle fw-light">{cancha.disponibilidad === "true" ? (<p className="text-success fw-bold">Disponible</p>) : (<p className="text-danger fw-bold">No disponible</p>)}</td>
             <td className="text-center align-middle">
                 <img
                     src={cancha.imagen}
