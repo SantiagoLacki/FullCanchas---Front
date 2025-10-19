@@ -1,4 +1,5 @@
-import { Button, Card } from "react-bootstrap";
+import { Card } from "react-bootstrap";
+import { Link } from "react-router";
 
 const CardProducto = ({ producto }) => {
   return (
@@ -15,10 +16,14 @@ const CardProducto = ({ producto }) => {
             {producto.descripcion.length > 30 ? producto.descripcion.slice(0, 30) + "..." : producto.descripcion}
           </Card.Text>
         </div>
-
-        <div>
-          <Card.Text className="fw-bold fs-4 text-dark mt-2">${producto.precio.toLocaleString("es-AR")}</Card.Text>
-          <Button className="w-100" >Agregar al carrito</Button>
+        <Card.Text className="fw-bold fs-4 text-dark mt-2">${producto.precio.toLocaleString("es-AR")}</Card.Text>
+        <div className="d-flex gap-2">
+          <Link to={"/carrito"} className="btn btn-primary w-100">
+            Agregar al carrito
+          </Link>
+          <Link to={`/detalleproducto/${producto._id}`} className="btn btn-success w-100">
+            Ver detalle
+          </Link>
         </div>
       </Card.Body>
     </Card>
