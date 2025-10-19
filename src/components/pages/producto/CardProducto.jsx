@@ -18,7 +18,11 @@ const CardProducto = ({ producto, agregarAlCarrito }) => {
         </div>
         <Card.Text className="fw-bold fs-4 text-dark mt-2">${producto.precio.toLocaleString("es-AR")}</Card.Text>
         <div className="d-flex gap-2">
-          <Button className="w-100 d-flex justify-content-center align-items-center" onClick={() => agregarAlCarrito(producto)}>
+          <Button
+            type="button"
+            className="w-100 d-flex justify-content-center align-items-center"
+            onClick={() => agregarAlCarrito(producto)}
+          >
             Sumar al carrito
           </Button>
           <Link to={`/detalleproducto/${producto._id}`} className="btn btn-success w-100 d-flex justify-content-center align-items-center">

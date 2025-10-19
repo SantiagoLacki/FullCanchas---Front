@@ -30,18 +30,18 @@ function App() {
   const [page, setPage] = useState(1);
   const [limit] = useState(6);
   const [totalPages, setTotalPages] = useState(1);
-  const [carrito, setCarrito] = useState([]);
+
+  const carritoGuardado = JSON.parse(localStorage.getItem("carrito")) || [];
+  const [carrito, setCarrito] = useState(carritoGuardado);
 
   useEffect(() => {
     sessionStorage.setItem("userKey", JSON.stringify(usuarioAdmin));
-    localStorage.setItem("carrito", JSON.stringify(carrito));
     obtenerProductos();
-  }, [usuarioAdmin, page, carrito]);
+  }, [usuarioAdmin, page]);
 
   useEffect(() => {
-    const carritoGuardado = JSON.parse(localStorage.getItem("carrito")) || [];
-    setCarrito(carritoGuardado);
-  }, []);
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+  }, [carrito]);
 
   const obtenerProductos = async () => {
     const respuesta = await leerProductosPaginados(page, limit);
@@ -69,7 +69,7 @@ function App() {
           icon: "success",
           title: `Se agregó otra unidad de "${producto.nombre}"`,
           showConfirmButton: false,
-          timer: 1500,
+          timer: 2500,
           timerProgressBar: true,
         });
         return prevCarrito.map((p) => (p._id === producto._id ? { ...p, cantidad: p.cantidad + 1 } : p));
@@ -80,7 +80,7 @@ function App() {
           icon: "success",
           title: `"${producto.nombre}" agregado al carrito`,
           showConfirmButton: false,
-          timer: 1500,
+          timer: 2500,
           timerProgressBar: true,
         });
         return [...prevCarrito, { ...producto, cantidad: 1 }];
@@ -108,7 +108,7 @@ function App() {
         icon: "info",
         title: `"${productoEliminado.nombre}" disminuido en 1`,
         showConfirmButton: false,
-        timer: 1500,
+        timer: 2500,
         timerProgressBar: true,
       });
     }
