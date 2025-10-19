@@ -66,7 +66,7 @@ const Administrador = ({ usuarioAdmin }) => {
       }
 
       setListaUsuarios(datosFiltrados);
-      setTotalPagesUsuarios(1);
+      setTotalPagesUsuarios(Math.ceil(datosFiltrados.length / limit));
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -323,7 +323,7 @@ const Administrador = ({ usuarioAdmin }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {listaUsuarios.map((usuario, indice) => (
+                    {listaUsuarios.slice((pageUsuarios - 1) * limit, pageUsuarios * limit).map((usuario, indice) => (
                       <ItemUsuario
                         key={usuario._id}
                         usuario={usuario}
