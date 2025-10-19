@@ -7,7 +7,7 @@ import "aos/dist/aos.css";
 import { leerCanchas } from "./helpers/queries";
 import "./Inicio.css";
 
-const Inicio = ({ listaProductos, page, totalPages, setPage, agregarAlCarrito }) => {
+const Inicio = ({ usuarioAdmin, listaProductos, page, totalPages, setPage, agregarAlCarrito }) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
   const [listaCanchas, setListaCanchas] = useState([]);
@@ -126,7 +126,7 @@ const Inicio = ({ listaProductos, page, totalPages, setPage, agregarAlCarrito })
               {listaProductos.length > 0 ? (
                 listaProductos.map((producto) => (
                   <Col key={producto._id} xl={3} lg={4} md={6} sm={12} className="mb-4">
-                    <CardProducto producto={producto} agregarAlCarrito={agregarAlCarrito} />
+                    <CardProducto usuarioAdmin={usuarioAdmin} producto={producto} agregarAlCarrito={agregarAlCarrito} />
                   </Col>
                 ))
               ) : (

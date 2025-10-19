@@ -55,9 +55,9 @@ const Carrito = ({ carrito, eliminarDelCarrito }) => {
                 <span>Total a Pagar:</span>
                 <span>${carrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0).toLocaleString("es-AR")}</span>
               </div>
-              <Button variant="success" className="w-100 mt-3">
+              <Link to="/*" className="btn btn-outline-info w-100 mt-3">
                 Finalizar Compra
-              </Button>
+              </Link>
               <Link to="/productos" className="btn btn-outline-secondary w-100 mt-2">
                 Seguir Comprando
               </Link>
