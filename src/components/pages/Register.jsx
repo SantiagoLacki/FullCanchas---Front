@@ -47,9 +47,19 @@ const Register = () => {
                 <Card.Title as="h2" className="text-center mb-4">
                   Crear Cuenta
                 </Card.Title>
+                <Card.Text className="text-center mb-4">
+                  ¡Únete a nuestra comunidad y comienza a disfrutar de todos los beneficios!
+                </Card.Text>
+                <Card.Text className="text-center">
+                  <small className="text-muted mx-auto">
+                    Los campos con un (<span className="text-danger">*</span>) son OBLIGATORIOS.
+                  </small>
+                </Card.Text>
                 <Form onSubmit={handleSubmit(onSubmit)}>
                   <Form.Group className="mb-3" controlId="formUserName">
-                    <Form.Label className="fw-semibold">Nombre de Usuario</Form.Label>
+                    <Form.Label className="fw-semibold">
+                      Nombre de Usuario <span className="text-danger">*</span>
+                    </Form.Label>
                     <Form.Control
                       type="text"
                       placeholder="Usuario"
@@ -70,7 +80,9 @@ const Register = () => {
                   </Form.Group>
 
                   <Form.Group className="mb-3" controlId="formEmail">
-                    <Form.Label className="fw-semibold">Correo Electrónico</Form.Label>
+                    <Form.Label className="fw-semibold">
+                      Correo Electrónico <span className="text-danger">*</span>
+                    </Form.Label>
                     <Form.Control
                       type="text"
                       placeholder="nombre@dominio.com"
@@ -87,7 +99,9 @@ const Register = () => {
                   </Form.Group>
 
                   <Form.Group className="mb-3" controlId="formPassword">
-                    <Form.Label className="fw-semibold">Contraseña</Form.Label>
+                    <Form.Label className="fw-semibold">
+                      Contraseña <span className="text-danger">*</span>
+                    </Form.Label>
                     <Form.Control
                       type="password"
                       placeholder="Contraseña"
@@ -105,7 +119,9 @@ const Register = () => {
                   </Form.Group>
 
                   <Form.Group className="mb-4" controlId="formConfirmPassword">
-                    <Form.Label className="fw-semibold">Repetir Contraseña</Form.Label>
+                    <Form.Label className="fw-semibold">
+                      Repetir Contraseña <span className="text-danger">*</span>
+                    </Form.Label>
                     <Form.Control
                       type="password"
                       placeholder="Repetir Contraseña"
@@ -121,7 +137,9 @@ const Register = () => {
                   </Form.Group>
 
                   <Form.Group className="mb-4" controlId="tipoUsuario">
-                    <Form.Label className="fw-semibold">Tipo de Usuario</Form.Label>
+                    <Form.Label className="fw-semibold">
+                      Tipo de Usuario <span className="text-danger">*</span>
+                    </Form.Label>
                     <Form.Select
                       {...register("rol", {
                         required: "Debes seleccionar un tipo de usuario",
@@ -138,7 +156,9 @@ const Register = () => {
 
                   {["admin", "staff"].includes(watch("rol")) && (
                     <Form.Group className="mb-4" controlId="formClave">
-                      <Form.Label className="fw-semibold">Clave</Form.Label>
+                      <Form.Label className="fw-semibold">
+                        Clave <span className="text-danger">*</span>
+                      </Form.Label>
                       <Form.Control
                         type="password"
                         placeholder="Clave de acceso para roles especiales"
