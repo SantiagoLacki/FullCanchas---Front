@@ -6,6 +6,7 @@ import Error404 from "./components/pages/Error404";
 import Inicio from "./components/pages/Inicio";
 import Login from "./components/pages/Login";
 import QuienesSomos from "./components/pages/QuienesSomos";
+import PoliticasDePrivacidad from "./components/pages/PoliticasdePrivacidad.jsx";
 import Register from "./components/pages/Register";
 import FormularioUsuario from "./components/pages/usuario/FormularioUsuario";
 import FormularioCancha from "./components/pages/cancha/FormularioCancha";
@@ -61,6 +62,7 @@ function App() {
             <Route path="/productos" element={<Productos listaProductos={listaProductos}></Productos>}></Route>
             <Route path="/login" element={<Login setUsuarioAdmin={setUsuarioAdmin}></Login>}></Route>
             <Route path="/quienesSomos" element={<QuienesSomos></QuienesSomos>}></Route>
+            <Route path="/PoliticasDePrivacidad" element={<PoliticasDePrivacidad></PoliticasDePrivacidad>}></Route>
             <Route path="/registro" element={<Register></Register>}></Route>
             <Route path="/administrador" element={<ProtectorAdmin isAdmin={usuarioAdmin}></ProtectorAdmin>}>
               <Route
