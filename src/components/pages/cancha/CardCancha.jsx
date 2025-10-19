@@ -1,5 +1,5 @@
 import { Button, Card } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 const CardCancha = ({ cancha }) => {
   const estaDisponible = cancha.disponibilidad === "true";
