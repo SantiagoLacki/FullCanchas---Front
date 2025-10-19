@@ -69,7 +69,6 @@ const Inicio = ({ listaProductos, page, totalPages, setPage }) => {
       </div>
       <section>
         <div className="bg-shopp">
-          <h3 className="container text-white text-center fs-5 pt-3 mb-0">Reservá tu cancha en 3 simples pasos</h3>
           <Container>
     <Row className="pt-3 rounded-2 justify-content-center">
         <Col xs={12} md={4} className="d-flex flex-column align-items-center mb-3 mb-md-0">
@@ -103,9 +102,9 @@ const Inicio = ({ listaProductos, page, totalPages, setPage }) => {
 </Container>
         </div>
         <div className="unionSuave2"></div>
-        <div className="px-5 py-3">
+        <div className="px-5 py-5">
           <Container>
-            <h1 className="titulo-seccion text-center mt-3 mb-4 text-white fs-1">Nuestras Canchas</h1>
+            <h1 className="titulo-seccion text-white text-center mt-3 mb-5 text-white">Nuestras Canchas</h1>
             <Row className="justify-content-center">
               {listaCanchas.map((cancha) => (
                 <Col key={cancha._id} xl={3} lg={4} md={6} sm={12} className="mb-4">
@@ -116,9 +115,9 @@ const Inicio = ({ listaProductos, page, totalPages, setPage }) => {
           </Container>
         </div>
         <div className="unionSuave1"></div>
-        <div className="bg-shopp px-5 py-3">
+        <div className="bg-shopp px-5 py-5">
           <Container>
-            <h2 className="titulo-seccion text-center mt-3 mb-4 text-white fs-1">Productos</h2>
+            <h1 className="titulo-seccion text-white text-center mt-3 mb-5 text-white ">Productos</h1>
             <Row className="justify-content-center">
               {listaProductos.length > 0 ? (
                 listaProductos.map((producto) => (
@@ -170,17 +169,20 @@ const Inicio = ({ listaProductos, page, totalPages, setPage }) => {
         </Modal.Body>
       </Modal>
 
-      <div className="container mt-5 text-center">
-        <h3 className="titulo-seccion text-white">Donde estamos</h3>
-        <div className="d-flex justify-content-center align-items-center mb-2">
-          <i className="bi bi-geo-alt fs-2 text-white"></i>
-          <p className="fs-6 mx-2 mb-0 fw-light text-white">Gral. José María Paz 1544, San Miguel de Tucumán, Tucumán</p>
+      <div className=" bg-shopp pt-5 text-center">
+        <div className="container">
+          <h3 className="titulo-seccion text-white mb-0">¿Donde estamos?</h3>
+          <div className="d-flex justify-content-center align-items-center pb-4">
+            <i className="bi bi-geo-alt fs-2 text-white"></i>
+            <p className="fs-6 mx-2 mb-0 fw-light text-white ">Gral. José María Paz 1544, San Miguel de Tucumán, Tucumán</p>
+          </div>
         </div>
       </div>
       <div>
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13836.007794024403!2d-65.23461743173766!3d-26.82855015704578!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94225c6e58a8deab%3A0x889e3702172a7141!2sEl%20Abasto%20Futbol%205!5e0!3m2!1ses-419!2sar!4v1759030578317!5m2!1ses-419!2sar"
-          className="googleMap"
+          className=" googleMap" 
+          style={{ minHeight: '300px' }}
           allowFullScreen
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
