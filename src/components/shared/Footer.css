@@ -1,7 +1,4 @@
-/* Footer.css */
-/* ==========================
-  Ajuste para footer pegado abajo
-========================== */
+
 html, body, #root {
   height: 100%;
   margin: 0;
@@ -10,47 +7,41 @@ html, body, #root {
 }
 
 main {
-  flex: 1; /* ocupa todo el espacio disponible entre nav y footer */
+  flex: 1; 
 }
 
-/* Estilos generales del footer */
 .footer {
-  background: linear-gradient(to top, #008500, #5A9A00); /* fondo con degradado verde */
-  color: #ecf0f1; /* color del texto */
-  font-family: "Nunito", sans-serif; /* tipografía */
-  padding: 40px 20px; /* espacio interno */
+  background: linear-gradient(to top, #008500, #5A9A00); 
+  color: #ecf0f1; 
+  font-family: "Nunito", sans-serif; 
+  padding: 15px 30px; 
 }
 
-/* Sección superior del footer (logo centrado) */
 .footer-top {
   text-align: center;
   margin-bottom: 30px;
 }
 
-/* Logo del footer */
 .footer-logo {
   width: 200px;
 }
 
-/* Contenedor del medio con columnas */
 .footer-middle {
   display: flex;
-  justify-content: space-between; /* separación horizontal */
-  flex-wrap: wrap; /* que se acomode en pantallas chicas */
-  gap: 20px; /* espacio entre columnas */
+  justify-content: space-between; 
+  flex-wrap: wrap; 
+  gap: 20px; 
 }
 
-/* Cada columna del footer */
 .footer-col {
   flex: 1;
-  min-width: 220px; /* ancho mínimo por columna */
+  min-width: 220px; 
   display: flex;
-  flex-direction: column; /* apila el contenido */
-  align-items: center; /* centra horizontalmente */
-  gap: 10px; /* espacio entre elementos */
+  flex-direction: column; 
+  align-items: center; 
+  gap: 10px; 
 }
 
-/* Links de las diferentes secciones */
 .footer-left a,
 .footer-center a,
 .footer-right a {
@@ -59,7 +50,6 @@ main {
   font-size: 14px;
 }
 
-/* Efecto hover en los links */
 .footer-left a:hover,
 .footer-center a:hover,
 .footer-right a:hover {
@@ -67,61 +57,54 @@ main {
   text-decoration: underline;
 }
 
-/* Título de cada columna */
 .footer-title {
   font-size: 16px;
   font-weight: 700;
   margin-bottom: 10px;
 }
 
-/* Título de la sección de redes sociales */
 .footer-social-title {
   margin-top: 15px;
   font-weight: 600;
 }
 
-/* Contenedor de iconos sociales */
 .social-icons {
   display: flex;
-  gap: 15px; /* espacio entre iconos */
+  gap: 15px; 
 }
 
-/* Estilo de cada icono social */
 .social-icons a {
   color: #ecf0f1;
   font-size: 22px;
-  transition: color 0.3s ease; /* transición suave */
+  transition: color 0.3s ease; 
 }
 
-/* Efecto hover en iconos sociales */
 .social-icons a:hover {
   color: #2C3E50;
 }
 
-/* Contenedor de logos de sponsors */
 .sponsor-logos {
   display: flex;
   gap: 10px;
-  flex-wrap: wrap; /* permite que bajen de línea */
-  justify-content: center; /* centra los logos */
+  flex-wrap: wrap; 
+  justify-content: center; 
+  flex-direction: column;
+  align-items: center;
 }
 
-/* Estilo general para logos de sponsors */
 .sponsor-logos img {
-  width: 150px; /* tamaño uniforme */
+  width: 150px; 
   height: auto;
-  object-fit: contain; /* mantiene proporciones sin deformar */
-  margin: 10px; /* separación entre logos */
+  object-fit: contain;
+  margin: 10px; 
 }
 
-/* Excepción para el logo de Adidas (ajuste de tamaño) */
 .logo-adidas {
-  width: 100px; /* tamaño personalizado */
+  width: 100px; 
   height: auto; 
-  display: block; /* asegura que respete el tamaño */
+  display: block; 
 }
 
-/* Sección inferior del footer (derechos reservados, etc.) */
 .footer-bottom {
   text-align: center;
   margin-top: 30px;
