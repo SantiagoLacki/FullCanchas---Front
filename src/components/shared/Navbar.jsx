@@ -68,7 +68,7 @@ function Menu({ usuarioAdmin, setUsuarioAdmin }) {
                   <i className="bi bi-person-circle fs-4 me-2"></i>Iniciar Sesión
                 </Nav.Link>
                 <Nav.Link as={Link} to={"/registro"} className="nav-link fw-bold text-white rounded px-2">
-                  <i class="bi bi-person-plus fs-4 me-2"></i>Registro
+                  <i className="bi bi-person-plus fs-4 me-2"></i>Registro
                 </Nav.Link>
               </>
             )}

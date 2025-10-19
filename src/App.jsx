@@ -20,6 +20,7 @@ import PopupAd from "./components/shared/Publicidad/Publicidad.jsx"; // Importar
 import Productos from "./components/pages/Productos.jsx";
 import Swal from "sweetalert2";
 import { leerProductosPaginados } from "./components/pages/helpers/queries.js";
+import DetalleProductos from "./components/pages/DetalleProductos.jsx";
 
 function App() {
   const usuarioLogueado = JSON.parse(sessionStorage.getItem("userKey")) || {};
@@ -61,6 +62,7 @@ function App() {
               element={<Inicio listaProductos={listaProductos} page={page} totalPages={totalPages} setPage={setPage}></Inicio>}
             ></Route>
             <Route path="/productos" element={<Productos listaProductos={listaProductos}></Productos>}></Route>
+            <Route path="/detalleproducto/:id" element={<DetalleProductos></DetalleProductos>}></Route>
             <Route path="/login" element={<Login setUsuarioAdmin={setUsuarioAdmin}></Login>}></Route>
             <Route path="/quienesSomos" element={<QuienesSomos></QuienesSomos>}></Route>
             <Route path="/PoliticasDePrivacidad" element={<PoliticasDePrivacidad></PoliticasDePrivacidad>}></Route>
