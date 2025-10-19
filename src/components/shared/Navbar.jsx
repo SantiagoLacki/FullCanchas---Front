@@ -10,19 +10,19 @@ function Menu({ usuarioAdmin, setUsuarioAdmin }) {
   const navegacion = useNavigate();
   const logout = () => {
     Swal.fire({
-      title: 'Cerrar Sesión',
+      title: "Cerrar Sesión",
       html: `
         <div class="text-center">
           <p>¿Estás seguro de que quieres cerrar tu sesión?</p>
         </div>
       `,
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#ca5118ff',
-      cancelButtonColor: '#dfb134ff',
+      confirmButtonColor: "#ca5118ff",
+      cancelButtonColor: "#dfb134ff",
       confirmButtonText: '<i class="bi bi-box-arrow-right"></i> Cerrar Sesión',
       cancelButtonText: '<i class="bi bi-x-circle"></i> Cancelar',
-      reverseButtons: true
+      reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
         setUsuarioAdmin({});
@@ -48,7 +48,7 @@ function Menu({ usuarioAdmin, setUsuarioAdmin }) {
             <Nav.Link as={Link} to={"/carrito"} className="nav-link fw-bold text-white rounded px-2">
               <i className="bi bi-cart-plus-fill fs-4 me-1"></i>Carrito
             </Nav.Link>
-            {usuarioAdmin.token && (usuarioAdmin.rol === "admin" || usuarioAdmin.rol === "staff")  ? (
+            {usuarioAdmin.token && (usuarioAdmin.rol === "admin" || usuarioAdmin.rol === "staff") ? (
               <>
                 <NavLink className="nav-link fw-bold text-white rounded px-2" to={"/administrador"}>
                   <i className="bi bi-person-vcard fs-4 me-1"></i>
@@ -63,9 +63,14 @@ function Menu({ usuarioAdmin, setUsuarioAdmin }) {
                 Cerrar Sesión
               </Button>
             ) : (
-              <Nav.Link as={Link} to={"/login"} className="nav-link fw-bold text-white rounded px-2">
-                <i className="bi bi-person-circle fs-4 me-2"></i>Iniciar Sesión
-              </Nav.Link>
+              <>
+                <Nav.Link as={Link} to={"/login"} className="nav-link fw-bold text-white rounded px-2">
+                  <i className="bi bi-person-circle fs-4 me-2"></i>Iniciar Sesión
+                </Nav.Link>
+                <Nav.Link as={Link} to={"/registro"} className="nav-link fw-bold text-white rounded px-2">
+                  <i className="bi bi-person-plus fs-4 me-2"></i>Registro
+                </Nav.Link>
+              </>
             )}
           </Nav>
         </Navbar.Collapse>
