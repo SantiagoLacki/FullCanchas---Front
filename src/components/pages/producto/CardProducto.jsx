@@ -18,7 +18,7 @@ const CardProducto = ({ producto }) => {
 
         <div>
           <Card.Text className="fw-bold fs-4 text-dark mt-2">${producto.precio.toLocaleString("es-AR")}</Card.Text>
-          <Button className="w-100">Sumar al carrito</Button>
+          <Button className="w-100" >Agregar al carrito</Button>
         </div>
       </Card.Body>
     </Card>
