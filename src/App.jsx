@@ -16,11 +16,12 @@ import TerminosYCondiciones from "./components/pages/TerminosYCondiciones.jsx";
 import { useEffect, useState } from "react";
 import ProtectorAdmin from "./components/routes/ProtectorAdmin";
 import FormularioReserva from "./components/pages/reserva/FormularioReserva";
-import PopupAd from "./components/shared/Publicidad/Publicidad.jsx"; // Importar el componente
+import PopupAd from "./components/shared/Publicidad/Publicidad.jsx";
 import Productos from "./components/pages/Productos.jsx";
 import Swal from "sweetalert2";
 import { leerProductosPaginados } from "./components/pages/helpers/queries.js";
 import DetalleProductos from "./components/pages/DetalleProductos.jsx";
+import Carrito from "./components/pages/Carrito.jsx";
 
 function App() {
   const usuarioLogueado = JSON.parse(sessionStorage.getItem("userKey")) || {};
@@ -63,6 +64,7 @@ function App() {
             ></Route>
             <Route path="/productos" element={<Productos listaProductos={listaProductos}></Productos>}></Route>
             <Route path="/detalleproducto/:id" element={<DetalleProductos></DetalleProductos>}></Route>
+            <Route path="/carrito" element={<Carrito></Carrito>}></Route>
             <Route path="/login" element={<Login setUsuarioAdmin={setUsuarioAdmin}></Login>}></Route>
             <Route path="/quienesSomos" element={<QuienesSomos></QuienesSomos>}></Route>
             <Route path="/PoliticasDePrivacidad" element={<PoliticasDePrivacidad></PoliticasDePrivacidad>}></Route>
