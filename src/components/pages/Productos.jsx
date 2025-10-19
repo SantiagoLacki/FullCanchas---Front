@@ -59,13 +59,15 @@ function Productos({ listaProductos }) {
   };
 
   return (
-    <section className="container">
-      <h1 className="text-center text-primary">Productos por categoría</h1>
-      <Categoria nombre="Remeras" page={pageRemeras} setPage={setPageRemeras} />
-      <Categoria nombre="Bebidas" page={pageBebidas} setPage={setPageBebidas} />
-      <Categoria nombre="Snacks" page={pageSnacks} setPage={setPageSnacks} />
-      <Categoria nombre="Pelotas" page={pagePelotas} setPage={setPagePelotas} />
-    </section>
+    <div className="fono-gral">
+      <section className="container">
+        <h1 className="display-6 titulo-admin fw-bold text-center">Productos por categoría</h1>
+        <Categoria nombre="Remeras" page={pageRemeras} setPage={setPageRemeras} />
+        <Categoria nombre="Bebidas" page={pageBebidas} setPage={setPageBebidas} />
+        <Categoria nombre="Snacks" page={pageSnacks} setPage={setPageSnacks} />
+        <Categoria nombre="Pelotas" page={pagePelotas} setPage={setPagePelotas} />
+      </section>
+    </div>
   );
 }
 
