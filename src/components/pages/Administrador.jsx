@@ -171,7 +171,8 @@ const Administrador = ({ usuarioAdmin }) => {
 };
 
   return (
-    <section className="container mainSection">
+    <div className="fono-gral">
+<section className="container mainSection">
       {usuarioAdmin.rol === "staff" ? (
         <div className="border text-white rounded-2 py-3 px-4 my-4 shadow-lg">
           <div className="  align-items-center mt-2 mb-3">
@@ -268,12 +269,12 @@ const Administrador = ({ usuarioAdmin }) => {
             </Dropdown.Menu>
           </Dropdown>
           {activeSection === "usuarios" && (
-            <div className="border text-white rounded-2 py-3 px-4 my-4 shadow-lg">
+            <div className="border text-white rounded-2 py-3 px-4 my-4 shadow-lg bg-light">
               <div className="  align-items-center mt-2 mb-3">
                 <Row className="d-flex justify-content-between align-items-center mb-3">
                   <Col xs={12} md={6} className="mb-2 mb-md-0">
                     <div className="d-flex align-items-center">
-                      <h2 className="display-6 titulo-banner fw-bold text-white me-4">Usuarios</h2>
+                      <h2 className="display-6 titulo-admin fw-bold me-4">Usuarios</h2>
                       <div>
                         <Link className="btn btn-gold text-white" to={"/administrador/crearusuario"}>
                           <i className="bi bi-plus-circle"></i> Agregar
@@ -321,14 +322,14 @@ const Administrador = ({ usuarioAdmin }) => {
               </Table>
               {totalPagesUsuarios > 1 && (
                 <div className="d-flex justify-content-center align-items-center mt-3">
-                  <Button variant="primary" onClick={() => setPageUsuarios((prev) => Math.max(prev - 1, 1))} disabled={pageUsuarios === 1}>
+                  <Button variant="warning" onClick={() => setPageUsuarios((prev) => Math.max(prev - 1, 1))} disabled={pageUsuarios === 1}>
                     Anterior
                   </Button>
-                  <span className="mx-3 text-dark bg-primary px-2 py-2 rounded">
+                  <span className="mx-3 text-dark px-2 py-2 rounded">
                     Página {pageUsuarios} de {totalPagesUsuarios}
                   </span>
                   <Button
-                    variant="primary"
+                    variant="warning"
                     onClick={() => setPageUsuarios((prev) => Math.min(prev + 1, totalPagesUsuarios))}
                     disabled={pageUsuarios === totalPagesUsuarios}
                   >
@@ -339,9 +340,9 @@ const Administrador = ({ usuarioAdmin }) => {
             </div>
           )}
           {activeSection === "canchas" && (
-            <div className="border text-white rounded-2 py-3 px-4 my-4 shadow-lg">
+            <div className="border text-white rounded-2 py-3 px-4 my-4 shadow-lg bg-light">
               <div className="d-flex align-items-center mt-2 mb-3">
-                <h2 className="display-6 titulo-banner fw-bold text-white me-4">Canchas</h2>
+                <h2 className="display-6 titulo-admin fw-bold me-4">Canchas</h2>
                 <div>
                   <Link className="btn btn-gold text-white" to={"/administrador/crearcancha"}>
                     <i className="bi bi-plus-circle"></i> Agregar
@@ -368,12 +369,12 @@ const Administrador = ({ usuarioAdmin }) => {
             </div>
           )}
           {activeSection === "productos" && (
-            <div className="border text-white rounded-2 py-3 px-4 my-4 shadow-lg">
+            <div className="border text-white rounded-2 py-3 px-4 my-4 shadow-lg bg-light">
               <div className="  align-items-center mt-2 mb-3">
                 <Row className="d-flex justify-content-between align-items-center mb-3">
                   <Col xs={12} md={6} className="mb-2 mb-md-0">
                     <div className="d-flex align-items-center">
-                      <h2 className="display-6 titulo-banner fw-bold text-white me-4">Productos</h2>
+                      <h2 className="display-6 titulo-admin fw-bold  me-4">Productos</h2>
                       <div>
                         <Link className="btn btn-gold text-white" to={"/administrador/crearproducto"}>
                           <i className="bi bi-plus-circle"></i> Agregar
@@ -426,17 +427,17 @@ const Administrador = ({ usuarioAdmin }) => {
               {totalPagesProductos > 1 && (
                 <div className="d-flex justify-content-center align-items-center mt-3">
                   <Button
-                    variant="primary"
+                    variant="warning"
                     onClick={() => setPageProductos((prev) => Math.max(prev - 1, 1))}
                     disabled={pageProductos === 1}
                   >
                     Anterior
                   </Button>
-                  <span className="mx-3 text-dark bg-primary px-2 py-2 rounded">
+                  <span className="mx-3 text-dark  px-2 py-2 rounded">
                     Página {pageProductos} de {totalPagesProductos}
                   </span>
                   <Button
-                    variant="primary"
+                    variant="warning"
                     onClick={() => setPageProductos((prev) => Math.min(prev + 1, totalPagesProductos))}
                     disabled={pageProductos === totalPagesProductos}
                   >
@@ -447,12 +448,12 @@ const Administrador = ({ usuarioAdmin }) => {
             </div>
           )}
           {activeSection === "reservas" && (
-            <div className="border text-white rounded-2 py-3 px-4 my-4 shadow-lg">
+            <div className="border text-white rounded-2 py-3 px-4 my-4 shadow-lg bg-light">
               <div className="  align-items-center mt-2 mb-3">
                 <Row className="d-flex justify-content-between align-items-center mb-3">
                   <Col xs={12} md={6} className="mb-2 mb-md-0">
                     <div className="d-flex align-items-center">
-                      <h2 className="display-6 titulo-banner fw-bold text-white me-4">Reservas</h2>
+                      <h2 className="display-6 titulo-admin fw-bold me-4">Reservas</h2>
                     </div>
                   </Col>
                   <Col xs={12} md={6}>
@@ -521,14 +522,14 @@ const Administrador = ({ usuarioAdmin }) => {
               </Table>
               {!fechaBusqueda && totalPagesReservas > 1 && (
                 <div className="d-flex justify-content-center align-items-center mt-3">
-                  <Button variant="primary" onClick={() => setPageReservas((prev) => Math.max(prev - 1, 1))} disabled={pageReservas === 1}>
+                  <Button variant="warning" onClick={() => setPageReservas((prev) => Math.max(prev - 1, 1))} disabled={pageReservas === 1}>
                     Anterior
                   </Button>
-                  <span className="mx-3 text-dark bg-primary px-2 py-2 rounded">
+                  <span className="mx-3 text-dark px-2 py-2 rounded">
                     Página {pageReservas} de {totalPagesReservas}
                   </span>
                   <Button
-                    variant="primary"
+                    variant="warning"
                     onClick={() => setPageReservas((prev) => Math.min(prev + 1, totalPagesReservas))}
                     disabled={pageReservas === totalPagesReservas}
                   >
@@ -541,6 +542,7 @@ const Administrador = ({ usuarioAdmin }) => {
         </>
       )}
     </section>
+    </div>
   );
 };
 

@@ -77,7 +77,8 @@ const ReservaCancha = ({usuarioAdmin}) => {
     };
 
     return (
-        <>
+        <section className="fono-gral">  
+
         <div className="position-relative">
             <img
                 className="banner-titulo w-100"
@@ -89,9 +90,9 @@ const ReservaCancha = ({usuarioAdmin}) => {
             </div>
         </div>
         <section className='container mainSection'>
-            <div className="border rounded-2 py-1 px-4 my-4 shadow-lg bg">
-                <h4 className="mt-4 text-white fw-bolder">{cancha.nombre}</h4>
-                <p className="fw-light text-white">Cancha de futbol 5 / {cancha.tipoDeSuperficie} / Con iluminación</p>
+            <div className="border rounded-2 py-1 px-4 mb-4 shadow-lg bg bg-light">
+                <h4 className="mt-4 fw-bolder">{cancha.nombre}</h4>
+                <p className="fw-light ">Cancha de futbol 5 / {cancha.tipoDeSuperficie} / Con iluminación</p>
                 <Table responsive bordered hover >
                       <colgroup>
                         <col style={{ width: "10%" }} />
@@ -118,13 +119,13 @@ const ReservaCancha = ({usuarioAdmin}) => {
                 </Table>
                     <div className="d-flex justify-content-end">
                         <div className="border rounded-1 btn-reservar box-referencia me-1">.</div>
-                        <p className="me-5">Turno Disponible</p>
+                        <p className="me-5 ">Turno Disponible</p>
                         <div className="border rounded-1 btn-reservado box-referencia me-1">.</div>
                         <p >Ocupado</p>
                     </div>
             </div>
         </section>
-        </>
+        </section>
     );
 };
 

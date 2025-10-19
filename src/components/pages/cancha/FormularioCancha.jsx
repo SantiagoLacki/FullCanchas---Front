@@ -79,19 +79,20 @@ const FormularioCancha = ({titulo}) => {
     }
 
     return (
-        <div>
-            <div className="text-center mt-3">
+        <div className="fono-gral">
+            <div className="text-center pt-3">
                 <img
                     className="imagen-icono"
-                    src="https://res.cloudinary.com/duwi53e7z/image/upload/v1759706583/cancha_itfl2j.png"
+                    src="https://res.cloudinary.com/duwi53e7z/image/upload/v1760824225/cancha2_r5glah.png"
                     alt="icono cancha"
                 />
             </div>
-            <section className="container mainSection border text-white rounded-2 py-1 px-4 my-4 shadow-lg ">
-                <h1 className="display-6 titulo-banner fw-bold text-center me-4 mt-2">{titulo}</h1>
+            <section className="container">
+                <div className="border rounded-4 py-1 px-4 mb-4 shadow-lg bg-light">
+                <h1 className="display-6 titulo-admin fw-bold text-center me-4 mt-2">{titulo}</h1>
                 <div className="d-flex justify-content-center">
                     <Form className="my-4 w-75" onSubmit={handleSubmit(onSubmit)}>
-                        <Form.Group className="mb-4 d-flex align-items-center" controlId="formNombreCancha">
+                        <Form.Group className="mb-4" controlId="formNombreCancha">
                             <Form.Label className="me-2">Nombre:</Form.Label>
                             <Form.Control
                                 type="text"
@@ -115,7 +116,7 @@ const FormularioCancha = ({titulo}) => {
                             </Form.Text>
                         </Form.Group>
 
-                        <Form.Group className="mb-4 d-flex align-items-center" controlId="formPrecio">
+                        <Form.Group className="mb-4" controlId="formPrecio">
                             <Form.Label className="me-2">Precio: </Form.Label>
                             <Form.Control
                                 type="number"
@@ -139,7 +140,7 @@ const FormularioCancha = ({titulo}) => {
                             </Form.Text>
                         </Form.Group>
 
-                        <Form.Group className="mb-4 d-flex align-items-center" controlId="formImagen">
+                        <Form.Group className="mb-4" controlId="formImagen">
                             <Form.Label>Imagen URL:</Form.Label>
                             <Form.Control
                                 type="text"
@@ -159,7 +160,7 @@ const FormularioCancha = ({titulo}) => {
                             </Form.Text>
                         </Form.Group>
 
-                        <Form.Group className="mb-4 d-flex align-items-center">
+                        <Form.Group className="mb-4">
                             <Form.Label>Tipo de Superficie: </Form.Label>
                             <Form.Select 
                             {...register('tipoDeSuperficie', {
@@ -188,7 +189,7 @@ const FormularioCancha = ({titulo}) => {
                                     className="fs-5"
                                 />
                             </div>
-                            <Form.Text className="text-white">
+                            <Form.Text>
                                 La cancha estará disponible para reservas cuando esté activada
                             </Form.Text>
                         </Form.Group>
@@ -206,6 +207,7 @@ const FormularioCancha = ({titulo}) => {
                             </Col>
                         </Row>   
                     </Form>
+                </div>
                 </div>
             </section>
         </div>

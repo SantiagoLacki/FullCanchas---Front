@@ -39,7 +39,8 @@ const Register = () => {
   };
 
   return (
-    <Container className='d-flex align-items-center justify-content-center my-5'>
+    <div className="fono-gral">
+    <Container className='d-flex align-items-center justify-content-center py-5'>
       <Card className='card-register shadow-lg border-0'>
         <Row className='g-0'>
           <Col xs={12} md={6}>
@@ -94,6 +95,7 @@ const Register = () => {
                   <Form.Label className='fw-semibold'>Contraseña</Form.Label>
                   <Form.Control
                     type="password"
+                    placeholder="Contraseña"
                     isInvalid={!!errors.password}
                     {...register("password", {
                     required: "La contraseña es un dato obligatorio",
@@ -138,6 +140,7 @@ const Register = () => {
         </Row>
       </Card>
     </Container>
+    </div>
   );
 }
 

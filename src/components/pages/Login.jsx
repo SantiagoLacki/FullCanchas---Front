@@ -36,7 +36,8 @@ function Login({setUsuarioAdmin}) {
     }
   }
   return (
-    <Container className='d-flex align-items-center justify-content-center my-5'>
+    <div className="fono-gral">
+    <Container className='d-flex align-items-center justify-content-center py-5'>
       <Card className='card-login shadow-lg border-0'>
         <Row className='g-0'>
           <Col md={6}>
@@ -82,6 +83,7 @@ function Login({setUsuarioAdmin}) {
         </Row>
       </Card>
     </Container>
+    </div>
   );
 }
 
