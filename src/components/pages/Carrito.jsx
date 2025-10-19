@@ -1,24 +1,7 @@
 import { Container, Row, Col, Card, Button, Table } from "react-bootstrap";
 import { Link } from "react-router";
 
-const Carrito = () => {
-  const productos = [
-    {
-      _id: "1",
-      nombre: "Pelota Adidas",
-      precio: 2500,
-      cantidad: 2,
-      imagen: "https://images.pexels.com/photos/46798/the-ball-stadion-football-the-pitch-46798.jpeg",
-    },
-    {
-      _id: "2",
-      nombre: "Remera Nike",
-      precio: 1800,
-      cantidad: 1,
-      imagen: "https://images.pexels.com/photos/396554/pexels-photo-396554.jpeg",
-    },
-  ];
-
+const Carrito = ({ carrito, eliminarDelCarrito }) => {
   return (
     <Container className="py-5">
       <h1 className="mb-4 text-center">Carrito de Compras</h1>
@@ -37,7 +20,7 @@ const Carrito = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {productos.map((prod) => (
+                  {carrito.map((prod) => (
                     <tr key={prod._id}>
                       <td className="d-flex align-items-center gap-3">
                         <img src={prod.imagen} alt={prod.nombre} width="60" className="rounded" />
@@ -47,7 +30,7 @@ const Carrito = () => {
                       <td>{prod.cantidad}</td>
                       <td>${(prod.precio * prod.cantidad).toLocaleString("es-AR")}</td>
                       <td>
-                        <Button variant="danger" size="sm">
+                        <Button variant="danger" size="sm" onClick={() => eliminarDelCarrito(prod._id)}>
                           Eliminar
                         </Button>
                       </td>
@@ -66,11 +49,11 @@ const Carrito = () => {
               <hr />
               <div className="d-flex justify-content-between mb-2">
                 <span>Total Productos:</span>
-                <span>{productos.reduce((acc, p) => acc + p.cantidad, 0)}</span>
+                <span>{carrito.reduce((acc, p) => acc + p.cantidad, 0)}</span>
               </div>
               <div className="d-flex justify-content-between mb-2">
                 <span>Total a Pagar:</span>
-                <span>${productos.reduce((acc, p) => acc + p.precio * p.cantidad, 0).toLocaleString("es-AR")}</span>
+                <span>${carrito.reduce((acc, p) => acc + p.precio * p.cantidad, 0).toLocaleString("es-AR")}</span>
               </div>
               <Button variant="success" className="w-100 mt-3">
                 Finalizar Compra
