@@ -12,6 +12,7 @@ import FormularioUsuario from "./components/pages/usuario/FormularioUsuario";
 import FormularioCancha from "./components/pages/cancha/FormularioCancha";
 import ReservaCancha from "./components/pages/reserva/ReservaCancha";
 import FormularioProducto from "./components/pages/producto/FormularioProducto";
+import TerminosYCondiciones from "./components/pages/TerminosYCondiciones.jsx";
 import { useEffect, useState } from "react";
 import ProtectorAdmin from "./components/routes/ProtectorAdmin";
 import FormularioReserva from "./components/pages/reserva/FormularioReserva";
@@ -64,6 +65,7 @@ function App() {
             <Route path="/quienesSomos" element={<QuienesSomos></QuienesSomos>}></Route>
             <Route path="/PoliticasDePrivacidad" element={<PoliticasDePrivacidad></PoliticasDePrivacidad>}></Route>
             <Route path="/registro" element={<Register></Register>}></Route>
+            <Route path="/terminosycondiciones" element={<TerminosYCondiciones></TerminosYCondiciones>}></Route>
             <Route path="/administrador" element={<ProtectorAdmin isAdmin={usuarioAdmin}></ProtectorAdmin>}>
               <Route
                 index
