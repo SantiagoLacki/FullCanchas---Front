@@ -43,7 +43,7 @@ const DetalleProductos = () => {
                       <Link to="/productos" className="btn btn-danger w-100 fw-semibold d-flex justify-content-center align-items-center">
                         Catalogo
                       </Link>
-                      <Link to="/inicio" className="btn btn-info w-100 fw-semibold d-flex justify-content-center align-items-center">
+                      <Link to="/" className="btn btn-info w-100 fw-semibold d-flex justify-content-center align-items-center">
                         Inicio
                       </Link>
                     </div>
