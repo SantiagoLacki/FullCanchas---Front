@@ -88,7 +88,7 @@ function App() {
               <Route path="editarreserva/:id" element={<FormularioReserva titulo={"Modificar Reserva"}></FormularioReserva>}></Route>
             </Route>
             <Route path="/reserva/:id" element={<ReservaCancha usuarioAdmin={usuarioAdmin}></ReservaCancha>}></Route>
-            <Route path="*" element={<Inicio></Inicio>}></Route>
+            <Route path="*" element={<Error404></Error404>}></Route>
           </Routes>
         </main>
         <Footer></Footer>
