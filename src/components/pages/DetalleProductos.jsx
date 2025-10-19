@@ -1,15 +1,19 @@
+import { useEffect, useState } from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router";
+import { obtenerProductoPorId } from "./helpers/queries.js";
 
 const DetalleProductos = () => {
-  // 🔹 Datos de ejemplo (solo para visualizar el diseño)
-  const producto = {
-    nombre: "Pelota Adidas Tango",
-    categoria: "Pelotas",
-    descripcion: "Pelota profesional de fútbol tamaño 5, con diseño clásico y materiales de alta durabilidad.",
-    precio: 24999,
-    imagen: "https://images.pexels.com/photos/46798/the-ball-stadion-football-the-pitch-46798.jpeg",
-  };
+  const { id } = useParams();
+  const [producto, setProducto] = useState({});
+
+  useEffect(() => {
+    const cargarProducto = async () => {
+      const productoBuscado = await obtenerProductoPorId(id);
+      setProducto(productoBuscado);
+    };
+    cargarProducto();
+  }, [id]);
 
   return (
     <Container className="py-5">
@@ -17,12 +21,9 @@ const DetalleProductos = () => {
         <Col md={10} lg={8}>
           <Card className="shadow-lg border-0 rounded-4 overflow-hidden">
             <Row className="g-0">
-              {/* Imagen del producto */}
               <Col md={6}>
                 <Card.Img src={producto.imagen} alt={producto.nombre} className="img-fluid h-100 object-fit-cover" />
               </Col>
-
-              {/* Detalles del producto */}
               <Col md={6}>
                 <Card.Body className="p-4 d-flex flex-column justify-content-between h-100">
                   <div>
@@ -34,7 +35,7 @@ const DetalleProductos = () => {
                   </div>
 
                   <div>
-                    <h3 className="fw-bold text-success mb-3">${producto.precio.toLocaleString("es-AR")}</h3>
+                    <h3 className="fw-bold text-success mb-3">${producto.precio}</h3>
                     <div className="d-flex gap-2">
                       <Button variant="success" className="fw-semibold w-100">
                         Agregar al carrito
