@@ -1,0 +1,42 @@
+.error-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: flex-start; /* empezamos desde arriba */
+  background: linear-gradient(to top, #f0f0f0, #ffffff);
+  font-family: "Nunito", sans-serif;
+  padding-bottom: 40px; /* espacio extra para que no quede pegado al footer */
+}
+
+.error-container {
+  text-align: center;
+  margin-top: auto; /* empuja el contenido hacia abajo */
+  margin-bottom: 40px; /* espacio entre contenido y footer */
+  padding: 0 20px;
+  color: #333;
+}
+
+.error-image {
+  width: 800px;
+  max-width: 90%;
+  height: auto;
+  display: block;
+  margin: 0 auto 20px; /* mantiene espacio entre imagen y botón */
+  border-radius: 12px;
+}
+
+.error-btn {
+  display: inline-block;
+  margin-top: 15px; /* espacio entre botón e imagen */
+  background-color: #d4ac0d;
+  color: #fff;
+  text-decoration: none;
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.error-btn:hover {
+  background-color: #5a9a00;
+}
