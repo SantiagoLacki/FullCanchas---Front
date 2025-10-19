@@ -1,4 +1,4 @@
-import { Form, Button, Col, Row} from "react-bootstrap";
+import { Form, Button, Col, Row, Container} from "react-bootstrap";
 import Swal from 'sweetalert2'
 import { Link, useNavigate, useParams } from "react-router";
 import { useEffect } from "react";
@@ -73,23 +73,24 @@ const FormularioUsuario = ({titulo, usuarioAdmin}) => {
         navegacion('/administrador')
     }
     return (
-        <>
-            <div className="text-center mt-3">
+        <div className="fono-gral">
+            <div className="text-center pt-3">
                 <img
                     className="imagen-icono"
-                    src="https://res.cloudinary.com/duwi53e7z/image/upload/v1759706583/usuario_gmhgg9.png"
+                    src="https://res.cloudinary.com/duwi53e7z/image/upload/v1760824225/usuario2_xel9ui.png"
                     alt="icono elegí"
                 />
             </div>
-            <section className="container mainSection border text-white rounded-2 py-1 px-4 my-4 shadow-lg">
-                <h1 className="display-6 titulo-banner fw-bold text-center me-4 mt-2">{titulo}</h1>
+            <section className="container">
+            <div className="border rounded-4 py-1  mb-4 shadow-lg bg-light">
+                <h1 className="display-6 titulo-admin fw-bold text-center me-4 mt-2">{titulo}</h1>
                 <div className="d-flex justify-content-center">
                     <Form className="my-4 w-75" onSubmit={handleSubmit(onSubmit)}>
-                        <Form.Group className="mb-3 d-flex align-items-center" controlId="formNombreCancha">
-                            <Form.Label className="me-2">Nombre Usuario:</Form.Label>
+                        <Form.Group className="mb-3 " controlId="formNombreCancha">
+                            <Form.Label className="me-2">Nombre de usuario:</Form.Label>
                             <Form.Control
                                 type="text"
-                                placeholder="usuario"
+                                placeholder="Ej: usuario1"
                                 {...register("nombreUsuario", {
                                 required: "El nombre del usuario es un dato obligatorio",
                                 minLength: {
@@ -109,11 +110,11 @@ const FormularioUsuario = ({titulo, usuarioAdmin}) => {
                             </Form.Text>
                         </Form.Group>
 
-                        <Form.Group className="mb-3 d-flex align-items-center" controlId="formEmail">
+                        <Form.Group className="mb-3" controlId="formEmail">
                             <Form.Label className="me-2">Email:</Form.Label>
                             <Form.Control
                                 type="text"
-                                placeholder="admin@admin.com"
+                                placeholder="Ej: usuario@admin.com"
                                 {...register("email", {
                                 required: "El Email es un valor obligatorio",
                                 pattern: {
@@ -127,10 +128,11 @@ const FormularioUsuario = ({titulo, usuarioAdmin}) => {
                             </Form.Text>
                         </Form.Group>
 
-                        <Form.Group className="mb-3 d-flex align-items-center" controlId="formPassword">
+                        <Form.Group className="mb-3 " controlId="formPassword">
                             <Form.Label className="me-2">Contraseña:</Form.Label>
                             <Form.Control
                                 type="password"
+                                placeholder="contraseña"
                                 {...register("password", {
                                 required: "La contraseña es un dato obligatorio",
                                 pattern: {
@@ -160,8 +162,9 @@ const FormularioUsuario = ({titulo, usuarioAdmin}) => {
                         </Row>
                     </Form>
                 </div>
+            </div>
             </section>
-        </>
+        </div>
     );
 };
 

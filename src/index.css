@@ -208,3 +208,14 @@ body.modal-open {
     margin: 0.5rem auto !important;
   }
 }
+
+.fono-gral {
+  background: linear-gradient(to bottom, #ffffff, #2C3E50);
+
+}
+
+.titulo-admin {
+  font-size: 60px;
+  font-family: "Open Sans", sans-serif;
+  color: #2C3E50;
+}
