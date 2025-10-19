@@ -3,7 +3,7 @@ import { Button, Row, Col } from "react-bootstrap";
 import CardProducto from "./producto/CardProducto.jsx";
 import "./Productos.css";
 
-function Productos({ listaProductos }) {
+function Productos({ usuarioAdmin, listaProductos, agregarAlCarrito }) {
   const productosPorPagina = 8;
 
   const [pageRemeras, setPageRemeras] = useState(1);
@@ -33,7 +33,7 @@ function Productos({ listaProductos }) {
           {productos.length > 0 ? (
             productos.map((producto) => (
               <Col key={producto._id} xs={12} sm={6} md={4} lg={3} className="d-flex justify-content-center pb-3">
-                <CardProducto producto={producto} />
+                <CardProducto usuarioAdmin={usuarioAdmin} producto={producto} agregarAlCarrito={agregarAlCarrito} />
               </Col>
             ))
           ) : (

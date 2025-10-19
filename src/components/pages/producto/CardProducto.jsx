@@ -1,7 +1,7 @@
-import { Card } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router";
 
-const CardProducto = ({ producto }) => {
+const CardProducto = ({ usuarioAdmin, producto, agregarAlCarrito }) => {
   return (
     <Card className="shadow-sm h-100 border border-1 border-black">
       <div className="overflow-hidden">
@@ -18,9 +18,17 @@ const CardProducto = ({ producto }) => {
         </div>
         <Card.Text className="fw-bold fs-4 text-dark mt-2">${producto.precio.toLocaleString("es-AR")}</Card.Text>
         <div className="d-flex gap-2">
-          <Link to={"/carrito"} className="btn btn-primary w-100 d-flex justify-content-center align-items-center">
-            Agregar al carrito
-          </Link>
+          {usuarioAdmin.token && (
+            <>
+              <Button
+                type="button"
+                className="w-100 d-flex justify-content-center align-items-center"
+                onClick={() => agregarAlCarrito(producto)}
+              >
+                Sumar al carrito
+              </Button>
+            </>
+          )}
           <Link to={`/detalleproducto/${producto._id}`} className="btn btn-success w-100 d-flex justify-content-center align-items-center">
             Ver detalle
           </Link>

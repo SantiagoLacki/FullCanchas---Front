@@ -31,10 +31,17 @@ function App() {
   const [limit] = useState(6);
   const [totalPages, setTotalPages] = useState(1);
 
+  const carritoGuardado = JSON.parse(localStorage.getItem("carrito")) || [];
+  const [carrito, setCarrito] = useState(carritoGuardado);
+
   useEffect(() => {
     sessionStorage.setItem("userKey", JSON.stringify(usuarioAdmin));
     obtenerProductos();
   }, [usuarioAdmin, page]);
+
+  useEffect(() => {
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+  }, [carrito]);
 
   const obtenerProductos = async () => {
     const respuesta = await leerProductosPaginados(page, limit);
@@ -51,6 +58,62 @@ function App() {
     }
   };
 
+  const agregarAlCarrito = (producto) => {
+    setCarrito((prevCarrito) => {
+      const existe = prevCarrito.find((p) => p._id === producto._id);
+
+      if (existe) {
+        Swal.fire({
+          toast: true,
+          position: "top-end",
+          icon: "success",
+          title: `Se agregó otra unidad de "${producto.nombre}"`,
+          showConfirmButton: false,
+          timer: 2500,
+          timerProgressBar: true,
+        });
+        return prevCarrito.map((p) => (p._id === producto._id ? { ...p, cantidad: p.cantidad + 1 } : p));
+      } else {
+        Swal.fire({
+          toast: true,
+          position: "top-end",
+          icon: "success",
+          title: `"${producto.nombre}" agregado al carrito`,
+          showConfirmButton: false,
+          timer: 2500,
+          timerProgressBar: true,
+        });
+        return [...prevCarrito, { ...producto, cantidad: 1 }];
+      }
+    });
+  };
+
+  const eliminarDelCarrito = (id) => {
+    setCarrito((prev) =>
+      prev
+        .map((p) => {
+          if (p._id === id) {
+            return { ...p, cantidad: p.cantidad - 1 };
+          }
+          return p;
+        })
+        .filter((p) => p.cantidad > 0)
+    );
+
+    const productoEliminado = carrito.find((p) => p._id === id);
+    if (productoEliminado) {
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "info",
+        title: `"${productoEliminado.nombre}" disminuido en 1`,
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true,
+      });
+    }
+  };
+
   return (
     <>
       <BrowserRouter>
@@ -60,11 +123,23 @@ function App() {
           <Routes>
             <Route
               path="/"
-              element={<Inicio listaProductos={listaProductos} page={page} totalPages={totalPages} setPage={setPage}></Inicio>}
+              element={
+                <Inicio
+                  usuarioAdmin={usuarioAdmin}
+                  listaProductos={listaProductos}
+                  page={page}
+                  totalPages={totalPages}
+                  setPage={setPage}
+                  agregarAlCarrito={agregarAlCarrito}
+                ></Inicio>
+              }
             ></Route>
-            <Route path="/productos" element={<Productos listaProductos={listaProductos}></Productos>}></Route>
+            <Route
+              path="/productos"
+              element={<Productos usuarioAdmin={usuarioAdmin} listaProductos={listaProductos} agregarAlCarrito={agregarAlCarrito}></Productos>}
+            ></Route>
             <Route path="/detalleproducto/:id" element={<DetalleProductos></DetalleProductos>}></Route>
-            <Route path="/carrito" element={<Carrito></Carrito>}></Route>
+            <Route path="/carrito" element={<Carrito carrito={carrito} eliminarDelCarrito={eliminarDelCarrito}></Carrito>}></Route>
             <Route path="/login" element={<Login setUsuarioAdmin={setUsuarioAdmin}></Login>}></Route>
             <Route path="/quienesSomos" element={<QuienesSomos></QuienesSomos>}></Route>
             <Route path="/PoliticasDePrivacidad" element={<PoliticasDePrivacidad></PoliticasDePrivacidad>}></Route>
