@@ -37,11 +37,14 @@ const DetalleProductos = () => {
                   <div>
                     <h3 className="fw-bold text-success mb-3">${producto.precio}</h3>
                     <div className="d-flex gap-2">
-                      <Button variant="success" className="fw-semibold w-100">
+                      <Button variant="success" className="fw-semibold w-100 d-flex justify-content-center align-items-center">
                         Agregar al carrito
                       </Button>
-                      <Link to="/productos" className="btn btn-outline-secondary w-100 fw-semibold">
-                        Volver
+                      <Link to="/productos" className="btn btn-danger w-100 fw-semibold d-flex justify-content-center align-items-center">
+                        Catalogo
+                      </Link>
+                      <Link to="/inicio" className="btn btn-info w-100 fw-semibold d-flex justify-content-center align-items-center">
+                        Inicio
                       </Link>
                     </div>
                   </div>
