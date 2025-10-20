@@ -122,13 +122,18 @@ export const obtenerProductoPorId = async (id) => {
 
 export const crearProducto = async (productoNuevo) => {
   try {
+    const formData = new FormData();
+    formData.append("nombre", productoNuevo.nombre);
+    formData.append("precio", productoNuevo.precio);
+    formData.append("categoria", productoNuevo.categoria);
+    formData.append("descripcion", productoNuevo.descripcion);
+    formData.append("imagen", productoNuevo.imagen);
     const respuesta = await fetch(urlProductos, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
         "x-token": JSON.parse(sessionStorage.getItem("userKey")).token,
       },
-      body: JSON.stringify(productoNuevo),
+      body: formData,
     });
     return respuesta;
   } catch (error) {
