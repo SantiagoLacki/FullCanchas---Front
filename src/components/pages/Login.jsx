@@ -1,8 +1,9 @@
-import { Container, Row, Col, Form, Button, Card, Image } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, Card, Image, Spinner } from "react-bootstrap";
 import { Link, useNavigate } from "react-router";
 import { login } from "./helpers/queries";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 
 function Login({ setUsuarioAdmin, setCarrito }) {
   const {
@@ -11,32 +12,49 @@ function Login({ setUsuarioAdmin, setCarrito }) {
     formState: { errors },
   } = useForm();
   const navegacion = useNavigate();
+  const [mostrarSpinner, setMostrarSpinner] = useState(false);
+  const [deshabilitarBoton, setDeshabilitarBoton] = useState(false);
 
   const iniciarSesion = async (usuario) => {
-    const respuesta = await login(usuario);
-    if (respuesta.status === 200) {
-      const datosUsuario = await respuesta.json();
-      setUsuarioAdmin(datosUsuario);
-      setCarrito([]);
-      sessionStorage.removeItem("carrito");
-      Swal.fire({
-        title: "Incio de sesión correcto",
-        text: `Bienvenido ${datosUsuario.nombreUsuario}`,
-        icon: "success",
-      });
-      if (datosUsuario.rol === "staff" || datosUsuario.rol === "admin") {
-        navegacion("/administrador");
+    setMostrarSpinner(true);
+    setDeshabilitarBoton(true);
+    
+    try {
+      const respuesta = await login(usuario);
+      if (respuesta.status === 200) {
+        const datosUsuario = await respuesta.json();
+        setUsuarioAdmin(datosUsuario);
+        setCarrito([]);
+        sessionStorage.removeItem("carrito");
+        Swal.fire({
+          title: "Inicio de sesión correcto",
+          text: `Bienvenido ${datosUsuario.nombreUsuario}`,
+          icon: "success",
+        });
+        if (datosUsuario.rol === "staff" || datosUsuario.rol === "admin") {
+          navegacion("/administrador");
+        } else {
+          navegacion("/");
+        }
       } else {
-        navegacion("/");
+        Swal.fire({
+          title: "Error al iniciar sesión",
+          text: `Credenciales incorrectas`,
+          icon: "error",
+        });
       }
-    } else {
+    } catch (error) {
       Swal.fire({
-        title: "Error al iniciar sesion",
-        text: `Credenciales incorrectas`,
+        title: "Error de conexión",
+        text: `No se pudo conectar con el servidor`,
         icon: "error",
       });
+    } finally {
+      setMostrarSpinner(false);
+      setDeshabilitarBoton(false);
     }
   };
+
   return (
     <Container className="d-flex align-items-center justify-content-center py-5">
       <Card className="card-login shadow-lg border-0">
@@ -70,6 +88,11 @@ function Login({ setUsuarioAdmin, setCarrito }) {
                       },
                     })}
                   />
+                  {errors.email && (
+                    <Form.Text className="text-danger">
+                      {errors.email.message}
+                    </Form.Text>
+                  )}
                 </Form.Group>
                 <Form.Group className="mb-4" controlId="password">
                   <Form.Label className="fw-semibold">Contraseña</Form.Label>
@@ -78,7 +101,7 @@ function Login({ setUsuarioAdmin, setCarrito }) {
                     placeholder="Contraseña"
                     required
                     {...register("password", {
-                      required: "La contraseña es un dato ogligatorio",
+                      required: "La contraseña es un dato obligatorio",
                       pattern: {
                         value: /^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,16}$/,
                         message:
@@ -86,15 +109,39 @@ function Login({ setUsuarioAdmin, setCarrito }) {
                       },
                     })}
                   />
+                  {errors.password && (
+                    <Form.Text className="text-danger">
+                      {errors.password.message}
+                    </Form.Text>
+                  )}
                   <div className="text-end mt-1">
                     <Link to={"*"} className="text-decoration-none text-primary small">
                       ¿Olvidaste tu contraseña?
                     </Link>
                   </div>
                 </Form.Group>
-                <Button variant="primary" type="submit" className="w-100 mb-3 fw-bold btn-fullcanchas-primary">
-                  Iniciar Sesión
+                
+                <Button 
+                  variant="primary" 
+                  type="submit" 
+                  className="w-100 mb-3 fw-bold btn-fullcanchas-primary"
+                  disabled={deshabilitarBoton}
+                >
+                  {mostrarSpinner ? (
+                    <div className="d-flex align-items-center justify-content-center">
+                      <Spinner
+                        animation="border"
+                        size="sm"
+                        role="status"
+                        className="me-2"
+                      />
+                      Iniciando sesión...
+                    </div>
+                  ) : (
+                    "Iniciar Sesión"
+                  )}
                 </Button>
+                
                 <hr className="my-4" />
                 <p className="text-center mt-3 mb-0 small">
                   ¿Aún no tienes cuenta?

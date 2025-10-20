@@ -1,4 +1,4 @@
-import { Table } from "react-bootstrap";
+import { Spinner, Table } from "react-bootstrap";
 import ItemReserva from "./ItemReserva";
 import { useNavigate, useParams } from "react-router";
 import { leerReservas, obtenerCanchaPorId } from "../helpers/queries";
@@ -8,7 +8,6 @@ const ReservaCancha = ({usuarioAdmin}) => {
     const [cancha, setCancha]=useState('')
     const [proximosDias, setProximosDias] = useState([]);
     const [listaReservas, setListaReservas]= useState([]);
-    //const turnos = ["04:00 pm","05:00 pm", "06:00 pm","07:00 pm", "08:00 pm","09:00 pm", "10:00 pm","11:00 pm"]
     const turnos = [
         {formatoAmPm:"04:00 pm", formato24: "16:00"},
         {formatoAmPm:"05:00 pm", formato24: "17:00"},
@@ -18,7 +17,7 @@ const ReservaCancha = ({usuarioAdmin}) => {
         {formatoAmPm:"09:00 pm", formato24: "21:00"},
         {formatoAmPm:"10:00 pm", formato24: "22:00"},
         {formatoAmPm:"11:00 pm", formato24: "23:00"},]
-
+    const [mostrarSpinner, setMostrarSpinner] = useState(true)
     const navegacion = useNavigate()
     const {id} = useParams()
 
@@ -52,6 +51,7 @@ const ReservaCancha = ({usuarioAdmin}) => {
         }else{
         console.info('Ocurrio un error al buscar los usuarios')
       }
+      setMostrarSpinner(false)
     }
 
     const generarProximosDiasHabiles = () => {
@@ -93,7 +93,7 @@ const ReservaCancha = ({usuarioAdmin}) => {
                 <h4 className="mt-4 fw-bolder">{cancha.nombre}</h4>
                 <p className="fw-light ">Cancha de futbol 5 / {cancha.tipoDeSuperficie} / Con iluminación</p>
                 <Table responsive bordered hover >
-                      <colgroup>
+                    <colgroup>
                         <col style={{ width: "10%" }} />
                         {proximosDias.map((_, index) => (
                             <col key={index} style={{ width: "15%" }} />
@@ -111,9 +111,26 @@ const ReservaCancha = ({usuarioAdmin}) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {turnos.map((turno, index) => (
-                            <ItemReserva key={index} turno={turno} dias={proximosDias} listaReservas={listaReservas} setListaReservas={setListaReservas} cancha={cancha} usuarioAdmin={usuarioAdmin}></ItemReserva>
-                        ))}
+                        {mostrarSpinner ? (
+                            <tr>
+                                <td colSpan={proximosDias.length + 1} className="text-center py-5">
+                                    <Spinner animation="border" variant="warning" role="status" />
+                                    <p className="mt-2 text-muted">Cargando disponibilidad...</p>
+                                </td>
+                            </tr>
+                        ) : (
+                            turnos.map((turno, index) => (
+                                <ItemReserva 
+                                    key={index} 
+                                    turno={turno} 
+                                    dias={proximosDias} 
+                                    listaReservas={listaReservas} 
+                                    setListaReservas={setListaReservas} 
+                                    cancha={cancha} 
+                                    usuarioAdmin={usuarioAdmin}
+                                />
+                            ))
+                        )}
                     </tbody>
                 </Table>
                     <div className="d-flex justify-content-end">
