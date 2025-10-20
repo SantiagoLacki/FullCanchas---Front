@@ -55,7 +55,7 @@ const Inicio = ({ usuarioAdmin, listaProductos, page, totalPages, setPage, agreg
   };
 
   return (
-    <section className="mainSection">
+    <section className="mainSection bg-inicio">
       <div className="carousel-inner">
         <div className="carousel-item active">
           <img

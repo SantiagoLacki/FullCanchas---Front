@@ -3,7 +3,6 @@ import { Link } from "react-router";
 
 const Carrito = ({ carrito, eliminarDelCarrito }) => {
   return (
-    <div className="fono-gral">
       <Container className="py-5">
         <h1 className="display-6 titulo-admin fw-bold text-center">Carrito de Compras</h1>
         <Row>
@@ -67,7 +66,6 @@ const Carrito = ({ carrito, eliminarDelCarrito }) => {
           </Col>
         </Row>
       </Container>
-    </div>
   );
 };
 
