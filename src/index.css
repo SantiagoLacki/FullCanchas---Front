@@ -89,6 +89,20 @@ main {
   background: #0a5204;
 }
 
+.navbar-links {
+  color: white !important;
+  transition: all 0.3s ease;
+}
+
+.navbar-links.active {
+  color: #f7e3a7 !important; 
+}
+
+.navbar-links:hover {
+  color: #ffc107 !important;
+  background-color: #ffffff00;
+}
+
 .logo-nav {
   width: 150px;
 }
