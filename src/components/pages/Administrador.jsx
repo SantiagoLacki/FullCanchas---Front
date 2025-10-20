@@ -140,6 +140,22 @@ const Administrador = ({ usuarioAdmin }) => {
     }
   };
 
+  const handleBuscarUsuarioAdmin = async (e) => {
+    const termino = e.target.value;
+    setTerminoBusquedaUsuario(termino);
+    if (!termino) {
+      obtenerUsuarios();
+    } else {
+      const respuesta = await leerUsuarios();
+      if (respuesta.status === 200) {
+        const datos = await respuesta.json();
+        const usuariosResultado = datos || [];
+        const usuariosFiltrados = usuariosResultado.filter((usuario) => usuario.email.toLowerCase().includes(termino.toLowerCase()) && usuario.rol === "admin");
+        setListaUsuarios(usuariosFiltrados);
+      }
+    }
+  };
+
   const handleBuscarProducto = async (e) => {
     const termino = e.target.value;
     setTerminoBusquedaProducto(termino);
@@ -187,12 +203,12 @@ const Administrador = ({ usuarioAdmin }) => {
     <div className="fono-gral">
       <section className="container mainSection">
         {usuarioAdmin.rol === "staff" ? (
-          <div className="border text-white rounded-2 py-3 px-4 my-4 shadow-lg">
-            <div className="  align-items-center mt-2 mb-3">
-              <Row className="d-flex justify-content-between align-items-center mb-3">
-                <Col xs={12} md={6} className="mb-2 mb-md-0">
-                  <div className="d-flex align-items-center">
-                    <h2 className="display-6 titulo-banner fw-bold text-white me-4">Usuarios</h2>
+          <div className="border text-white rounded-2 py-3 px-4 my-4 shadow-lg bg-light">
+                <div className="  align-items-center mt-2 mb-3">
+                  <Row className="d-flex justify-content-between align-items-center mb-3">
+                    <Col xs={12} md={6} className="mb-2 mb-md-0">
+                      <div className="d-flex align-items-center">
+                        <h2 className="display-6 titulo-admin fw-bold me-4">Usuarios</h2>
                     <div>
                       <Link className="btn btn-gold text-white" to={"/administrador/crearusuario"}>
                         <i className="bi bi-plus-circle"></i> Agregar
@@ -209,7 +225,7 @@ const Administrador = ({ usuarioAdmin }) => {
                           type="text"
                           placeholder="Buscar"
                           className=" mr-sm-2"
-                          onChange={handleFechaChange}
+                          onChange={handleBuscarUsuarioAdmin}
                           value={terminoBusquedaUsuario}
                         />
                       </Col>
