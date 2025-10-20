@@ -1,4 +1,4 @@
-import { Col, Dropdown, Form, Row, Table, Button } from "react-bootstrap";
+import { Col, Dropdown, Form, Row, Table, Button, Spinner } from "react-bootstrap";
 import { Link } from "react-router";
 import ItemUsuario from "./usuario/ItemUsuario";
 import { useEffect, useState } from "react";
@@ -34,6 +34,7 @@ const Administrador = ({ usuarioAdmin }) => {
   const [totalPagesProductos, setTotalPagesProductos] = useState(1);
   const [pageReservas, setPageReservas] = useState(1);
   const [totalPagesReservas, setTotalPagesReservas] = useState(1);
+  const [mostrarSpinner, setMostrarSpinner] = useState(true)
 
   useEffect(() => {
     obtenerUsuarios();
@@ -74,10 +75,11 @@ const Administrador = ({ usuarioAdmin }) => {
         text: "Intenta esta operación en unos minutos",
       });
     }
-    //setMostrarSpinner(false)
+    setMostrarSpinner(false)
   };
 
   const obtenerProductos = async () => {
+    setMostrarSpinner(true)
     const respuesta = await leerProductosPaginados(pageProductos, limit);
     if (respuesta.status === 200) {
       const datos = await respuesta.json();
@@ -90,10 +92,11 @@ const Administrador = ({ usuarioAdmin }) => {
         text: "Intenta esta operación en unos minutos",
       });
     }
-    //setMostrarSpinner(false)
+    setMostrarSpinner(false)
   };
 
   const obtenerCanchas = async () => {
+    setMostrarSpinner(true)
     const respuesta = await leerCanchas();
     if (respuesta.status === 200) {
       const datos = await respuesta.json();
@@ -105,10 +108,11 @@ const Administrador = ({ usuarioAdmin }) => {
         text: "Intenta esta operación en unos minutos",
       });
     }
-    //setMostrarSpinner(false)
+    setMostrarSpinner(false)
   };
 
   const obtenerReservas = async () => {
+    setMostrarSpinner(true)
     const respuesta = await leerReservasPaginadas(pageReservas, limit);
     if (respuesta.status === 200) {
       const datos = await respuesta.json();
@@ -121,10 +125,11 @@ const Administrador = ({ usuarioAdmin }) => {
         text: "Intenta esta operación en unos minutos",
       });
     }
-    //setMostrarSpinner(false)
+    setMostrarSpinner(false)
   };
 
   const handleBuscarUsuario = async (e) => {
+    setMostrarSpinner(true)
     const termino = e.target.value;
     setTerminoBusquedaUsuario(termino);
     if (!termino) {
@@ -138,9 +143,29 @@ const Administrador = ({ usuarioAdmin }) => {
         setListaUsuarios(usuariosFiltrados);
       }
     }
+    setMostrarSpinner(false)
+  };
+
+  const handleBuscarUsuarioAdmin = async (e) => {
+    setMostrarSpinner(true)
+    const termino = e.target.value;
+    setTerminoBusquedaUsuario(termino);
+    if (!termino) {
+      obtenerUsuarios();
+    } else {
+      const respuesta = await leerUsuarios();
+      if (respuesta.status === 200) {
+        const datos = await respuesta.json();
+        const usuariosResultado = datos || [];
+        const usuariosFiltrados = usuariosResultado.filter((usuario) => usuario.email.toLowerCase().includes(termino.toLowerCase()) && usuario.rol === "admin");
+        setListaUsuarios(usuariosFiltrados);
+      }
+    }
+    setMostrarSpinner(false)
   };
 
   const handleBuscarProducto = async (e) => {
+    setMostrarSpinner(true)
     const termino = e.target.value;
     setTerminoBusquedaProducto(termino);
     if (!termino) {
@@ -155,9 +180,11 @@ const Administrador = ({ usuarioAdmin }) => {
         setListaProductos(productosFiltrados);
       }
     }
+    setMostrarSpinner(false)
   };
 
   const handleFechaChange = async (e) => {
+    setMostrarSpinner(true)
     const fechaSeleccionada = e.target.value;
     setFechaBusqueda(fechaSeleccionada);
     const respuesta = await leerReservas();
@@ -181,18 +208,19 @@ const Administrador = ({ usuarioAdmin }) => {
         });
       }
     }
+    setMostrarSpinner(false)
   };
 
   return (
     <div className="fono-gral">
       <section className="container mainSection">
         {usuarioAdmin.rol === "staff" ? (
-          <div className="border text-white rounded-2 py-3 px-4 my-4 shadow-lg">
-            <div className="  align-items-center mt-2 mb-3">
-              <Row className="d-flex justify-content-between align-items-center mb-3">
-                <Col xs={12} md={6} className="mb-2 mb-md-0">
-                  <div className="d-flex align-items-center">
-                    <h2 className="display-6 titulo-banner fw-bold text-white me-4">Usuarios</h2>
+          <div className="border text-white rounded-2 py-3 px-4 my-4 shadow-lg bg-light">
+                <div className="  align-items-center mt-2 mb-3">
+                  <Row className="d-flex justify-content-between align-items-center mb-3">
+                    <Col xs={12} md={6} className="mb-2 mb-md-0">
+                      <div className="d-flex align-items-center">
+                        <h2 className="display-6 titulo-admin fw-bold me-4">Usuarios</h2>
                     <div>
                       <Link className="btn btn-gold text-white" to={"/administrador/crearusuario"}>
                         <i className="bi bi-plus-circle"></i> Agregar
@@ -209,7 +237,7 @@ const Administrador = ({ usuarioAdmin }) => {
                           type="text"
                           placeholder="Buscar"
                           className=" mr-sm-2"
-                          onChange={handleFechaChange}
+                          onChange={handleBuscarUsuarioAdmin}
                           value={terminoBusquedaUsuario}
                         />
                       </Col>
@@ -218,6 +246,11 @@ const Administrador = ({ usuarioAdmin }) => {
                 </Col>
               </Row>
             </div>
+            {mostrarSpinner ?                     
+              <div className="text-center mt-5">
+                <Spinner animation="border" variant="warning" role="status" ></Spinner>
+              </div> 
+              :
             <Table responsive striped bordered hover>
               <thead>
                 <tr className="text-center">
@@ -237,8 +270,16 @@ const Administrador = ({ usuarioAdmin }) => {
                     obtenerUsuarios={obtenerUsuarios}
                   ></ItemUsuario>
                 ))}
+                ) : (
+                    <tr>
+                    <td colSpan="6" className="text-center text-muted py-4">
+                        No hay Usuarios disponibles
+                    </td>
+                    </tr>
+                )
               </tbody>
             </Table>
+            }
           </div>
         ) : (
           <>
@@ -313,6 +354,11 @@ const Administrador = ({ usuarioAdmin }) => {
                     </Col>
                   </Row>
                 </div>
+                {mostrarSpinner ?                     
+                <div className="text-center mt-5">
+                    <Spinner animation="border" variant="warning" role="status" ></Spinner>
+                </div> 
+                :
                 <Table responsive striped bordered hover>
                   <thead>
                     <tr className="text-center">
@@ -323,16 +369,25 @@ const Administrador = ({ usuarioAdmin }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {listaUsuarios.slice((pageUsuarios - 1) * limit, pageUsuarios * limit).map((usuario, indice) => (
+                    {listaUsuarios && listaUsuarios.length > 0 ? (
+                    listaUsuarios.slice((pageUsuarios - 1) * limit, pageUsuarios * limit).map((usuario, indice) => (
                       <ItemUsuario
                         key={usuario._id}
                         usuario={usuario}
                         fila={(pageUsuarios - 1) * limit + indice + 1}
                         obtenerUsuarios={obtenerUsuarios}
                       ></ItemUsuario>
-                    ))}
+                    ))
+                    ) : (
+                      <tr>
+                        <td colSpan="6" className="text-center text-muted py-4">
+                          No hay Usuarios disponibles
+                        </td>
+                      </tr>
+                    )}
                   </tbody>
                 </Table>
+                }
                 {totalPagesUsuarios > 1 && (
                   <div className="d-flex justify-content-center align-items-center mt-3">
                     <Button
@@ -366,6 +421,11 @@ const Administrador = ({ usuarioAdmin }) => {
                     </Link>
                   </div>
                 </div>
+                {mostrarSpinner ?                     
+                <div className="text-center mt-5">
+                    <Spinner animation="border" variant="warning" role="status" ></Spinner>
+                </div> 
+                :
                 <Table responsive striped bordered hover>
                   <thead>
                     <tr className="text-center">
@@ -383,6 +443,7 @@ const Administrador = ({ usuarioAdmin }) => {
                     ))}
                   </tbody>
                 </Table>
+                }
               </div>
             )}
             {activeSection === "productos" && (
@@ -417,6 +478,11 @@ const Administrador = ({ usuarioAdmin }) => {
                     </Col>
                   </Row>
                 </div>
+                {mostrarSpinner ?                     
+                <div className="text-center mt-5">
+                    <Spinner animation="border" variant="warning" role="status" ></Spinner>
+                </div> 
+                :
                 <Table responsive striped bordered hover>
                   <thead>
                     <tr className="text-center">
@@ -429,7 +495,8 @@ const Administrador = ({ usuarioAdmin }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {listaProductos.map((producto, indice) => (
+                    {listaProductos && listaProductos.length > 0 ? (
+                    listaProductos.map((producto, indice) => (
                       <ItemProducto
                         key={producto._id}
                         producto={producto}
@@ -438,9 +505,17 @@ const Administrador = ({ usuarioAdmin }) => {
                         pageProductos={pageProductos}
                         limit={limit}
                       ></ItemProducto>
-                    ))}
+                    ))
+                    ) : (
+                      <tr>
+                        <td colSpan="6" className="text-center text-muted py-4">
+                          No hay productos disponibles
+                        </td>
+                      </tr>
+                    )}
                   </tbody>
                 </Table>
+                }
                 {totalPagesProductos > 1 && (
                   <div className="d-flex justify-content-center align-items-center mt-3">
                     <Button
@@ -504,6 +579,11 @@ const Administrador = ({ usuarioAdmin }) => {
                     </Col>
                   </Row>
                 </div>
+                {mostrarSpinner ?                     
+                <div className="text-center mt-5">
+                    <Spinner animation="border" variant="warning" role="status" ></Spinner>
+                </div> 
+                :
                 <Table responsive striped bordered hover>
                   <thead>
                     <tr className="text-center">
@@ -536,6 +616,7 @@ const Administrador = ({ usuarioAdmin }) => {
                     )}
                   </tbody>
                 </Table>
+                }
                 {!fechaBusqueda && totalPagesReservas > 1 && (
                   <div className="d-flex justify-content-center align-items-center mt-3">
                     <Button
