@@ -27,8 +27,10 @@ const FormularioProducto = ({ titulo }) => {
   const obtenerProducto = async () => {
     if (titulo === "Modificar Producto") {
       const respuesta = await obtenerProductoPorId(id);
+      console.log(respuesta.status)
       if (respuesta.status === 200) {
         const productoBuscado = await respuesta.json();
+        console.log(productoBuscado)
         if (productoBuscado === undefined) {
           navegacion("/administrador");
           Swal.fire({
