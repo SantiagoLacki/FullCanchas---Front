@@ -111,9 +111,8 @@ export const leerProductos = async () => {
 export const obtenerProductoPorId = async (id) => {
   try {
     const respuesta = await fetch(urlProductos + `/${id}`);
-    if (!respuesta.ok) throw new Error("Producto no encontrado");
-    const data = await respuesta.json();
-    return data;
+    console.log(respuesta)
+    return respuesta;
   } catch (error) {
     console.error(error);
     return null;

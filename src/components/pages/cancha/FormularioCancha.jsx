@@ -1,4 +1,4 @@
-import { Form, Button, Col, Row } from "react-bootstrap";
+import { Form, Button, Col, Row, Spinner } from "react-bootstrap";
 import Swal from "sweetalert2";
 import { Link, useNavigate, useParams } from "react-router";
 import { useEffect, useState } from "react";
@@ -20,6 +20,8 @@ const FormularioCancha = ({ titulo }) => {
   const { id } = useParams();
   const [imagenActual, setImagenActual] = useState("");
   const [preview, setPreview] = useState("");
+  const [mostrarSpinner, setMostrarSpinner] = useState(false);
+  const [deshabilitarBoton, setDeshabilitarBoton] = useState(false);
 
   useEffect(() => {
     obtenerCancha();
@@ -41,7 +43,7 @@ const FormularioCancha = ({ titulo }) => {
           setValue("nombre", canchaBuscada.nombre);
           setValue("tipoDeSuperficie", canchaBuscada.tipoDeSuperficie);
           setValue("precioPorHora", canchaBuscada.precioPorHora);
-          setValue("imagen", canchaBuscada.imagen);
+          setImagenActual(canchaBuscada.imagen)
           setValue("disponibilidad", canchaBuscada.disponibilidad === "true");
         }
       }
@@ -49,6 +51,8 @@ const FormularioCancha = ({ titulo }) => {
   };
 
   const onSubmit = async (cancha) => {
+    setMostrarSpinner(true);
+    setDeshabilitarBoton(true);
     const canchasMejoradas = {
       ...cancha,
       imagen: cancha.imagen ? cancha.imagen[0] : imagenActual,
@@ -82,6 +86,8 @@ const FormularioCancha = ({ titulo }) => {
       }
     }
     navegacion("/administrador");
+    setMostrarSpinner(false);
+    setDeshabilitarBoton(false);
   };
 
   return (
@@ -209,8 +215,15 @@ const FormularioCancha = ({ titulo }) => {
 
               <Row className="mt-5">
                 <Col xs={12} md={6} className="mb-2 mb-md-0 text-center text-md-end">
-                  <Button type="submit" variant="warning" className="w-50 btn-gold text-white">
-                    Guardar
+                  <Button disabled={deshabilitarBoton} type="submit" variant="warning" className="w-50 btn-gold text-white">
+                    {mostrarSpinner ? (
+                      <div className="d-flex align-items-center justify-content-center">
+                        <Spinner animation="border" size="sm" className="me-2" />
+                        Guardando...
+                      </div>
+                    ) : (
+                      "Guardar"
+                    )}
                   </Button>
                 </Col>
                 <Col xs={12} md={6} className="text-center text-md-start">
