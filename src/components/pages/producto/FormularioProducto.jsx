@@ -1,4 +1,4 @@
-import { Form, Button, Row, Col } from "react-bootstrap";
+import { Form, Button, Row, Col, Spinner } from "react-bootstrap";
 import Swal from "sweetalert2";
 import { Link, useNavigate, useParams } from "react-router";
 import { useState, useEffect } from "react";
@@ -19,6 +19,8 @@ const FormularioProducto = ({ titulo }) => {
   const { id } = useParams();
   const [imagenActual, setImagenActual] = useState("");
   const [preview, setPreview] = useState("");
+  const [mostrarSpinner, setMostrarSpinner] = useState(false);
+  const [deshabilitarBoton, setDeshabilitarBoton] = useState(false);
 
   useEffect(() => {
     obtenerProducto();
@@ -50,6 +52,8 @@ const FormularioProducto = ({ titulo }) => {
   };
 
   const onSubmit = async (producto) => {
+    setMostrarSpinner(true);
+    setDeshabilitarBoton(true);
     const productoMejorado = { ...producto, imagen: producto.imagen[0] };
     if (titulo === "Producto Nuevo") {
       const respuesta = await crearProducto(productoMejorado);
@@ -78,6 +82,8 @@ const FormularioProducto = ({ titulo }) => {
       }
     }
     navegacion("/administrador");
+    setMostrarSpinner(false);
+    setDeshabilitarBoton(false);
   };
   return (
     <>
@@ -212,9 +218,17 @@ const FormularioProducto = ({ titulo }) => {
 
               <Row className="mt-5">
                 <Col xs={12} md={6} className="mb-2 mb-md-0 text-center text-md-end">
-                  <Button type="submit" variant="warning" className="w-50 btn-gold text-white">
-                    Guardar
-                  </Button>
+                  <Button 
+                  disabled={deshabilitarBoton} type="submit" variant="warning" className="w-50 btn-gold text-white">
+                  {mostrarSpinner ? (
+                    <div className="d-flex align-items-center justify-content-center">
+                      <Spinner animation="border" size="sm" className="me-2" />
+                      Guardando...
+                    </div>
+                  ) : (
+                    "Guardar"
+                  )}
+                </Button>
                 </Col>
                 <Col xs={12} md={6} className="text-center text-md-start">
                   <Link to={"/administrador"} className="btn btn-danger w-50">
