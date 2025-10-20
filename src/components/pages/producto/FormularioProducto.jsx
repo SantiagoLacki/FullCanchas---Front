@@ -78,7 +78,7 @@ const FormularioProducto = ({ titulo }) => {
     navegacion("/administrador");
   };
   return (
-    <div className="fono-gral">
+    <>
       <div className="text-center pt-3">
         <img
           className="imagen-icono"
@@ -224,7 +224,7 @@ const FormularioProducto = ({ titulo }) => {
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 };
 
