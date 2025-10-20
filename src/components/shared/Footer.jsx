@@ -15,8 +15,8 @@ const Footer = () => {
 
         <div className="footer-col footer-center pt-4 text-center">
           <h4 className="footer-title fs-4">Sobre Nosotros</h4>
-          <a href="/catalogo">Politicas de Privacidad</a>
-          <a href="/reservas">Terminos y Condiciones</a>
+          <a href="/politicasDePrivacidad">Políticas de Privacidad</a>
+          <a href="/terminosycondiciones">Términos y Condiciones</a>
           <a href="/quienesSomos">¿Quiénes Somos?</a>
           <p><i className="bi bi-geo-alt fs-4 text-white"></i> Gral. José María Paz 1544, San Miguel de Tucumán, Tucumán</p>
 

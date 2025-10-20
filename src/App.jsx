@@ -144,7 +144,7 @@ function App() {
             <Route path="/carrito" element={<Carrito carrito={carrito} eliminarDelCarrito={eliminarDelCarrito}></Carrito>}></Route>
             <Route path="/login" element={<Login setUsuarioAdmin={setUsuarioAdmin} setCarrito={setCarrito}></Login>}></Route>
             <Route path="/quienesSomos" element={<QuienesSomos></QuienesSomos>}></Route>
-            <Route path="/PoliticasDePrivacidad" element={<PoliticasDePrivacidad></PoliticasDePrivacidad>}></Route>
+            <Route path="/politicasDePrivacidad" element={<PoliticasDePrivacidad></PoliticasDePrivacidad>}></Route>
             <Route path="/registro" element={<Register></Register>}></Route>
             <Route path="/terminosycondiciones" element={<TerminosYCondiciones></TerminosYCondiciones>}></Route>
             <Route path="/administrador" element={<ProtectorAdmin isAdmin={usuarioAdmin}></ProtectorAdmin>}>

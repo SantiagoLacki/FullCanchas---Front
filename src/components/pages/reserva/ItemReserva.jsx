@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Button, Form, Modal } from "react-bootstrap";
+import { Button,  Modal } from "react-bootstrap";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
 import { crearReserva, leerReservas } from "../helpers/queries";
 
-const ItemReserva = ({ turno, dias, listaReservas, setListaReservas, cancha, usuarioAdmin, pageReservas, limit }) => {
+const ItemReserva = ({ turno, dias, listaReservas, setListaReservas, cancha, usuarioAdmin }) => {
   const [show, setShow] = useState(false);
   const [reservaSeleccionada, setReservaSeleccionada] = useState(null);
 
@@ -18,8 +18,6 @@ const ItemReserva = ({ turno, dias, listaReservas, setListaReservas, cancha, usu
     const ultimaReservaStr = localStorage.getItem("ultimaReserva");
     if (ultimaReservaStr) {
       const ultimaReserva = JSON.parse(ultimaReservaStr);
-      console.log(ultimaReserva.cliente)
-      console.log(usuarioAdmin.id)
       if(ultimaReserva.cliente === usuarioAdmin.id){
           const tiempoTranscurrido = Date.now() - ultimaReserva.timestamp;
           const minutos = Math.floor(tiempoTranscurrido / 60000);
@@ -249,7 +247,7 @@ const ItemReserva = ({ turno, dias, listaReservas, setListaReservas, cancha, usu
             </>
           )}
           <p className="ms-4 mt-3 fw-light fs-6">
-            Al hacer click en reservar declaras haber leido y aceptado los <Link>Terminos y Condiciones</Link>{" "}
+             Al hacer click en reservar declaras haber leido y aceptado los <Link to={"/terminosycondiciones"}>Términos y Condiciones</Link>
           </p>
         </Modal.Body>
         <Modal.Footer className="border-0 d-flex justify-content-between mb-3">
