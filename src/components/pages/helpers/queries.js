@@ -110,11 +110,16 @@ export const leerProductos = async () => {
 
 export const obtenerProductoPorId = async (id) => {
   try {
-    const respuesta = await fetch(urlProductos + `/${id}`);
-    console.log(respuesta)
-    return respuesta;
+    const respuesta = await fetch(`${urlProductos}/${id}`);
+    if (respuesta.ok) {
+      const producto = await respuesta.json();
+      return producto;
+    } else {
+      console.error("Error al obtener producto por ID:", respuesta.status);
+      return null;
+    }
   } catch (error) {
-    console.error(error);
+    console.error("Error en obtenerProductoPorId:", error);
     return null;
   }
 };
