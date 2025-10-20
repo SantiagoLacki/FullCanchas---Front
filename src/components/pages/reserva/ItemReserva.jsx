@@ -89,35 +89,44 @@ const ItemReserva = ({ turno, dias, listaReservas, setListaReservas, cancha, usu
   };
 
   const handleShow = (dia) => {
-    if (usuarioAdmin.rol === "user") {
-      setReservaSeleccionada({
-        fecha: new Date(dia.fecha).toLocaleDateString("es-ES"),
-        fechaISO: dia.fechaISO,
-        horario: turno.formato24,
-        horarioAmPm: turno.formatoAmPm,
-        nombreDia: dia.nombre,
-        nombreCancha: cancha?.nombre || "Cancha",
-        precio: cancha?.precioPorHora || 0,
-        cliente: usuarioAdmin.email,
-      });
-      setShow(true);
-    } else {
-      Swal.fire({
-        title: "Iniciar Sesión",
-        text: "Debes iniciar sesión para poder reservar un turno",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Ir a Iniciar Sesión",
-        cancelButtonText: "Cancelar",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          window.location.href = "/login";
-        }
-      });
-    }
-  };
+  if (usuarioAdmin.rol === "user") {
+    setReservaSeleccionada({
+      fecha: new Date(dia.fecha).toLocaleDateString("es-ES"),
+      fechaISO: dia.fechaISO,
+      horario: turno.formato24,
+      horarioAmPm: turno.formatoAmPm,
+      nombreDia: dia.nombre,
+      nombreCancha: cancha?.nombre || "Cancha",
+      precio: cancha?.precioPorHora || 0,
+      cliente: usuarioAdmin.email,
+    });
+    setShow(true);
+  } else if (usuarioAdmin.rol === "admin" || usuarioAdmin.rol === "staff") {
+    Swal.fire({
+      title: "Acceso restringido",
+      text: "Los usuarios administradores y desarrolladores no pueden realizar reservas. Solo los usuarios regulares pueden reservar turnos.",
+      icon: "info",
+      confirmButtonColor: "#3085d6",
+      confirmButtonText: "Entendido",
+    });
+  } else {
+    Swal.fire({
+      title: "Iniciar Sesión",
+      text: "Debes iniciar sesión como usuario regular para poder reservar un turno",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Ir a Iniciar Sesión",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = "/login";
+      }
+    });
+  }
+};
+
   const estaReservado = (dia) => {
     const fechaDia = new Date(dia.fecha).toISOString().split("T")[0];
     const existeReserva = listaReservas.some((reserva) => {
