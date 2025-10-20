@@ -31,7 +31,7 @@ function App() {
   const [limit] = useState(6);
   const [totalPages, setTotalPages] = useState(1);
 
-  const carritoGuardado = JSON.parse(localStorage.getItem("carrito")) || [];
+  const carritoGuardado = JSON.parse(sessionStorage.getItem("carrito")) || [];
   const [carrito, setCarrito] = useState(carritoGuardado);
 
   useEffect(() => {
@@ -40,7 +40,7 @@ function App() {
   }, [usuarioAdmin, page]);
 
   useEffect(() => {
-    localStorage.setItem("carrito", JSON.stringify(carrito));
+    sessionStorage.setItem("carrito", JSON.stringify(carrito));
   }, [carrito]);
 
   const obtenerProductos = async () => {
@@ -117,7 +117,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Menu usuarioAdmin={usuarioAdmin} setUsuarioAdmin={setUsuarioAdmin}></Menu>
+        <Menu usuarioAdmin={usuarioAdmin} setUsuarioAdmin={setUsuarioAdmin} setCarrito={setCarrito}></Menu>
         <main>
           <PopupAd />
           <Routes>
@@ -136,11 +136,13 @@ function App() {
             ></Route>
             <Route
               path="/productos"
-              element={<Productos usuarioAdmin={usuarioAdmin} listaProductos={listaProductos} agregarAlCarrito={agregarAlCarrito}></Productos>}
+              element={
+                <Productos usuarioAdmin={usuarioAdmin} listaProductos={listaProductos} agregarAlCarrito={agregarAlCarrito}></Productos>
+              }
             ></Route>
             <Route path="/detalleproducto/:id" element={<DetalleProductos></DetalleProductos>}></Route>
             <Route path="/carrito" element={<Carrito carrito={carrito} eliminarDelCarrito={eliminarDelCarrito}></Carrito>}></Route>
-            <Route path="/login" element={<Login setUsuarioAdmin={setUsuarioAdmin}></Login>}></Route>
+            <Route path="/login" element={<Login setUsuarioAdmin={setUsuarioAdmin} setCarrito={setCarrito}></Login>}></Route>
             <Route path="/quienesSomos" element={<QuienesSomos></QuienesSomos>}></Route>
             <Route path="/PoliticasDePrivacidad" element={<PoliticasDePrivacidad></PoliticasDePrivacidad>}></Route>
             <Route path="/registro" element={<Register></Register>}></Route>
