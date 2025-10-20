@@ -62,9 +62,8 @@ const ItemReserva = ({ turno, dias, listaReservas, setListaReservas, cancha, usu
   
   const respuesta = await crearReserva(reserva);
   if (respuesta.status === 201) {
-    // CAMBIO CLAVE: Guardar con clave específica por usuario
     localStorage.setItem(
-      claveUltimaReserva, // ← Usar la clave específica
+      claveUltimaReserva,
       JSON.stringify({
         timestamp: Date.now(),
         cancha: reservaSeleccionada.nombreCancha,
