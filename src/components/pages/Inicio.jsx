@@ -8,7 +8,7 @@ import { leerCanchas } from "./helpers/queries";
 import "./Inicio.css";
 import Spinner from 'react-bootstrap/Spinner';
 
-const Inicio = ({ listaProductos, page, totalPages, setPage }) => {
+const Inicio = ({ usuarioAdmin, listaProductos, page, totalPages, setPage, agregarAlCarrito }) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
   const [listaCanchas, setListaCanchas] = useState([]);
@@ -58,7 +58,11 @@ const Inicio = ({ listaProductos, page, totalPages, setPage }) => {
     <section className="mainSection">
       <div className="carousel-inner">
         <div className="carousel-item active">
-          <img className="banner" src="https://res.cloudinary.com/duwi53e7z/image/upload/v1760671426/pexels-photo-274506_km7e0r.jpg" alt="fondo cancha" />
+          <img
+            className="banner"
+            src="https://res.cloudinary.com/duwi53e7z/image/upload/v1760671426/pexels-photo-274506_km7e0r.jpg"
+            alt="fondo cancha"
+          />
           <div className="carousel-caption position-absolute end-50 bottom-0 text-start w-50 fadeInTexto">
             <h3 className="titulo-banner fs-1 mb-0 fw-light">Viví el futbol</h3>
             <h3 className="titulo-banner shadow-sm fw-bold display-3 display-md-1">FULLCANCHAS</h3>
@@ -72,36 +76,36 @@ const Inicio = ({ listaProductos, page, totalPages, setPage }) => {
       <section>
         <div className="bg-shopp">
           <Container>
-    <Row className="pt-3 rounded-2 justify-content-center">
-        <Col xs={12} md={4} className="d-flex flex-column align-items-center mb-3 mb-md-0">
-            <p className="fw-bold fs-6 fs-md-5 text-white d-none d-md-block">PASO 1</p>
-            <img
-            className="imagen-icono"
-            src="https://res.cloudinary.com/duwi53e7z/image/upload/v1759154741/Elegir2_t2ykcl.png"
-            alt="icono elegí"
-            />
-            <p className="fw-bolder fs-6 fs-md-5 text-white text-center">Elegí tu cancha</p>
-        </Col>
-        <Col xs={12} md={4} className="d-flex flex-column align-items-center mb-3 mb-md-0">
-            <p className="fw-bold fs-6 fs-md-5 text-white d-none d-md-block">PASO 2</p>
-            <img
-            className="imagen-icono"
-            src="https://res.cloudinary.com/duwi53e7z/image/upload/v1759154741/Horario2_satb47.png"
-            alt="icono elegí"
-            />
-            <p className="fw-bolder fs-6 fs-md-5 text-white text-center">Elegí el día y la hora</p>
-        </Col>
-        <Col xs={12} md={4} className="d-flex flex-column align-items-center">
-            <p className="fw-bold fs-6 fs-md-5 text-white d-none d-md-block">PASO 3</p>
-            <img
-            className="imagen-icono"
-            src="https://res.cloudinary.com/duwi53e7z/image/upload/v1759154741/Juga2_xw0qnm.png"
-            alt="icono elegí"
-            />
-            <p className="fw-bolder fs-6 fs-md-5 text-white text-center">Vení a Jugar!!!</p>
-        </Col>
-    </Row>
-</Container>
+            <Row className="pt-3 rounded-2 justify-content-center">
+              <Col xs={12} md={4} className="d-flex flex-column align-items-center mb-3 mb-md-0">
+                <p className="fw-bold fs-6 fs-md-5 text-white d-none d-md-block">PASO 1</p>
+                <img
+                  className="imagen-icono"
+                  src="https://res.cloudinary.com/duwi53e7z/image/upload/v1759154741/Elegir2_t2ykcl.png"
+                  alt="icono elegí"
+                />
+                <p className="fw-bolder fs-6 fs-md-5 text-white text-center">Elegí tu cancha</p>
+              </Col>
+              <Col xs={12} md={4} className="d-flex flex-column align-items-center mb-3 mb-md-0">
+                <p className="fw-bold fs-6 fs-md-5 text-white d-none d-md-block">PASO 2</p>
+                <img
+                  className="imagen-icono"
+                  src="https://res.cloudinary.com/duwi53e7z/image/upload/v1759154741/Horario2_satb47.png"
+                  alt="icono elegí"
+                />
+                <p className="fw-bolder fs-6 fs-md-5 text-white text-center">Elegí el día y la hora</p>
+              </Col>
+              <Col xs={12} md={4} className="d-flex flex-column align-items-center">
+                <p className="fw-bold fs-6 fs-md-5 text-white d-none d-md-block">PASO 3</p>
+                <img
+                  className="imagen-icono"
+                  src="https://res.cloudinary.com/duwi53e7z/image/upload/v1759154741/Juga2_xw0qnm.png"
+                  alt="icono elegí"
+                />
+                <p className="fw-bolder fs-6 fs-md-5 text-white text-center">Vení a Jugar!!!</p>
+              </Col>
+            </Row>
+          </Container>
         </div>
         <div className="unionSuave2"></div>
         <div className="px-5 py-5">
@@ -129,7 +133,7 @@ const Inicio = ({ listaProductos, page, totalPages, setPage }) => {
               {listaProductos.length > 0 ? (
                 listaProductos.map((producto) => (
                   <Col key={producto._id} xl={3} lg={4} md={6} sm={12} className="mb-4">
-                    <CardProducto producto={producto} />
+                    <CardProducto usuarioAdmin={usuarioAdmin} producto={producto} agregarAlCarrito={agregarAlCarrito} />
                   </Col>
                 ))
               ) : (
@@ -155,20 +159,20 @@ const Inicio = ({ listaProductos, page, totalPages, setPage }) => {
       </section>
 
       <Container fluid>
-            <Row className="mt-0">
-                {galleryImages.map((imageUrl, index) => (
-                <Col key={index} xs={12} md={4} lg={2} className="p-0">
-                    <img
-                    className="contenedor-imagen imagenGaleria w-100"
-                    src={imageUrl}
-                    alt={`imagen galería ${index + 1}`}
-                    style={{ cursor: "pointer" }}
-                    onClick={() => handleImageClick(imageUrl)}
-                    />
-                </Col>
-                ))}
-            </Row>
-        </Container>
+        <Row className="mt-0">
+          {galleryImages.map((imageUrl, index) => (
+            <Col key={index} xs={12} md={4} lg={2} className="p-0">
+              <img
+                className="contenedor-imagen imagenGaleria w-100"
+                src={imageUrl}
+                alt={`imagen galería ${index + 1}`}
+                style={{ cursor: "pointer" }}
+                onClick={() => handleImageClick(imageUrl)}
+              />
+            </Col>
+          ))}
+        </Row>
+      </Container>
 
       <Modal show={showModal} onHide={handleCloseModal} size="lg" centered className="image-modal">
         <Modal.Body className="text-center p-0">
@@ -188,8 +192,8 @@ const Inicio = ({ listaProductos, page, totalPages, setPage }) => {
       <div>
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13836.007794024403!2d-65.23461743173766!3d-26.82855015704578!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94225c6e58a8deab%3A0x889e3702172a7141!2sEl%20Abasto%20Futbol%205!5e0!3m2!1ses-419!2sar!4v1759030578317!5m2!1ses-419!2sar"
-          className=" googleMap" 
-          style={{ minHeight: '300px' }}
+          className=" googleMap"
+          style={{ minHeight: "300px" }}
           allowFullScreen
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"

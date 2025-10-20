@@ -1,6 +1,7 @@
 import { Button, Card } from "react-bootstrap";
+import { Link } from "react-router";
 
-const CardProducto = ({ producto }) => {
+const CardProducto = ({ usuarioAdmin, producto, agregarAlCarrito }) => {
   return (
     <Card className="shadow-sm h-100 border border-1 border-black">
       <div className="overflow-hidden">
@@ -15,10 +16,22 @@ const CardProducto = ({ producto }) => {
             {producto.descripcion.length > 30 ? producto.descripcion.slice(0, 30) + "..." : producto.descripcion}
           </Card.Text>
         </div>
-
-        <div>
-          <Card.Text className="fw-bold fs-4 text-dark mt-2">${producto.precio.toLocaleString("es-AR")}</Card.Text>
-          <Button className="w-100" >Agregar al carrito</Button>
+        <Card.Text className="fw-bold fs-4 text-dark mt-2">${producto.precio.toLocaleString("es-AR")}</Card.Text>
+        <div className="d-flex gap-2">
+          {usuarioAdmin.token && (
+            <>
+              <Button
+                type="button"
+                className="w-100 d-flex justify-content-center align-items-center"
+                onClick={() => agregarAlCarrito(producto)}
+              >
+                Sumar al carrito
+              </Button>
+            </>
+          )}
+          <Link to={`/detalleproducto/${producto._id}`} className="btn btn-success w-100 d-flex justify-content-center align-items-center">
+            Ver detalle
+          </Link>
         </div>
       </Card.Body>
     </Card>
