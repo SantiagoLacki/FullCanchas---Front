@@ -16,13 +16,11 @@ const ItemReserva = ({ turno, dias, listaReservas, setListaReservas, cancha, usu
   const handleReservar = async () => {
   if (!reservaSeleccionada) return;
   
-  // CAMBIO CLAVE: Usar una clave específica por usuario
   const claveUltimaReserva = `ultimaReserva_${usuarioAdmin.id}`;
   const ultimaReservaStr = localStorage.getItem(claveUltimaReserva);
   
   if (ultimaReservaStr) {
     const ultimaReserva = JSON.parse(ultimaReservaStr);
-    // Ya no necesitamos verificar el cliente aquí porque la clave es específica
     
     const tiempoTranscurrido = Date.now() - ultimaReserva.timestamp;
     const minutos = Math.floor(tiempoTranscurrido / 60000);
