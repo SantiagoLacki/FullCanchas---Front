@@ -153,7 +153,7 @@ const FormularioProducto = ({ titulo }) => {
                   type="file"
                   accept="image/*"
                   {...register("imagen", {
-                    required: titulo === "Producto Nuevo" ? "La imagen es obligatoria" : false,
+                    required: titulo === "Producto Nuevo" || !imagenActual ? "La imagen es obligatoria" : false,
                     validate: {
                       fileSize: (files) => !files[0] || files[0].size <= 3 * 1024 * 1024 || "La imagen no debe superar los 3MB.",
                     },

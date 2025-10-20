@@ -144,13 +144,20 @@ export const crearProducto = async (productoNuevo) => {
 
 export const editarProducto = async (productoEditado, id) => {
   try {
+    const formData = new FormData();
+    formData.append("nombre", productoEditado.nombre);
+    formData.append("precio", productoEditado.precio);
+    formData.append("categoria", productoEditado.categoria);
+    formData.append("descripcion", productoEditado.descripcion);
+    if (productoEditado.imagen) {
+      formData.append("imagen", productoEditado.imagen);
+    }
     const respuesta = await fetch(urlProductos + `/${id}`, {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json",
         "x-token": JSON.parse(sessionStorage.getItem("userKey")).token,
       },
-      body: JSON.stringify(productoEditado),
+      body: formData,
     });
     return respuesta;
   } catch (error) {
