@@ -122,13 +122,18 @@ export const obtenerProductoPorId = async (id) => {
 
 export const crearProducto = async (productoNuevo) => {
   try {
+    const formData = new FormData();
+    formData.append("nombre", productoNuevo.nombre);
+    formData.append("precio", productoNuevo.precio);
+    formData.append("categoria", productoNuevo.categoria);
+    formData.append("descripcion", productoNuevo.descripcion);
+    formData.append("imagen", productoNuevo.imagen);
     const respuesta = await fetch(urlProductos, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
         "x-token": JSON.parse(sessionStorage.getItem("userKey")).token,
       },
-      body: JSON.stringify(productoNuevo),
+      body: formData,
     });
     return respuesta;
   } catch (error) {
@@ -139,13 +144,20 @@ export const crearProducto = async (productoNuevo) => {
 
 export const editarProducto = async (productoEditado, id) => {
   try {
+    const formData = new FormData();
+    formData.append("nombre", productoEditado.nombre);
+    formData.append("precio", productoEditado.precio);
+    formData.append("categoria", productoEditado.categoria);
+    formData.append("descripcion", productoEditado.descripcion);
+    if (productoEditado.imagen) {
+      formData.append("imagen", productoEditado.imagen);
+    }
     const respuesta = await fetch(urlProductos + `/${id}`, {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json",
         "x-token": JSON.parse(sessionStorage.getItem("userKey")).token,
       },
-      body: JSON.stringify(productoEditado),
+      body: formData,
     });
     return respuesta;
   } catch (error) {
@@ -201,13 +213,18 @@ export const obtenerCanchaPorId = async (id) => {
 
 export const crearCancha = async (canchaNueva) => {
   try {
+    const formData = new FormData();
+    formData.append("nombre", canchaNueva.nombre);
+    formData.append("tipoDeSuperficie", canchaNueva.tipoDeSuperficie);
+    formData.append("precioPorHora", canchaNueva.precioPorHora);
+    formData.append("imagen", canchaNueva.imagen);
+    formData.append("disponibilidad", canchaNueva.disponibilidad);
     const respuesta = await fetch(urlCanchas, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
         "x-token": JSON.parse(sessionStorage.getItem("userKey")).token,
       },
-      body: JSON.stringify(canchaNueva),
+      body: formData,
     });
     console.log(respuesta);
     return respuesta;
@@ -219,13 +236,20 @@ export const crearCancha = async (canchaNueva) => {
 
 export const editarCancha = async (canchaEditada, id) => {
   try {
+    const formData = new FormData();
+    formData.append("nombre", canchaEditada.nombre);
+    formData.append("tipoDeSuperficie", canchaEditada.tipoDeSuperficie);
+    formData.append("precioPorHora", canchaEditada.precioPorHora);
+    if (canchaEditada.imagen) {
+      formData.append("imagen", canchaEditada.imagen);
+    }
+    formData.append("disponibilidad", canchaEditada.disponibilidad);
     const respuesta = await fetch(urlCanchas + `/${id}`, {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json",
         "x-token": JSON.parse(sessionStorage.getItem("userKey")).token,
       },
-      body: JSON.stringify(canchaEditada),
+      body: formData,
     });
     return respuesta;
   } catch (error) {
@@ -279,7 +303,6 @@ export const crearReserva = async (reservaNueva) => {
       },
       body: JSON.stringify(reservaNueva),
     });
-    console.log(respuesta);
     return respuesta;
   } catch (error) {
     console.error(error);

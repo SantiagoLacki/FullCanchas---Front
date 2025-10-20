@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Button, Form, Modal } from "react-bootstrap";
+import { Button,  Modal } from "react-bootstrap";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
 import { crearReserva, leerReservas } from "../helpers/queries";
 
-const ItemReserva = ({ turno, dias, listaReservas, setListaReservas, cancha, usuarioAdmin, pageReservas, limit }) => {
+const ItemReserva = ({ turno, dias, listaReservas, setListaReservas, cancha, usuarioAdmin }) => {
   const [show, setShow] = useState(false);
   const [reservaSeleccionada, setReservaSeleccionada] = useState(null);
 
@@ -18,8 +18,6 @@ const ItemReserva = ({ turno, dias, listaReservas, setListaReservas, cancha, usu
     const ultimaReservaStr = localStorage.getItem("ultimaReserva");
     if (ultimaReservaStr) {
       const ultimaReserva = JSON.parse(ultimaReservaStr);
-      console.log(ultimaReserva.cliente)
-      console.log(usuarioAdmin.id)
       if(ultimaReserva.cliente === usuarioAdmin.id){
           const tiempoTranscurrido = Date.now() - ultimaReserva.timestamp;
           const minutos = Math.floor(tiempoTranscurrido / 60000);
@@ -89,35 +87,44 @@ const ItemReserva = ({ turno, dias, listaReservas, setListaReservas, cancha, usu
   };
 
   const handleShow = (dia) => {
-    if (usuarioAdmin.rol === "user") {
-      setReservaSeleccionada({
-        fecha: new Date(dia.fecha).toLocaleDateString("es-ES"),
-        fechaISO: dia.fechaISO,
-        horario: turno.formato24,
-        horarioAmPm: turno.formatoAmPm,
-        nombreDia: dia.nombre,
-        nombreCancha: cancha?.nombre || "Cancha",
-        precio: cancha?.precioPorHora || 0,
-        cliente: usuarioAdmin.email,
-      });
-      setShow(true);
-    } else {
-      Swal.fire({
-        title: "Iniciar Sesión",
-        text: "Debes iniciar sesión para poder reservar un turno",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Ir a Iniciar Sesión",
-        cancelButtonText: "Cancelar",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          window.location.href = "/login";
-        }
-      });
-    }
-  };
+  if (usuarioAdmin.rol === "user") {
+    setReservaSeleccionada({
+      fecha: new Date(dia.fecha).toLocaleDateString("es-ES"),
+      fechaISO: dia.fechaISO,
+      horario: turno.formato24,
+      horarioAmPm: turno.formatoAmPm,
+      nombreDia: dia.nombre,
+      nombreCancha: cancha?.nombre || "Cancha",
+      precio: cancha?.precioPorHora || 0,
+      cliente: usuarioAdmin.email,
+    });
+    setShow(true);
+  } else if (usuarioAdmin.rol === "admin" || usuarioAdmin.rol === "staff") {
+    Swal.fire({
+      title: "Acceso restringido",
+      text: "Los usuarios administradores y desarrolladores no pueden realizar reservas. Solo los usuarios regulares pueden reservar turnos.",
+      icon: "info",
+      confirmButtonColor: "#3085d6",
+      confirmButtonText: "Entendido",
+    });
+  } else {
+    Swal.fire({
+      title: "Iniciar Sesión",
+      text: "Debes iniciar sesión como usuario regular para poder reservar un turno",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Ir a Iniciar Sesión",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = "/login";
+      }
+    });
+  }
+};
+
   const estaReservado = (dia) => {
     const fechaDia = new Date(dia.fecha).toISOString().split("T")[0];
     const existeReserva = listaReservas.some((reserva) => {
@@ -240,7 +247,7 @@ const ItemReserva = ({ turno, dias, listaReservas, setListaReservas, cancha, usu
             </>
           )}
           <p className="ms-4 mt-3 fw-light fs-6">
-            Al hacer click en reservar declaras haber leido y aceptado los <Link>Terminos y Condiciones</Link>{" "}
+             Al hacer click en reservar declaras haber leido y aceptado los <Link to={"/terminosycondiciones"}>Términos y Condiciones</Link>
           </p>
         </Modal.Body>
         <Modal.Footer className="border-0 d-flex justify-content-between mb-3">
