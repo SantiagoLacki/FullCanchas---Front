@@ -36,21 +36,21 @@ function Menu({ usuarioAdmin, setUsuarioAdmin, setCarrito }) {
   return (
     <Navbar expand="lg" className="navbar ps-4 pe-5">
       <Container fluid>
-        <Navbar.Brand as={Link} to={"/"} className="fw-bold text-white">
+        <Navbar.Brand as={Link} to={"/"} className="fw-bold text-warning">
           <img src={FullCanchaLogo} alt="full cancha logo" className="logo-nav img-fluid" />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav gap-4">
           <Nav className="ms-auto gap-2">
-            <Nav.Link as={Link} to={"/"} className="nav-link fw-bold text-white rounded px-2">
+            <NavLink as={Link} to={"/"} className="nav-link fw-bold text-white rounded px-2">
               <i className="bi bi-house-fill fs-4 me-1"></i>Inicio
-            </Nav.Link>
-            <Nav.Link as={Link} to={"/productos"} className="nav-link fw-bold text-white rounded px-2">
+            </NavLink>
+            <NavLink as={Link} to={"/productos"} className="nav-link fw-bold text-white rounded px-2 navbar-links">
               <i className="bi bi-bag-fill fs-4 me-1"></i>Catalogo
-            </Nav.Link>
-            <Nav.Link as={Link} to={"/carrito"} className="nav-link fw-bold text-white rounded px-2">
+            </NavLink>
+            <NavLink as={Link} to={"/carrito"} className="nav-link fw-bold text-white rounded px-2">
               <i className="bi bi-cart-plus-fill fs-4 me-1"></i>Carrito
-            </Nav.Link>
+            </NavLink>
             {usuarioAdmin.token && (usuarioAdmin.rol === "admin" || usuarioAdmin.rol === "staff") ? (
               <>
                 <NavLink className="nav-link fw-bold text-white rounded px-2" to={"/administrador"}>
@@ -62,9 +62,15 @@ function Menu({ usuarioAdmin, setUsuarioAdmin, setCarrito }) {
                 </Button>
               </>
             ) : usuarioAdmin.token && usuarioAdmin.rol === "user" ? (
-              <Button className="nav-link fw-bold text-white rounded px-2 btn-gold" onClick={logout}>
-                Cerrar Sesión
-              </Button>
+              <>
+                <Button className="nav-link fw-bold text-white rounded px-2 btn-gold" onClick={logout}>
+                  Cerrar Sesión
+                </Button>
+                <div className="d-flex align-items-center text-warning">
+                  <i className="bi bi-person-check fs-4 me-2 "></i>
+                  <p className="mb-0 ">{usuarioAdmin.nombreUsuario}</p>
+                </div>
+              </>
             ) : (
               <>
                 <Nav.Link as={Link} to={"/login"} className="nav-link fw-bold text-white rounded px-2">
