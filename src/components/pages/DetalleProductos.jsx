@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Container, Row, Col, Card } from "react-bootstrap";
 import { Link, useParams } from "react-router";
 import { obtenerProductoPorId } from "./helpers/queries.js";
 
@@ -37,9 +37,6 @@ const DetalleProductos = () => {
                   <div>
                     <h3 className="fw-bold text-success mb-3">${producto.precio}</h3>
                     <div className="d-flex gap-2">
-                      <Button variant="success" className="fw-semibold w-100 d-flex justify-content-center align-items-center">
-                        Agregar al carrito
-                      </Button>
                       <Link to="/productos" className="btn btn-danger w-100 fw-semibold d-flex justify-content-center align-items-center">
                         Catalogo
                       </Link>
