@@ -137,7 +137,7 @@ function App() {
             <Route
               path="/productos"
               element={
-                <Productos usuarioAdmin={usuarioAdmin} listaProductos={listaProductos} agregarAlCarrito={agregarAlCarrito}></Productos>
+                <Productos usuarioAdmin={usuarioAdmin} agregarAlCarrito={agregarAlCarrito}></Productos>
               }
             ></Route>
             <Route path="/detalleproducto/:id" element={<DetalleProductos></DetalleProductos>}></Route>

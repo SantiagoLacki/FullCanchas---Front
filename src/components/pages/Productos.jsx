@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Row, Col } from "react-bootstrap";
 import CardProducto from "./producto/CardProducto.jsx";
 import "./Productos.css";
+import { leerProductos } from "./helpers/queries.js";
 
-function Productos({ usuarioAdmin, listaProductos, agregarAlCarrito }) {
+function Productos({ usuarioAdmin, agregarAlCarrito }) {
   const productosPorPagina = 8;
+
+  const [listaProductos, setListaProductos] = useState([]);
 
   const [pageRemeras, setPageRemeras] = useState(1);
   const [pageBebidas, setPageBebidas] = useState(1);
@@ -22,6 +25,20 @@ function Productos({ usuarioAdmin, listaProductos, agregarAlCarrito }) {
       productos: productosPagina,
       totalPages,
     };
+  };
+
+  useEffect(() => {
+    obtenerProductos();
+  }, []);
+
+  const obtenerProductos = async () => {
+    const respuesta = await leerProductos();
+    if (respuesta.status === 200) {
+      const datos = await respuesta.json();
+      setListaProductos(datos);
+    } else {
+      console.error("Error al obtener productos");
+    }
   };
 
   const Categoria = ({ nombre, page, setPage }) => {
