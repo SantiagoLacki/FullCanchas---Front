@@ -118,7 +118,7 @@ function App() {
     <>
       <BrowserRouter>
         <Menu usuarioAdmin={usuarioAdmin} setUsuarioAdmin={setUsuarioAdmin} setCarrito={setCarrito}></Menu>
-        <main>
+        <main className="fono-gral">
           <PopupAd />
           <Routes>
             <Route

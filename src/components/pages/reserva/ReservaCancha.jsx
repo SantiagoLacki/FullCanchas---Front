@@ -77,8 +77,7 @@ const ReservaCancha = ({usuarioAdmin}) => {
     };
 
     return (
-        <section className="fono-gral">  
-
+        <>  
         <div className="position-relative">
             <img
                 className="banner-titulo w-100"
@@ -125,7 +124,7 @@ const ReservaCancha = ({usuarioAdmin}) => {
                     </div>
             </div>
         </section>
-        </section>
+        </>
     );
 };
 

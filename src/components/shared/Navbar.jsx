@@ -40,8 +40,8 @@ function Menu({ usuarioAdmin, setUsuarioAdmin, setCarrito }) {
           <img src={FullCanchaLogo} alt="full cancha logo" className="logo-nav img-fluid" />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto">
+        <Navbar.Collapse id="basic-navbar-nav gap-4">
+          <Nav className="ms-auto gap-2">
             <Nav.Link as={Link} to={"/"} className="nav-link fw-bold text-white rounded px-2">
               <i className="bi bi-house-fill fs-4 me-1"></i>Inicio
             </Nav.Link>
@@ -70,8 +70,8 @@ function Menu({ usuarioAdmin, setUsuarioAdmin, setCarrito }) {
                 <Nav.Link as={Link} to={"/login"} className="nav-link fw-bold text-white rounded px-2">
                   <i className="bi bi-person-circle fs-4 me-2"></i>Iniciar Sesión
                 </Nav.Link>
-                <Nav.Link as={Link} to={"/registro"} className="nav-link fw-bold text-white rounded px-2">
-                  <i className="bi bi-person-plus fs-4 me-2"></i>Registro
+                <Nav.Link as={Link} to={"/registro"} className="nav-link fw-bold text-white rounded px-2 border">
+                  <i className="bi bi-person-plus-fill fs-4 me-2"></i>Registro
                 </Nav.Link>
               </>
             )}

@@ -212,439 +212,437 @@ const Administrador = ({ usuarioAdmin }) => {
   };
 
   return (
-    <div className="fono-gral">
-      <section className="container mainSection">
-        {usuarioAdmin.rol === "staff" ? (
-          <div className="border text-white rounded-2 py-3 px-4 my-4 shadow-lg bg-light">
-                <div className="  align-items-center mt-2 mb-3">
-                  <Row className="d-flex justify-content-between align-items-center mb-3">
-                    <Col xs={12} md={6} className="mb-2 mb-md-0">
-                      <div className="d-flex align-items-center">
-                        <h2 className="display-6 titulo-admin fw-bold me-4">Usuarios</h2>
+    <section className="container mainSection">
+    {usuarioAdmin.rol === "staff" ? (
+        <div className="border text-white rounded-2 py-3 px-4 my-4 shadow-lg bg-light">
+            <div className="  align-items-center mt-2 mb-3">
+                <Row className="d-flex justify-content-between align-items-center mb-3">
+                <Col xs={12} md={6} className="mb-2 mb-md-0">
+                    <div className="d-flex align-items-center">
+                    <h2 className="display-6 titulo-admin fw-bold me-4">Usuarios</h2>
+                <div>
+                    <Link className="btn btn-gold text-white" to={"/administrador/crearusuario"}>
+                    <i className="bi bi-plus-circle"></i> Agregar
+                    </Link>
+                </div>
+                </div>
+            </Col>
+            <Col xs={12} md={6}>
+                <Form>
+                <Row className="justify-content-start justify-content-md-end">
+                    <Col xs="auto d-flex">
+                    <i className="bi bi-search fs-3 me-2 text-secondary"></i>
+                    <Form.Control
+                        type="text"
+                        placeholder="Buscar"
+                        className=" mr-sm-2"
+                        onChange={handleBuscarUsuarioAdmin}
+                        value={terminoBusquedaUsuario}
+                    />
+                    </Col>
+                </Row>
+                </Form>
+            </Col>
+            </Row>
+        </div>
+        {mostrarSpinner ?                     
+            <div className="text-center mt-5">
+            <Spinner animation="border" variant="warning" role="status" ></Spinner>
+            </div> 
+            :
+        <Table responsive striped bordered hover>
+            <thead>
+            <tr className="text-center">
+                <th className="text-secondary">#</th>
+                <th className="text-secondary">Nombre de Usuario</th>
+                <th className="text-secondary">Email</th>
+                <th className="text-secondary">Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            {listaUsuarios && listaUsuarios.length > 0 ? (
+            listaUsuarios.map((usuario, indice) => (
+                <ItemUsuario
+                key={usuario._id}
+                usuario={usuario}
+                fila={indice + 1}
+                setListaUsuarios={setListaUsuarios}
+                obtenerUsuarios={obtenerUsuarios}
+                ></ItemUsuario>
+            ))
+                ) : (
+                    <tr>
+                    <td colSpan="6" className="text-center text-muted py-4">
+                        No hay Usuarios disponibles
+                    </td>
+                    </tr>
+                )}
+            </tbody>
+        </Table>
+        }
+        </div>
+    ) : (
+        <>
+        <Dropdown className="mt-2">
+            <Dropdown.Toggle variant="gold" className="text-white btn-gold">
+            {activeSection === "usuarios" && "Usuarios"}
+            {activeSection === "canchas" && "Canchas"}
+            {activeSection === "productos" && "Productos"}
+            {activeSection === "reservas" && "Reservas"}
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+            <Dropdown.Item
+                onClick={() => setActiveSection("usuarios")}
+                active={activeSection === "usuarios"}
+                className={activeSection === "usuarios" ? "btn-gold" : ""}
+            >
+                Usuarios
+            </Dropdown.Item>
+            <Dropdown.Item
+                onClick={() => setActiveSection("canchas")}
+                active={activeSection === "canchas"}
+                className={activeSection === "canchas" ? "btn-gold" : ""}
+            >
+                Canchas
+            </Dropdown.Item>
+            <Dropdown.Item
+                onClick={() => setActiveSection("productos")}
+                active={activeSection === "productos"}
+                className={activeSection === "productos" ? "btn-gold" : ""}
+            >
+                Productos
+            </Dropdown.Item>
+            <Dropdown.Item
+                onClick={() => setActiveSection("reservas")}
+                active={activeSection === "reservas"}
+                className={activeSection === "reservas" ? "btn-gold" : ""}
+            >
+                Reservas
+            </Dropdown.Item>
+            </Dropdown.Menu>
+        </Dropdown>
+        {activeSection === "usuarios" && (
+            <div className="border text-white rounded-2 py-3 px-4 my-4 shadow-lg bg-light">
+            <div className="  align-items-center mt-2 mb-3">
+                <Row className="d-flex justify-content-between align-items-center mb-3">
+                <Col xs={12} md={6} className="mb-2 mb-md-0">
+                    <div className="d-flex align-items-center">
+                    <h2 className="display-6 titulo-admin fw-bold me-4">Usuarios</h2>
                     <div>
-                      <Link className="btn btn-gold text-white" to={"/administrador/crearusuario"}>
+                        <Link className="btn btn-gold text-white" to={"/administrador/crearusuario"}>
                         <i className="bi bi-plus-circle"></i> Agregar
-                      </Link>
+                        </Link>
                     </div>
-                  </div>
+                    </div>
                 </Col>
                 <Col xs={12} md={6}>
-                  <Form>
+                    <Form>
                     <Row className="justify-content-start justify-content-md-end">
-                      <Col xs="auto d-flex">
+                        <Col xs="auto d-flex">
                         <i className="bi bi-search fs-3 me-2 text-secondary"></i>
                         <Form.Control
-                          type="text"
-                          placeholder="Buscar"
-                          className=" mr-sm-2"
-                          onChange={handleBuscarUsuarioAdmin}
-                          value={terminoBusquedaUsuario}
+                            type="text"
+                            placeholder="Buscar"
+                            className=" mr-sm-2"
+                            onChange={handleBuscarUsuario}
+                            value={terminoBusquedaUsuario}
                         />
-                      </Col>
+                        </Col>
                     </Row>
-                  </Form>
+                    </Form>
                 </Col>
-              </Row>
+                </Row>
             </div>
             {mostrarSpinner ?                     
-              <div className="text-center mt-5">
+            <div className="text-center mt-5">
                 <Spinner animation="border" variant="warning" role="status" ></Spinner>
-              </div> 
-              :
+            </div> 
+            :
             <Table responsive striped bordered hover>
-              <thead>
+                <thead>
                 <tr className="text-center">
-                  <th className="text-secondary">#</th>
-                  <th className="text-secondary">Nombre de Usuario</th>
-                  <th className="text-secondary">Email</th>
-                  <th className="text-secondary">Acciones</th>
+                    <th className="text-secondary">#</th>
+                    <th className="text-secondary">Nombre de Usuario</th>
+                    <th className="text-secondary">Email</th>
+                    <th className="text-secondary">Acciones</th>
                 </tr>
-              </thead>
-              <tbody>
+                </thead>
+                <tbody>
                 {listaUsuarios && listaUsuarios.length > 0 ? (
-                listaUsuarios.map((usuario, indice) => (
-                  <ItemUsuario
+                listaUsuarios.slice((pageUsuarios - 1) * limit, pageUsuarios * limit).map((usuario, indice) => (
+                    <ItemUsuario
                     key={usuario._id}
                     usuario={usuario}
-                    fila={indice + 1}
-                    setListaUsuarios={setListaUsuarios}
+                    fila={(pageUsuarios - 1) * limit + indice + 1}
                     obtenerUsuarios={obtenerUsuarios}
-                  ></ItemUsuario>
+                    ></ItemUsuario>
                 ))
-                 ) : (
-                      <tr>
-                        <td colSpan="6" className="text-center text-muted py-4">
-                          No hay Usuarios disponibles
-                        </td>
-                      </tr>
-                    )}
-              </tbody>
+                ) : (
+                    <tr>
+                    <td colSpan="6" className="text-center text-muted py-4">
+                        No hay Usuarios disponibles
+                    </td>
+                    </tr>
+                )}
+                </tbody>
             </Table>
             }
-          </div>
-        ) : (
-          <>
-            <Dropdown className="mt-2">
-              <Dropdown.Toggle variant="gold" className="text-white btn-gold">
-                {activeSection === "usuarios" && "Usuarios"}
-                {activeSection === "canchas" && "Canchas"}
-                {activeSection === "productos" && "Productos"}
-                {activeSection === "reservas" && "Reservas"}
-              </Dropdown.Toggle>
-
-              <Dropdown.Menu>
-                <Dropdown.Item
-                  onClick={() => setActiveSection("usuarios")}
-                  active={activeSection === "usuarios"}
-                  className={activeSection === "usuarios" ? "btn-gold" : ""}
+            {totalPagesUsuarios > 1 && (
+                <div className="d-flex justify-content-center align-items-center mt-3">
+                <Button
+                    variant="warning"
+                    onClick={() => setPageUsuarios((prev) => Math.max(prev - 1, 1))}
+                    disabled={pageUsuarios === 1}
                 >
-                  Usuarios
-                </Dropdown.Item>
-                <Dropdown.Item
-                  onClick={() => setActiveSection("canchas")}
-                  active={activeSection === "canchas"}
-                  className={activeSection === "canchas" ? "btn-gold" : ""}
+                    Anterior
+                </Button>
+                <span className="mx-3 text-dark px-2 py-2 rounded">
+                    Página {pageUsuarios} de {totalPagesUsuarios}
+                </span>
+                <Button
+                    variant="warning"
+                    onClick={() => setPageUsuarios((prev) => Math.min(prev + 1, totalPagesUsuarios))}
+                    disabled={pageUsuarios === totalPagesUsuarios}
                 >
-                  Canchas
-                </Dropdown.Item>
-                <Dropdown.Item
-                  onClick={() => setActiveSection("productos")}
-                  active={activeSection === "productos"}
-                  className={activeSection === "productos" ? "btn-gold" : ""}
-                >
-                  Productos
-                </Dropdown.Item>
-                <Dropdown.Item
-                  onClick={() => setActiveSection("reservas")}
-                  active={activeSection === "reservas"}
-                  className={activeSection === "reservas" ? "btn-gold" : ""}
-                >
-                  Reservas
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-            {activeSection === "usuarios" && (
-              <div className="border text-white rounded-2 py-3 px-4 my-4 shadow-lg bg-light">
-                <div className="  align-items-center mt-2 mb-3">
-                  <Row className="d-flex justify-content-between align-items-center mb-3">
-                    <Col xs={12} md={6} className="mb-2 mb-md-0">
-                      <div className="d-flex align-items-center">
-                        <h2 className="display-6 titulo-admin fw-bold me-4">Usuarios</h2>
-                        <div>
-                          <Link className="btn btn-gold text-white" to={"/administrador/crearusuario"}>
-                            <i className="bi bi-plus-circle"></i> Agregar
-                          </Link>
-                        </div>
-                      </div>
-                    </Col>
-                    <Col xs={12} md={6}>
-                      <Form>
-                        <Row className="justify-content-start justify-content-md-end">
-                          <Col xs="auto d-flex">
-                            <i className="bi bi-search fs-3 me-2 text-secondary"></i>
-                            <Form.Control
-                              type="text"
-                              placeholder="Buscar"
-                              className=" mr-sm-2"
-                              onChange={handleBuscarUsuario}
-                              value={terminoBusquedaUsuario}
-                            />
-                          </Col>
-                        </Row>
-                      </Form>
-                    </Col>
-                  </Row>
+                    Siguiente
+                </Button>
                 </div>
-                {mostrarSpinner ?                     
-                <div className="text-center mt-5">
-                    <Spinner animation="border" variant="warning" role="status" ></Spinner>
-                </div> 
-                :
-                <Table responsive striped bordered hover>
-                  <thead>
-                    <tr className="text-center">
-                      <th className="text-secondary">#</th>
-                      <th className="text-secondary">Nombre de Usuario</th>
-                      <th className="text-secondary">Email</th>
-                      <th className="text-secondary">Acciones</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {listaUsuarios && listaUsuarios.length > 0 ? (
-                    listaUsuarios.slice((pageUsuarios - 1) * limit, pageUsuarios * limit).map((usuario, indice) => (
-                      <ItemUsuario
-                        key={usuario._id}
-                        usuario={usuario}
-                        fila={(pageUsuarios - 1) * limit + indice + 1}
-                        obtenerUsuarios={obtenerUsuarios}
-                      ></ItemUsuario>
-                    ))
-                    ) : (
-                      <tr>
-                        <td colSpan="6" className="text-center text-muted py-4">
-                          No hay Usuarios disponibles
-                        </td>
-                      </tr>
-                    )}
-                  </tbody>
-                </Table>
-                }
-                {totalPagesUsuarios > 1 && (
-                  <div className="d-flex justify-content-center align-items-center mt-3">
-                    <Button
-                      variant="warning"
-                      onClick={() => setPageUsuarios((prev) => Math.max(prev - 1, 1))}
-                      disabled={pageUsuarios === 1}
-                    >
-                      Anterior
-                    </Button>
-                    <span className="mx-3 text-dark px-2 py-2 rounded">
-                      Página {pageUsuarios} de {totalPagesUsuarios}
-                    </span>
-                    <Button
-                      variant="warning"
-                      onClick={() => setPageUsuarios((prev) => Math.min(prev + 1, totalPagesUsuarios))}
-                      disabled={pageUsuarios === totalPagesUsuarios}
-                    >
-                      Siguiente
-                    </Button>
-                  </div>
-                )}
-              </div>
             )}
-            {activeSection === "canchas" && (
-              <div className="border text-white rounded-2 py-3 px-4 my-4 shadow-lg bg-light">
-                <div className="d-flex align-items-center mt-2 mb-3">
-                  <h2 className="display-6 titulo-admin fw-bold me-4">Canchas</h2>
-                  <div>
-                    <Link className="btn btn-gold text-white" to={"/administrador/crearcancha"}>
-                      <i className="bi bi-plus-circle"></i> Agregar
-                    </Link>
-                  </div>
-                </div>
-                {mostrarSpinner ?                     
-                <div className="text-center mt-5">
-                    <Spinner animation="border" variant="warning" role="status" ></Spinner>
-                </div> 
-                :
-                <Table responsive striped bordered hover>
-                  <thead>
-                    <tr className="text-center">
-                      <th className="text-secondary">#</th>
-                      <th className="text-secondary">Cancha</th>
-                      <th className="text-secondary">Precio por Hora</th>
-                      <th className="text-secondary">Disponibilidad</th>
-                      <th className="text-secondary">Imagen</th>
-                      <th className="text-secondary">Acciones</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {listaCanchas.map((cancha, indice) => (
-                      <ItemCancha key={cancha._id} cancha={cancha} fila={indice + 1} setListaCanchas={setListaCanchas}></ItemCancha>
-                    ))}
-                  </tbody>
-                </Table>
-                }
-              </div>
-            )}
-            {activeSection === "productos" && (
-              <div className="border text-white rounded-2 py-3 px-4 my-4 shadow-lg bg-light">
-                <div className="  align-items-center mt-2 mb-3">
-                  <Row className="d-flex justify-content-between align-items-center mb-3">
-                    <Col xs={12} md={6} className="mb-2 mb-md-0">
-                      <div className="d-flex align-items-center">
-                        <h2 className="display-6 titulo-admin fw-bold  me-4">Productos</h2>
-                        <div>
-                          <Link className="btn btn-gold text-white" to={"/administrador/crearproducto"}>
-                            <i className="bi bi-plus-circle"></i> Agregar
-                          </Link>
-                        </div>
-                      </div>
-                    </Col>
-                    <Col xs={12} md={6}>
-                      <Form>
-                        <Row className="justify-content-start justify-content-md-end">
-                          <Col xs="auto d-flex">
-                            <i className="bi bi-search fs-3 me-2 text-secondary"></i>
-                            <Form.Control
-                              type="text"
-                              placeholder="Buscar"
-                              className=" mr-sm-2"
-                              onChange={handleBuscarProducto}
-                              value={terminoBusquedaProducto}
-                            />
-                          </Col>
-                        </Row>
-                      </Form>
-                    </Col>
-                  </Row>
-                </div>
-                {mostrarSpinner ?                     
-                <div className="text-center mt-5">
-                    <Spinner animation="border" variant="warning" role="status" ></Spinner>
-                </div> 
-                :
-                <Table responsive striped bordered hover>
-                  <thead>
-                    <tr className="text-center">
-                      <th className="text-secondary">#</th>
-                      <th className="text-secondary">Nombre del producto</th>
-                      <th className="text-secondary">Precio</th>
-                      <th className="text-secondary">Categoria</th>
-                      <th className="text-secondary">Imagen</th>
-                      <th className="text-secondary">Acciones</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {listaProductos && listaProductos.length > 0 ? (
-                    listaProductos.map((producto, indice) => (
-                      <ItemProducto
-                        key={producto._id}
-                        producto={producto}
-                        fila={(pageProductos - 1) * limit + indice + 1}
-                        setListaProductos={setListaProductos}
-                        pageProductos={pageProductos}
-                        limit={limit}
-                      ></ItemProducto>
-                    ))
-                    ) : (
-                      <tr>
-                        <td colSpan="6" className="text-center text-muted py-4">
-                          No hay productos disponibles
-                        </td>
-                      </tr>
-                    )}
-                  </tbody>
-                </Table>
-                }
-                {totalPagesProductos > 1 && (
-                  <div className="d-flex justify-content-center align-items-center mt-3">
-                    <Button
-                      variant="warning"
-                      onClick={() => setPageProductos((prev) => Math.max(prev - 1, 1))}
-                      disabled={pageProductos === 1}
-                    >
-                      Anterior
-                    </Button>
-                    <span className="mx-3 text-dark  px-2 py-2 rounded">
-                      Página {pageProductos} de {totalPagesProductos}
-                    </span>
-                    <Button
-                      variant="warning"
-                      onClick={() => setPageProductos((prev) => Math.min(prev + 1, totalPagesProductos))}
-                      disabled={pageProductos === totalPagesProductos}
-                    >
-                      Siguiente
-                    </Button>
-                  </div>
-                )}
-              </div>
-            )}
-            {activeSection === "reservas" && (
-              <div className="border text-white rounded-2 py-3 px-4 my-4 shadow-lg bg-light">
-                <div className="  align-items-center mt-2 mb-3">
-                  <Row className="d-flex justify-content-between align-items-center mb-3">
-                    <Col xs={12} md={6} className="mb-2 mb-md-0">
-                      <div className="d-flex align-items-center">
-                        <h2 className="display-6 titulo-admin fw-bold me-4">Reservas</h2>
-                      </div>
-                    </Col>
-                    <Col xs={12} md={6}>
-                      <Form>
-                        <Row className="justify-content-start justify-content-md-end">
-                          <Col xs="auto" className="d-flex align-items-center">
-                            <i className="bi bi-search fs-3 me-2 text-secondary"></i>
-                            <Form.Control
-                              type="date"
-                              placeholder="Buscar por fecha"
-                              className="mr-sm-2"
-                              onChange={handleFechaChange}
-                              value={fechaBusqueda}
-                            />
-                            <Button
-                              variant={fechaBusqueda ? "outline-danger" : "outline-secondary"}
-                              className="border-0"
-                              disabled={!fechaBusqueda}
-                              onClick={() => {
-                                setFechaBusqueda("");
-                                setPageReservas(1);
-                                obtenerReservas();
-                              }}
-                              title={fechaBusqueda ? "Limpiar búsqueda" : "Selecciona una fecha para limpiar"}
-                            >
-                              <i className="bi bi-x-circle"></i>
-                            </Button>
-                          </Col>
-                        </Row>
-                      </Form>
-                    </Col>
-                  </Row>
-                </div>
-                {mostrarSpinner ?                     
-                <div className="text-center mt-5">
-                    <Spinner animation="border" variant="warning" role="status" ></Spinner>
-                </div> 
-                :
-                <Table responsive striped bordered hover>
-                  <thead>
-                    <tr className="text-center">
-                      <th className="text-secondary">#</th>
-                      <th className="text-secondary">Cancha</th>
-                      <th className="text-secondary">Cliente</th>
-                      <th className="text-secondary">Fecha</th>
-                      <th className="text-secondary">Turno</th>
-                      <th className="text-secondary">Acciones</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {listaReservas.reservas && listaReservas.reservas.length > 0 ? (
-                      listaReservas.reservas.map((reserva, indice) => (
-                        <ItemReservaAdmin
-                          key={reserva._id}
-                          reserva={reserva}
-                          fila={(pageReservas - 1) * limit + indice + 1}
-                          setListaReservas={setListaReservas}
-                          pageReservas={pageReservas}
-                          limit={limit}
-                        ></ItemReservaAdmin>
-                      ))
-                    ) : (
-                      <tr>
-                        <td colSpan="6" className="text-center text-muted py-4">
-                          {fechaBusqueda ? "No se encontraron reservas para la fecha seleccionada" : "No hay reservas disponibles"}
-                        </td>
-                      </tr>
-                    )}
-                  </tbody>
-                </Table>
-                }
-                {!fechaBusqueda && totalPagesReservas > 1 && (
-                  <div className="d-flex justify-content-center align-items-center mt-3">
-                    <Button
-                      variant="warning"
-                      onClick={() => setPageReservas((prev) => Math.max(prev - 1, 1))}
-                      disabled={pageReservas === 1}
-                    >
-                      Anterior
-                    </Button>
-                    <span className="mx-3 text-dark px-2 py-2 rounded">
-                      Página {pageReservas} de {totalPagesReservas}
-                    </span>
-                    <Button
-                      variant="warning"
-                      onClick={() => setPageReservas((prev) => Math.min(prev + 1, totalPagesReservas))}
-                      disabled={pageReservas === totalPagesReservas}
-                    >
-                      Siguiente
-                    </Button>
-                  </div>
-                )}
-              </div>
-            )}
-          </>
+            </div>
         )}
-      </section>
-    </div>
+        {activeSection === "canchas" && (
+            <div className="border text-white rounded-2 py-3 px-4 my-4 shadow-lg bg-light">
+            <div className="d-flex align-items-center mt-2 mb-3">
+                <h2 className="display-6 titulo-admin fw-bold me-4">Canchas</h2>
+                <div>
+                <Link className="btn btn-gold text-white" to={"/administrador/crearcancha"}>
+                    <i className="bi bi-plus-circle"></i> Agregar
+                </Link>
+                </div>
+            </div>
+            {mostrarSpinner ?                     
+            <div className="text-center mt-5">
+                <Spinner animation="border" variant="warning" role="status" ></Spinner>
+            </div> 
+            :
+            <Table responsive striped bordered hover>
+                <thead>
+                <tr className="text-center">
+                    <th className="text-secondary">#</th>
+                    <th className="text-secondary">Cancha</th>
+                    <th className="text-secondary">Precio por Hora</th>
+                    <th className="text-secondary">Disponibilidad</th>
+                    <th className="text-secondary">Imagen</th>
+                    <th className="text-secondary">Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                {listaCanchas.map((cancha, indice) => (
+                    <ItemCancha key={cancha._id} cancha={cancha} fila={indice + 1} setListaCanchas={setListaCanchas}></ItemCancha>
+                ))}
+                </tbody>
+            </Table>
+            }
+            </div>
+        )}
+        {activeSection === "productos" && (
+            <div className="border text-white rounded-2 py-3 px-4 my-4 shadow-lg bg-light">
+            <div className="  align-items-center mt-2 mb-3">
+                <Row className="d-flex justify-content-between align-items-center mb-3">
+                <Col xs={12} md={6} className="mb-2 mb-md-0">
+                    <div className="d-flex align-items-center">
+                    <h2 className="display-6 titulo-admin fw-bold  me-4">Productos</h2>
+                    <div>
+                        <Link className="btn btn-gold text-white" to={"/administrador/crearproducto"}>
+                        <i className="bi bi-plus-circle"></i> Agregar
+                        </Link>
+                    </div>
+                    </div>
+                </Col>
+                <Col xs={12} md={6}>
+                    <Form>
+                    <Row className="justify-content-start justify-content-md-end">
+                        <Col xs="auto d-flex">
+                        <i className="bi bi-search fs-3 me-2 text-secondary"></i>
+                        <Form.Control
+                            type="text"
+                            placeholder="Buscar"
+                            className=" mr-sm-2"
+                            onChange={handleBuscarProducto}
+                            value={terminoBusquedaProducto}
+                        />
+                        </Col>
+                    </Row>
+                    </Form>
+                </Col>
+                </Row>
+            </div>
+            {mostrarSpinner ?                     
+            <div className="text-center mt-5">
+                <Spinner animation="border" variant="warning" role="status" ></Spinner>
+            </div> 
+            :
+            <Table responsive striped bordered hover>
+                <thead>
+                <tr className="text-center">
+                    <th className="text-secondary">#</th>
+                    <th className="text-secondary">Nombre del producto</th>
+                    <th className="text-secondary">Precio</th>
+                    <th className="text-secondary">Categoria</th>
+                    <th className="text-secondary">Imagen</th>
+                    <th className="text-secondary">Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                {listaProductos && listaProductos.length > 0 ? (
+                listaProductos.map((producto, indice) => (
+                    <ItemProducto
+                    key={producto._id}
+                    producto={producto}
+                    fila={(pageProductos - 1) * limit + indice + 1}
+                    setListaProductos={setListaProductos}
+                    pageProductos={pageProductos}
+                    limit={limit}
+                    ></ItemProducto>
+                ))
+                ) : (
+                    <tr>
+                    <td colSpan="6" className="text-center text-muted py-4">
+                        No hay productos disponibles
+                    </td>
+                    </tr>
+                )}
+                </tbody>
+            </Table>
+            }
+            {totalPagesProductos > 1 && (
+                <div className="d-flex justify-content-center align-items-center mt-3">
+                <Button
+                    variant="warning"
+                    onClick={() => setPageProductos((prev) => Math.max(prev - 1, 1))}
+                    disabled={pageProductos === 1}
+                >
+                    Anterior
+                </Button>
+                <span className="mx-3 text-dark  px-2 py-2 rounded">
+                    Página {pageProductos} de {totalPagesProductos}
+                </span>
+                <Button
+                    variant="warning"
+                    onClick={() => setPageProductos((prev) => Math.min(prev + 1, totalPagesProductos))}
+                    disabled={pageProductos === totalPagesProductos}
+                >
+                    Siguiente
+                </Button>
+                </div>
+            )}
+            </div>
+        )}
+        {activeSection === "reservas" && (
+            <div className="border text-white rounded-2 py-3 px-4 my-4 shadow-lg bg-light">
+            <div className="  align-items-center mt-2 mb-3">
+                <Row className="d-flex justify-content-between align-items-center mb-3">
+                <Col xs={12} md={6} className="mb-2 mb-md-0">
+                    <div className="d-flex align-items-center">
+                    <h2 className="display-6 titulo-admin fw-bold me-4">Reservas</h2>
+                    </div>
+                </Col>
+                <Col xs={12} md={6}>
+                    <Form>
+                    <Row className="justify-content-start justify-content-md-end">
+                        <Col xs="auto" className="d-flex align-items-center">
+                        <i className="bi bi-search fs-3 me-2 text-secondary"></i>
+                        <Form.Control
+                            type="date"
+                            placeholder="Buscar por fecha"
+                            className="mr-sm-2"
+                            onChange={handleFechaChange}
+                            value={fechaBusqueda}
+                        />
+                        <Button
+                            variant={fechaBusqueda ? "outline-danger" : "outline-secondary"}
+                            className="border-0"
+                            disabled={!fechaBusqueda}
+                            onClick={() => {
+                            setFechaBusqueda("");
+                            setPageReservas(1);
+                            obtenerReservas();
+                            }}
+                            title={fechaBusqueda ? "Limpiar búsqueda" : "Selecciona una fecha para limpiar"}
+                        >
+                            <i className="bi bi-x-circle"></i>
+                        </Button>
+                        </Col>
+                    </Row>
+                    </Form>
+                </Col>
+                </Row>
+            </div>
+            {mostrarSpinner ?                     
+            <div className="text-center mt-5">
+                <Spinner animation="border" variant="warning" role="status" ></Spinner>
+            </div> 
+            :
+            <Table responsive striped bordered hover>
+                <thead>
+                <tr className="text-center">
+                    <th className="text-secondary">#</th>
+                    <th className="text-secondary">Cancha</th>
+                    <th className="text-secondary">Cliente</th>
+                    <th className="text-secondary">Fecha</th>
+                    <th className="text-secondary">Turno</th>
+                    <th className="text-secondary">Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                {listaReservas.reservas && listaReservas.reservas.length > 0 ? (
+                    listaReservas.reservas.map((reserva, indice) => (
+                    <ItemReservaAdmin
+                        key={reserva._id}
+                        reserva={reserva}
+                        fila={(pageReservas - 1) * limit + indice + 1}
+                        setListaReservas={setListaReservas}
+                        pageReservas={pageReservas}
+                        limit={limit}
+                    ></ItemReservaAdmin>
+                    ))
+                ) : (
+                    <tr>
+                    <td colSpan="6" className="text-center text-muted py-4">
+                        {fechaBusqueda ? "No se encontraron reservas para la fecha seleccionada" : "No hay reservas disponibles"}
+                    </td>
+                    </tr>
+                )}
+                </tbody>
+            </Table>
+            }
+            {!fechaBusqueda && totalPagesReservas > 1 && (
+                <div className="d-flex justify-content-center align-items-center mt-3">
+                <Button
+                    variant="warning"
+                    onClick={() => setPageReservas((prev) => Math.max(prev - 1, 1))}
+                    disabled={pageReservas === 1}
+                >
+                    Anterior
+                </Button>
+                <span className="mx-3 text-dark px-2 py-2 rounded">
+                    Página {pageReservas} de {totalPagesReservas}
+                </span>
+                <Button
+                    variant="warning"
+                    onClick={() => setPageReservas((prev) => Math.min(prev + 1, totalPagesReservas))}
+                    disabled={pageReservas === totalPagesReservas}
+                >
+                    Siguiente
+                </Button>
+                </div>
+            )}
+            </div>
+        )}
+        </>
+    )}
+    </section>
   );
 };
 

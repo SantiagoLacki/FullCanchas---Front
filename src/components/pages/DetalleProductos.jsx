@@ -27,7 +27,7 @@ const DetalleProductos = () => {
               <Col md={6}>
                 <Card.Body className="p-4 d-flex flex-column justify-content-between h-100">
                   <div>
-                    <Card.Title as="h2" className="fw-bold mb-3 text-primary">
+                    <Card.Title as="h2" className="mb-3 display-6 titulo-admin">
                       {producto.nombre}
                     </Card.Title>
                     <Card.Subtitle className="text-muted mb-3">Categoría: {producto.categoria}</Card.Subtitle>

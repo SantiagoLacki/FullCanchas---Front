@@ -137,7 +137,7 @@ const FormularioReserva = ({ titulo }) => {
   };
 
   return (
-    <div className="fono-gral">
+    <>
       <div className="text-center pt-3">
         <img
           className="imagen-icono"
@@ -232,7 +232,7 @@ const FormularioReserva = ({ titulo }) => {
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 };
 
