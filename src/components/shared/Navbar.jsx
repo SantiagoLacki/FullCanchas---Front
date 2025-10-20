@@ -6,7 +6,7 @@ import FullCanchaLogo from "../../assets/logo-canchasfull-nav.png";
 import { Button } from "react-bootstrap";
 import Swal from "sweetalert2";
 
-function Menu({ usuarioAdmin, setUsuarioAdmin }) {
+function Menu({ usuarioAdmin, setUsuarioAdmin, setCarrito }) {
   const navegacion = useNavigate();
   const logout = () => {
     Swal.fire({
@@ -25,6 +25,9 @@ function Menu({ usuarioAdmin, setUsuarioAdmin }) {
       reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
+        setCarrito([]);
+        sessionStorage.removeItem("carrito");
+        sessionStorage.removeItem("userKey");
         setUsuarioAdmin({});
         navegacion("/");
       }
