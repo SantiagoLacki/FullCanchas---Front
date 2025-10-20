@@ -261,7 +261,8 @@ const Administrador = ({ usuarioAdmin }) => {
                 </tr>
               </thead>
               <tbody>
-                {listaUsuarios.map((usuario, indice) => (
+                {listaUsuarios && listaUsuarios.length > 0 ? (
+                listaUsuarios.map((usuario, indice) => (
                   <ItemUsuario
                     key={usuario._id}
                     usuario={usuario}
@@ -269,14 +270,14 @@ const Administrador = ({ usuarioAdmin }) => {
                     setListaUsuarios={setListaUsuarios}
                     obtenerUsuarios={obtenerUsuarios}
                   ></ItemUsuario>
-                ))}
-                ) : (
-                    <tr>
-                    <td colSpan="6" className="text-center text-muted py-4">
-                        No hay Usuarios disponibles
-                    </td>
-                    </tr>
-                )
+                ))
+                 ) : (
+                      <tr>
+                        <td colSpan="6" className="text-center text-muted py-4">
+                          No hay Usuarios disponibles
+                        </td>
+                      </tr>
+                    )}
               </tbody>
             </Table>
             }
