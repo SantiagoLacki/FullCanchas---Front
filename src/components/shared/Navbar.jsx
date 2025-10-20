@@ -60,6 +60,10 @@ function Menu({ usuarioAdmin, setUsuarioAdmin, setCarrito }) {
                 <Button className="nav-link fw-bold navbar-links rounded px-2 btn-gold" onClick={logout}>
                   Cerrar Sesión
                 </Button>
+                <div className="d-flex align-items-center text-warning">
+                  <i className="bi bi-person-check fs-4 me-2 "></i>
+                  <p className="mb-0 ">{usuarioAdmin.nombreUsuario}</p>
+                </div>
               </>
             ) : usuarioAdmin.token && usuarioAdmin.rol === "user" ? (
               <>

@@ -34,7 +34,11 @@ const Administrador = ({ usuarioAdmin }) => {
   const [totalPagesProductos, setTotalPagesProductos] = useState(1);
   const [pageReservas, setPageReservas] = useState(1);
   const [totalPagesReservas, setTotalPagesReservas] = useState(1);
-  const [mostrarSpinner, setMostrarSpinner] = useState(true)
+ 
+  const [mostrarSpinnerUsuarios, setMostrarSpinnerUsuarios] = useState(true);
+  const [mostrarSpinnerProductos, setMostrarSpinnerProductos] = useState(true);
+  const [mostrarSpinnerCanchas, setMostrarSpinnerCanchas] = useState(true);
+  const [mostrarSpinnerReservas, setMostrarSpinnerReservas] = useState(true);
 
   useEffect(() => {
     obtenerUsuarios();
@@ -45,6 +49,7 @@ const Administrador = ({ usuarioAdmin }) => {
 
   const obtenerUsuarios = async () => {
     try {
+      setMostrarSpinnerUsuarios(true);
       const primeraRespuesta = await leerUsuariosPaginados(1, limit);
       if (primeraRespuesta.status !== 200) throw new Error();
 
@@ -75,11 +80,11 @@ const Administrador = ({ usuarioAdmin }) => {
         text: "Intenta esta operación en unos minutos",
       });
     }
-    setMostrarSpinner(false)
+    setMostrarSpinnerUsuarios(false);
   };
 
   const obtenerProductos = async () => {
-    setMostrarSpinner(true)
+    setMostrarSpinnerProductos(true);
     const respuesta = await leerProductosPaginados(pageProductos, limit);
     if (respuesta.status === 200) {
       const datos = await respuesta.json();
@@ -92,11 +97,11 @@ const Administrador = ({ usuarioAdmin }) => {
         text: "Intenta esta operación en unos minutos",
       });
     }
-    setMostrarSpinner(false)
+    setMostrarSpinnerProductos(false);
   };
 
   const obtenerCanchas = async () => {
-    setMostrarSpinner(true)
+    setMostrarSpinnerCanchas(true);
     const respuesta = await leerCanchas();
     if (respuesta.status === 200) {
       const datos = await respuesta.json();
@@ -108,11 +113,11 @@ const Administrador = ({ usuarioAdmin }) => {
         text: "Intenta esta operación en unos minutos",
       });
     }
-    setMostrarSpinner(false)
+    setMostrarSpinnerCanchas(false);
   };
 
   const obtenerReservas = async () => {
-    setMostrarSpinner(true)
+    setMostrarSpinnerReservas(true);
     const respuesta = await leerReservasPaginadas(pageReservas, limit);
     if (respuesta.status === 200) {
       const datos = await respuesta.json();
@@ -125,11 +130,11 @@ const Administrador = ({ usuarioAdmin }) => {
         text: "Intenta esta operación en unos minutos",
       });
     }
-    setMostrarSpinner(false)
+    setMostrarSpinnerReservas(false);
   };
 
   const handleBuscarUsuario = async (e) => {
-    setMostrarSpinner(true)
+    setMostrarSpinnerUsuarios(true);
     const termino = e.target.value;
     setTerminoBusquedaUsuario(termino);
     if (!termino) {
@@ -139,15 +144,15 @@ const Administrador = ({ usuarioAdmin }) => {
       if (respuesta.status === 200) {
         const datos = await respuesta.json();
         const usuariosResultado = datos || [];
-        const usuariosFiltrados = usuariosResultado.filter((usuario) => usuario.email.toLowerCase().includes(termino.toLowerCase()));
+        const usuariosFiltrados = usuariosResultado.filter((usuario) => usuario.email.toLowerCase().includes(termino.toLowerCase()) && usuario.rol === "user");
         setListaUsuarios(usuariosFiltrados);
       }
     }
-    setMostrarSpinner(false)
+    setMostrarSpinnerUsuarios(false);
   };
 
   const handleBuscarUsuarioAdmin = async (e) => {
-    setMostrarSpinner(true)
+    setMostrarSpinnerUsuarios(true);
     const termino = e.target.value;
     setTerminoBusquedaUsuario(termino);
     if (!termino) {
@@ -161,11 +166,11 @@ const Administrador = ({ usuarioAdmin }) => {
         setListaUsuarios(usuariosFiltrados);
       }
     }
-    setMostrarSpinner(false)
+    setMostrarSpinnerUsuarios(false);
   };
 
   const handleBuscarProducto = async (e) => {
-    setMostrarSpinner(true)
+    setMostrarSpinnerProductos(true);
     const termino = e.target.value;
     setTerminoBusquedaProducto(termino);
     if (!termino) {
@@ -180,11 +185,11 @@ const Administrador = ({ usuarioAdmin }) => {
         setListaProductos(productosFiltrados);
       }
     }
-    setMostrarSpinner(false)
+    setMostrarSpinnerProductos(false);
   };
 
   const handleFechaChange = async (e) => {
-    setMostrarSpinner(true)
+    setMostrarSpinnerReservas(true);
     const fechaSeleccionada = e.target.value;
     setFechaBusqueda(fechaSeleccionada);
     const respuesta = await leerReservas();
@@ -208,7 +213,7 @@ const Administrador = ({ usuarioAdmin }) => {
         });
       }
     }
-    setMostrarSpinner(false)
+    setMostrarSpinnerReservas(false);
   };
 
   return (
@@ -245,7 +250,7 @@ const Administrador = ({ usuarioAdmin }) => {
             </Col>
             </Row>
         </div>
-        {mostrarSpinner ?                     
+        {mostrarSpinnerUsuarios ?                     
             <div className="text-center mt-5">
             <Spinner animation="border" variant="warning" role="status" ></Spinner>
             </div> 
@@ -354,7 +359,7 @@ const Administrador = ({ usuarioAdmin }) => {
                 </Col>
                 </Row>
             </div>
-            {mostrarSpinner ?                     
+            {mostrarSpinnerUsuarios ?                     
             <div className="text-center mt-5">
                 <Spinner animation="border" variant="warning" role="status" ></Spinner>
             </div> 
@@ -421,7 +426,7 @@ const Administrador = ({ usuarioAdmin }) => {
                 </Link>
                 </div>
             </div>
-            {mostrarSpinner ?                     
+            {mostrarSpinnerCanchas ?                     
             <div className="text-center mt-5">
                 <Spinner animation="border" variant="warning" role="status" ></Spinner>
             </div> 
@@ -478,7 +483,7 @@ const Administrador = ({ usuarioAdmin }) => {
                 </Col>
                 </Row>
             </div>
-            {mostrarSpinner ?                     
+            {mostrarSpinnerProductos ?                     
             <div className="text-center mt-5">
                 <Spinner animation="border" variant="warning" role="status" ></Spinner>
             </div> 
@@ -579,7 +584,7 @@ const Administrador = ({ usuarioAdmin }) => {
                 </Col>
                 </Row>
             </div>
-            {mostrarSpinner ?                     
+            {mostrarSpinnerReservas ?                     
             <div className="text-center mt-5">
                 <Spinner animation="border" variant="warning" role="status" ></Spinner>
             </div> 
