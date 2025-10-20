@@ -1,7 +1,7 @@
-import { Form, Button, Col, Row, Container } from "react-bootstrap";
+import { Form, Button, Col, Row, Spinner } from "react-bootstrap";
 import Swal from "sweetalert2";
 import { Link, useNavigate, useParams } from "react-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { obtenerUsuarioPorId, editarUsuario, crearUsuario } from "../helpers/queries";
 
@@ -15,6 +15,8 @@ const FormularioUsuario = ({ titulo, usuarioAdmin }) => {
   } = useForm();
   const navegacion = useNavigate();
   const { id } = useParams();
+  const [mostrarSpinner, setMostrarSpinner] = useState(false);
+  const [deshabilitarBoton, setDeshabilitarBoton] = useState(false);
 
   useEffect(() => {
     obtenerUsuario();
@@ -42,6 +44,8 @@ const FormularioUsuario = ({ titulo, usuarioAdmin }) => {
   };
 
   const onSubmit = async (usuario) => {
+    setMostrarSpinner(true);
+    setDeshabilitarBoton(true);
     if (titulo === "Usuario Nuevo") {
       const rol = usuarioAdmin.rol === "staff" ? "admin" : "user";
       const usuarioNuevo = { nombreUsuario: usuario.nombreUsuario, email: usuario.email, password: usuario.password, rol: rol };
@@ -71,6 +75,8 @@ const FormularioUsuario = ({ titulo, usuarioAdmin }) => {
       }
     }
     navegacion("/administrador");
+    setMostrarSpinner(false);
+    setDeshabilitarBoton(false);
   };
   return (
     <>
@@ -141,8 +147,15 @@ const FormularioUsuario = ({ titulo, usuarioAdmin }) => {
 
               <Row className="mt-5">
                 <Col xs={12} md={6} className="mb-2 mb-md-0 text-center text-md-end">
-                  <Button type="submit" variant="warning" className="w-50 btn-gold text-white">
-                    Guardar
+                  <Button disabled={deshabilitarBoton} type="submit" variant="warning" className="w-50 btn-gold text-white">
+                    {mostrarSpinner ? (
+                      <div className="d-flex align-items-center justify-content-center">
+                        <Spinner animation="border" size="sm" className="me-2" />
+                        Guardando...
+                      </div>
+                    ) : (
+                      "Guardar"
+                    )}
                   </Button>
                 </Col>
                 <Col xs={12} md={6} className="text-center text-md-start">
