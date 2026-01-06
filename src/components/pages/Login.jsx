@@ -31,7 +31,7 @@ function Login({ setUsuarioAdmin, setCarrito }) {
           text: `Bienvenido ${datosUsuario.nombreUsuario}`,
           icon: "success",
         });
-        if (datosUsuario.rol === "staff" || datosUsuario.rol === "admin") {
+        if (datosUsuario.rol === "empleado" || datosUsuario.rol === "admin" || datosUsuario.rol === "superAdmin") {
           navegacion("/administrador");
         } else {
           navegacion("/");

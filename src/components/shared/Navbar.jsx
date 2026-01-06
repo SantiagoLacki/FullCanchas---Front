@@ -51,7 +51,7 @@ function Menu({ usuarioAdmin, setUsuarioAdmin, setCarrito }) {
             <NavLink as={Link} to={"/carrito"} className="nav-link fw-bold navbar-links rounded px-2">
               <i className="bi bi-cart-plus-fill fs-4 me-1"></i>Carrito
             </NavLink>
-            {usuarioAdmin.token && (usuarioAdmin.rol === "admin" || usuarioAdmin.rol === "staff") ? (
+            {usuarioAdmin.token && (usuarioAdmin.rol === "admin" || usuarioAdmin.rol === "superAdmin" || usuarioAdmin.rol === "empleado") ? (
               <>
                 <NavLink className="nav-link fw-bold navbar-links rounded px-2" to={"/administrador"}>
                   <i className="bi bi-person-vcard fs-4 me-1"></i>
