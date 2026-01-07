@@ -1,9 +1,9 @@
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { NavLink, Link, useNavigate } from "react-router";
+import { NavLink,  Link, useNavigate } from "react-router";
 import FullCanchaLogo from "../../assets/logo-canchasfull-nav.png";
-import { Button } from "react-bootstrap";
+import { Button, NavDropdown} from "react-bootstrap";
 import Swal from "sweetalert2";
 
 function Menu({ usuarioAdmin, setUsuarioAdmin, setCarrito }) {
@@ -53,10 +53,13 @@ function Menu({ usuarioAdmin, setUsuarioAdmin, setCarrito }) {
             </NavLink>
             {usuarioAdmin.token && (usuarioAdmin.rol === "admin" || usuarioAdmin.rol === "superAdmin" || usuarioAdmin.rol === "empleado") ? (
               <>
-                <NavLink className="nav-link fw-bold navbar-links rounded px-2" to={"/administrador"}>
-                  <i className="bi bi-person-vcard fs-4 me-1"></i>
-                  Administrador
-                </NavLink>
+                <NavDropdown title="Administrador" id="basic-nav-dropdown">
+                  <NavLink className="nav-link fw-bold navbar-links rounded px-2" to={"/usuarios"}>
+                    <i className="bi bi-person-vcard fs-4 me-1"></i>
+                    Usuarios
+                  </NavLink>
+                </NavDropdown>
+                
                 <Button className="nav-link fw-bold navbar-links rounded px-2 btn-gold" onClick={logout}>
                   Cerrar Sesión
                 </Button>

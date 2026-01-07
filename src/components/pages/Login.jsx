@@ -32,7 +32,7 @@ function Login({ setUsuarioAdmin, setCarrito }) {
           icon: "success",
         });
         if (datosUsuario.rol === "empleado" || datosUsuario.rol === "admin" || datosUsuario.rol === "superAdmin") {
-          navegacion("/administrador");
+          navegacion("/usuarios");
         } else {
           navegacion("/");
         }

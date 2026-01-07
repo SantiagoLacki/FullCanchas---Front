@@ -22,6 +22,7 @@ import Swal from "sweetalert2";
 import { leerProductosPaginados } from "./components/pages/helpers/queries.js";
 import DetalleProductos from "./components/pages/DetalleProductos.jsx";
 import Carrito from "./components/pages/Carrito.jsx";
+import AdminUsuario from "./components/pages/AdminUsuario.jsx";
 
 function App() {
   const usuarioLogueado = JSON.parse(sessionStorage.getItem("userKey")) || {};
@@ -147,18 +148,18 @@ function App() {
             <Route path="/politicasDePrivacidad" element={<PoliticasDePrivacidad></PoliticasDePrivacidad>}></Route>
             <Route path="/registro" element={<Register></Register>}></Route>
             <Route path="/terminosycondiciones" element={<TerminosYCondiciones></TerminosYCondiciones>}></Route>
-            <Route path="/administrador" element={<ProtectorAdmin isAdmin={usuarioAdmin}></ProtectorAdmin>}>
+            <Route path="/usuarios" element={<ProtectorAdmin isAdmin={usuarioAdmin}></ProtectorAdmin>}>
               <Route
                 index
                 element={
-                  <Administrador
+                  <AdminUsuario
                     usuarioAdmin={usuarioAdmin}
                     obtenerProductos={obtenerProductos}
                     page={page}
                     totalPages={totalPages}
                     listaProductos={listaProductos}
                     setListaProductos={setListaProductos}
-                  ></Administrador>
+                  ></AdminUsuario>
                 }
               ></Route>
               <Route
