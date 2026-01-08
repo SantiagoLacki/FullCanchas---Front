@@ -1,28 +1,16 @@
 import { Col, Dropdown, Form, Row, Table, Button, Spinner } from "react-bootstrap";
 import { Link } from "react-router";
-import ItemUsuario from "./usuario/ItemUsuario";
 import { useEffect, useState } from "react";
 import ItemCancha from "./cancha/ItemCancha";
-import ItemProducto from "./producto/ItemProducto";
 import {
   leerCanchas,
-  leerProductos,
-  leerReservas,
-  leerReservasPaginadas,
-  leerUsuarios,
-  leerUsuariosPaginados,
 } from "./helpers/queries";
-import ItemReservaAdmin from "./reserva/ItemReservaAdmin";
+
 import Swal from "sweetalert2";
 
 const AdminCanchas = () => {
 
   const [listaCanchas, setListaCanchas] = useState([]);
-
-  const [limit] = useState(10);
-  const [pageUsuarios, setPageUsuarios] = useState(1);
-  const [pageProductos, setPageProductos] = useState(1);
-  const [pageReservas, setPageReservas] = useState(1);
 
   const [mostrarSpinnerCanchas, setMostrarSpinnerCanchas] = useState(true);
 
