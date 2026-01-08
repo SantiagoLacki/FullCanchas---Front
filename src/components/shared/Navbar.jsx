@@ -70,6 +70,10 @@ function Menu({ usuarioAdmin, setUsuarioAdmin, setCarrito }) {
                     <i className="bi bi-person-vcard fs-4 me-1"></i>
                     Productos
                   </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to={"/reservas"} className="dropdown-item-custom">
+                    <i className="bi bi-person-vcard fs-4 me-1"></i>
+                    Reservas
+                  </NavDropdown.Item>
                 </NavDropdown>
                 
                 <Button className="nav-link fw-bold navbar-links rounded px-2 btn-gold" onClick={logout}>

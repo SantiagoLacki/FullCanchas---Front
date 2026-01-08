@@ -250,7 +250,7 @@ const AdminUsuario = ({ usuarioAdmin }) => {
               <div className="d-flex align-items-center">
                 <h2 className="display-6 titulo-admin fw-bold me-4">Usuarios</h2>
                 <div>
-                  <Link className="btn btn-gold text-white" to={"/administrador/crearusuario"}>
+                  <Link className="btn btn-gold text-white" to={"/usuarios/crearusuario"}>
                     <i className="bi bi-plus-circle"></i> Agregar
                   </Link>
                 </div>

@@ -25,7 +25,7 @@ import Carrito from "./components/pages/Carrito.jsx";
 import AdminUsuario from "./components/pages/AdminUsuario.jsx";
 import AdminCanchas from "./components/pages/AdminCanchas.jsx";
 import AdminProductos from "./components/pages/AdminProductos.jsx";
-
+import AdminReservas from "./components/pages/AdminReservas.jsx";
 
 
 function App() {
@@ -208,6 +208,22 @@ function App() {
               ></Route>
               <Route path="crearproducto" element={<FormularioProducto titulo={"Producto Nuevo"}></FormularioProducto>}></Route>
               <Route path="editarproducto/:id" element={<FormularioProducto titulo={"Modificar Producto"}></FormularioProducto>}></Route>
+            </Route>
+            <Route path="/reservas" element={<ProtectorAdmin isAdmin={usuarioAdmin}></ProtectorAdmin>}>
+              <Route
+                index
+                element={
+                  <AdminReservas
+                    usuarioAdmin={usuarioAdmin}
+                    obtenerProductos={obtenerProductos}
+                    page={page}
+                    totalPages={totalPages}
+                    listaProductos={listaProductos}
+                    setListaProductos={setListaProductos}
+                  ></AdminReservas>
+                }
+              ></Route>
+              <Route path="editarreserva/:id" element={<FormularioReserva titulo={"Modificar Reserva"}></FormularioReserva>}></Route>
             </Route>
             <Route path="/reserva/:id" element={<ReservaCancha usuarioAdmin={usuarioAdmin}></ReservaCancha>}></Route>
             <Route path="*" element={<Error404></Error404>}></Route>

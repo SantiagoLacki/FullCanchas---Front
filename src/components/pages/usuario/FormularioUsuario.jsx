@@ -29,7 +29,7 @@ const FormularioUsuario = ({ titulo, usuarioAdmin }) => {
         const usuarioBuscado = await respuesta.json();
         console.log(usuarioBuscado);
         if (usuarioBuscado === undefined) {
-          navegacion("/administrador");
+          navegacion("/usuarios");
           Swal.fire({
             icon: "error",
             title: "Oops...",
@@ -74,7 +74,7 @@ const FormularioUsuario = ({ titulo, usuarioAdmin }) => {
         });
       }
     }
-    navegacion("/administrador");
+    navegacion("/usuarios");
     setMostrarSpinner(false);
     setDeshabilitarBoton(false);
   };
@@ -159,7 +159,7 @@ const FormularioUsuario = ({ titulo, usuarioAdmin }) => {
                   </Button>
                 </Col>
                 <Col xs={12} md={6} className="text-center text-md-start">
-                  <Link to={"/administrador"} className="btn btn-danger w-50">
+                  <Link to={"/usuarios"} className="btn btn-danger w-50">
                     Cancelar
                   </Link>
                 </Col>
