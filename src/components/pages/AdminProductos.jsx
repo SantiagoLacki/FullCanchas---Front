@@ -81,7 +81,7 @@ const AdminProductos = () => {
                 <div className="d-flex align-items-center">
                   <h2 className="display-6 titulo-admin fw-bold  me-4">Productos</h2>
                   <div>
-                    <Link className="btn btn-gold text-white" to={"/administrador/crearproducto"}>
+                    <Link className="btn btn-gold text-white" to={"/productos/crearproducto"}>
                       <i className="bi bi-plus-circle"></i> Agregar
                     </Link>
                   </div>

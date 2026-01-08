@@ -34,7 +34,7 @@ const FormularioProducto = ({ titulo }) => {
         const productoBuscado = await respuesta.json();
         console.log(productoBuscado)
         if (productoBuscado === undefined) {
-          navegacion("/administrador");
+          navegacion("/productos");
           Swal.fire({
             icon: "error",
             title: "Oops...",
@@ -81,7 +81,7 @@ const FormularioProducto = ({ titulo }) => {
         });
       }
     }
-    navegacion("/administrador");
+    navegacion("/productos");
     setMostrarSpinner(false);
     setDeshabilitarBoton(false);
   };
@@ -231,7 +231,7 @@ const FormularioProducto = ({ titulo }) => {
                 </Button>
                 </Col>
                 <Col xs={12} md={6} className="text-center text-md-start">
-                  <Link to={"/administrador"} className="btn btn-danger w-50">
+                  <Link to={"/productos"} className="btn btn-danger w-50">
                     Cancelar
                   </Link>
                 </Col>

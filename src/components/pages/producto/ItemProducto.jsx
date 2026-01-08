@@ -46,7 +46,7 @@ const ItemProducto = ({ producto, fila, setListaProductos, pageProductos, limit 
         <img src={producto.imagen} className="img-thumbnail" alt="cancha"></img>
       </td>
       <td className="text-center align-middle">
-        <Link className="me-lg-2 btn btn-gold text-white" to={"/administrador/editarproducto/" + producto._id}>
+        <Link className="me-lg-2 btn btn-gold text-white" to={"/productos/editarproducto/" + producto._id}>
           <i className="bi bi-pencil-square"></i>
         </Link>
         <Button variant="danger" onClick={eliminarProducto}>
