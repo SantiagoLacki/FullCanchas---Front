@@ -23,6 +23,8 @@ import { leerProductosPaginados } from "./components/pages/helpers/queries.js";
 import DetalleProductos from "./components/pages/DetalleProductos.jsx";
 import Carrito from "./components/pages/Carrito.jsx";
 import AdminUsuario from "./components/pages/AdminUsuario.jsx";
+import AdminCanchas from "./components/pages/AdminCanchas.jsx";
+
 
 function App() {
   const usuarioLogueado = JSON.parse(sessionStorage.getItem("userKey")) || {};
@@ -167,11 +169,26 @@ function App() {
                 element={<FormularioUsuario titulo={"Usuario Nuevo"} usuarioAdmin={usuarioAdmin}></FormularioUsuario>}
               ></Route>
               <Route path="editarusuario/:id" element={<FormularioUsuario titulo={"Modificar Usuario"}></FormularioUsuario>}></Route>
-              <Route path="crearcancha" element={<FormularioCancha titulo={"Cancha Nueva"}></FormularioCancha>}></Route>
-              <Route path="editarcancha/:id" element={<FormularioCancha titulo={"Modificar Cancha"}></FormularioCancha>}></Route>
               <Route path="crearproducto" element={<FormularioProducto titulo={"Producto Nuevo"}></FormularioProducto>}></Route>
               <Route path="editarproducto/:id" element={<FormularioProducto titulo={"Modificar Producto"}></FormularioProducto>}></Route>
               <Route path="editarreserva/:id" element={<FormularioReserva titulo={"Modificar Reserva"}></FormularioReserva>}></Route>
+            </Route>
+            <Route path="/canchas" element={<ProtectorAdmin isAdmin={usuarioAdmin}></ProtectorAdmin>}>
+              <Route
+                index
+                element={
+                  <AdminCanchas
+                    usuarioAdmin={usuarioAdmin}
+                    obtenerProductos={obtenerProductos}
+                    page={page}
+                    totalPages={totalPages}
+                    listaProductos={listaProductos}
+                    setListaProductos={setListaProductos}
+                  ></AdminCanchas>
+                }
+              ></Route>
+              <Route path="crearcancha" element={<FormularioCancha titulo={"Cancha Nueva"}></FormularioCancha>}></Route>
+              <Route path="editarcancha/:id" element={<FormularioCancha titulo={"Modificar Cancha"}></FormularioCancha>}></Route>
             </Route>
             <Route path="/reserva/:id" element={<ReservaCancha usuarioAdmin={usuarioAdmin}></ReservaCancha>}></Route>
             <Route path="*" element={<Error404></Error404>}></Route>
