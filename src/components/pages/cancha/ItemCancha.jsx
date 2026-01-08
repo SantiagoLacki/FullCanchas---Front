@@ -50,7 +50,7 @@ const ItemCancha = ({cancha, fila, setListaCanchas}) => {
                 ></img>
             </td>
             <td className="text-center align-middle">
-                <Link className="me-lg-2 btn btn-gold text-white" to={'/administrador/editarcancha/'+cancha._id}>
+                <Link className="me-lg-2 btn btn-gold text-white" to={'/canchas/editarcancha/'+cancha._id}>
                 <i className="bi bi-pencil-square"></i>
                 </Link>
                 <Button variant="danger" onClick={eliminarCancha}>

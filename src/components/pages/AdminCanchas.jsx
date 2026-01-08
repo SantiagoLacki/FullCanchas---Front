@@ -42,7 +42,7 @@ const AdminCanchas = () => {
           <div className="d-flex align-items-center mt-2 mb-3">
             <h2 className="display-6 titulo-admin fw-bold me-4">Canchas</h2>
             <div>
-              <Link className="btn btn-gold text-white" to={"/administrador/crearcancha"}>
+              <Link className="btn btn-gold text-white" to={"/canchas/crearcancha"}>
                 <i className="bi bi-plus-circle"></i> Agregar
               </Link>
             </div>

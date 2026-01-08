@@ -33,7 +33,7 @@ const FormularioCancha = ({ titulo }) => {
       if (respuesta.status === 200) {
         const canchaBuscada = await respuesta.json();
         if (canchaBuscada === undefined) {
-          navegacion("/administrador");
+          navegacion("/canchas");
           Swal.fire({
             icon: "error",
             title: "Oops...",
@@ -85,7 +85,7 @@ const FormularioCancha = ({ titulo }) => {
         });
       }
     }
-    navegacion("/administrador");
+    navegacion("/canchas");
     setMostrarSpinner(false);
     setDeshabilitarBoton(false);
   };
@@ -227,7 +227,7 @@ const FormularioCancha = ({ titulo }) => {
                   </Button>
                 </Col>
                 <Col xs={12} md={6} className="text-center text-md-start">
-                  <Link to={"/administrador"} className="btn btn-danger w-50">
+                  <Link to={"/canchas"} className="btn btn-danger w-50">
                     Cancelar
                   </Link>
                 </Col>
