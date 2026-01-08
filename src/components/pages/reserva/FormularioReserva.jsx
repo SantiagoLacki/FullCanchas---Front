@@ -57,7 +57,7 @@ const FormularioReserva = ({ titulo }) => {
       if (respuesta.status === 200) {
         const reservaBuscada = await respuesta.json();
         if (reservaBuscada === undefined) {
-          navegacion("/administrador");
+          navegacion("/reservas");
           Swal.fire({
             icon: "error",
             title: "Oops...",
@@ -137,7 +137,7 @@ const FormularioReserva = ({ titulo }) => {
         return;
       }
     }
-    navegacion("/administrador");
+    navegacion("/reservas");
     setMostrarSpinner(false);
     setDeshabilitarBoton(false);
   };
@@ -236,7 +236,7 @@ const FormularioReserva = ({ titulo }) => {
                   </Button>
                 </Col>
                 <Col xs={12} md={6} className="text-center text-md-start">
-                  <Link to={"/administrador"} className="btn btn-danger w-50">
+                  <Link to={"/reservas"} className="btn btn-danger w-50">
                     Cancelar
                   </Link>
                 </Col>
