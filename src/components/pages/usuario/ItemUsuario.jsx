@@ -43,9 +43,9 @@ const ItemUsuario = ({ usuario, fila, obtenerUsuarios, usuarioAdmin }) => {
           <Form.Check 
             type="switch"
             id={`switch-usuario-${usuario._id}`}
-            checked={usuario.estado}
+            checked={usuario.habilitado}
             onChange={eliminarUsuario}
-            label={usuario.estado ? "Activo" : "Inactivo"}
+            label={usuario.habilitado ? "Activo" : "Inactivo"}
             className="d-inline-block ms-2 align-middle"
           />
       </td>

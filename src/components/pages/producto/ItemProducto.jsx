@@ -1,9 +1,9 @@
-import { Button } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { Link } from "react-router";
 import { borrarProductoPorId, leerProductosPaginados } from "../helpers/queries";
 import Swal from "sweetalert2";
 
-const ItemProducto = ({ producto, fila, setListaProductos, pageProductos, limit }) => {
+const ItemProducto = ({ producto, fila, setListaProductos, pageProductos, limit, usuarioAdmin }) => {
   const eliminarProducto = () => {
     Swal.fire({
       title: "Eliminar Producto",
@@ -42,16 +42,28 @@ const ItemProducto = ({ producto, fila, setListaProductos, pageProductos, limit 
       <td className="align-middle fw-light">{producto.nombre}</td>
       <td className="text-center align-middle fw-light">{producto.precio}</td>
       <td className="text-center align-middle fw-light">{producto.categoria}</td>
-      <td className="text-center align-middle">
+            <td className="text-center align-middle">
         <img src={producto.imagen} className="img-thumbnail" alt="cancha"></img>
+      </td>
+      <td className="text-center align-middle fw-light">
+          <Form.Check 
+            type="switch"
+            id={`switch-producto-${producto._id}`}
+            checked={producto.habilitado}
+            onChange={eliminarProducto}
+            label={producto.habilitado ? "Disponible" : "No disponible"}
+            className="d-inline-block ms-2 align-middle"
+          />
       </td>
       <td className="text-center align-middle">
         <Link className="me-lg-2 btn btn-gold text-white" to={"/productos/editarproducto/" + producto._id}>
           <i className="bi bi-pencil-square"></i>
         </Link>
-        <Button variant="danger" onClick={eliminarProducto}>
-          <i className="bi bi-trash"></i>
-        </Button>
+        {usuarioAdmin && usuarioAdmin.rol !== "empleado" && (
+          <Button variant="danger" onClick={eliminarProducto}>
+            <i className="bi bi-trash"></i>
+          </Button>
+        )}
       </td>
     </tr>
   );

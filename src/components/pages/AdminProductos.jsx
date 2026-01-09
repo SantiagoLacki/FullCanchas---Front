@@ -13,7 +13,7 @@ import {
 
 import Swal from "sweetalert2";
 
-const AdminProductos = () => {
+const AdminProductos = ({usuarioAdmin}) => {
 
   const [terminoBusquedaProducto, setTerminoBusquedaProducto] = useState("");
  
@@ -118,6 +118,7 @@ const AdminProductos = () => {
                   <th className="text-secondary">Precio</th>
                   <th className="text-secondary">Categoria</th>
                   <th className="text-secondary">Imagen</th>
+                  <th className="text-secondary">Disponibilidad</th>
                   <th className="text-secondary">Acciones</th>
                 </tr>
               </thead>
@@ -131,6 +132,7 @@ const AdminProductos = () => {
                       setListaProductos={setListaProductos}
                       pageProductos={pageProductos}
                       limit={limit}
+                      usuarioAdmin={usuarioAdmin}
                     ></ItemProducto>
                   ))
                 ) : (

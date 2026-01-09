@@ -45,7 +45,7 @@ function Menu({ usuarioAdmin, setUsuarioAdmin, setCarrito }) {
             <NavLink as={Link} to={"/"} className="nav-link fw-bold navbar-links rounded px-2">
               <i className="bi bi-house-fill fs-4 me-1"></i>Inicio
             </NavLink>
-            <NavLink as={Link} to={"/productos"} className="nav-link fw-bold navbar-links rounded px-2">
+            <NavLink as={Link} to={"/catalogo"} className="nav-link fw-bold navbar-links rounded px-2">
               <i className="bi bi-bag-fill fs-4 me-1"></i>Catalogo
             </NavLink>
             <NavLink as={Link} to={"/carrito"} className="nav-link fw-bold navbar-links rounded px-2">
@@ -58,19 +58,19 @@ function Menu({ usuarioAdmin, setUsuarioAdmin, setCarrito }) {
                       <i className="bi bi-gear-fill fs-4 me-1"></i>Administrador
                     </span>
                   }  id="basic-nav-dropdown" className="navbar-links-dropdown">
-                  <NavDropdown.Item as={Link} to={"/usuarios"} className="dropdown-item-custom">
+                  <NavDropdown.Item as={NavLink} to={"/usuarios"} className="dropdown-item-custom">
                     <i className="bi bi-person-vcard fs-4 me-1"></i>
                     Usuarios
                   </NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to={"/canchas"} className="dropdown-item-custom">
+                  <NavDropdown.Item as={NavLink} to={"/canchas"} className="dropdown-item-custom">
                     <i className="bi bi-person-vcard fs-4 me-1"></i>
                     Canchas
                   </NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to={"/productos"} className="dropdown-item-custom">
+                  <NavDropdown.Item as={NavLink} to={"/productos"} className="dropdown-item-custom">
                     <i className="bi bi-person-vcard fs-4 me-1"></i>
                     Productos
                   </NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to={"/reservas"} className="dropdown-item-custom">
+                  <NavDropdown.Item as={NavLink} to={"/reservas"} className="dropdown-item-custom">
                     <i className="bi bi-person-vcard fs-4 me-1"></i>
                     Reservas
                   </NavDropdown.Item>

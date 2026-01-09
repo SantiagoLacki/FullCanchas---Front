@@ -140,7 +140,7 @@ function App() {
               }
             ></Route>
             <Route
-              path="/productos"
+              path="/catalogo"
               element={
                 <Productos usuarioAdmin={usuarioAdmin} agregarAlCarrito={agregarAlCarrito}></Productos>
               }
