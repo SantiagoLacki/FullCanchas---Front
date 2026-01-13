@@ -1,9 +1,10 @@
 import { Button, Form } from "react-bootstrap";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
-import { borrarUsuarioPorId } from "../helpers/queries";
+import { borrarUsuarioPorId, editarUsuario } from "../helpers/queries";
 
 const ItemUsuario = ({ usuario, fila, obtenerUsuarios, usuarioAdmin }) => {
+  
   const eliminarUsuario = () => {
     Swal.fire({
       title: "Eliminar Usuario",
@@ -34,6 +35,46 @@ const ItemUsuario = ({ usuario, fila, obtenerUsuarios, usuarioAdmin }) => {
       }
     });
   };
+
+  const cambiarEstadoUsuario = async () => {
+    const nuevoEstado = !usuario.habilitado;
+    const accionTexto = nuevoEstado ? "habilitar" : "deshabilitar";
+    const estadoTexto = nuevoEstado ? "habilitado" : "deshabilitado";
+
+    Swal.fire({
+      title: `${nuevoEstado ? "Habilitar" : "Deshabilitar"} Usuario`,
+      text: `¿Está seguro que quiere ${accionTexto} al usuario ${usuario.nombreUsuario}?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#024959",
+      cancelButtonColor: "#d33",
+      confirmButtonText: `${nuevoEstado ? "Habilitar" : "Deshabilitar"}`,
+      cancelButtonText: "Cancelar",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const usuarioModificado = {
+        ...usuario,
+        habilitado: nuevoEstado,
+        };
+        const respuesta = await editarUsuario(usuarioModificado, usuario._id);
+        if (respuesta.status === 200) {
+          Swal.fire({
+              title: "Cambio de Estado",
+              text: `El usuario ${usuario.nombreUsuario} ha sido ${estadoTexto} correctamente.`,
+              icon: "success",
+            });
+          await obtenerUsuarios();
+        } else {
+          Swal.fire({
+            title: "Ocurrio un error",
+            text: `No se pudo ${accionTexto} al usuario ${usuario.nombreUsuario}.`,
+            icon: "error",
+          });
+        }
+      }
+    });
+  }
+
   return (
     <tr>
       <td className="text-center align-middle fw-light">{fila}</td>
@@ -44,7 +85,7 @@ const ItemUsuario = ({ usuario, fila, obtenerUsuarios, usuarioAdmin }) => {
             type="switch"
             id={`switch-usuario-${usuario._id}`}
             checked={usuario.habilitado}
-            onChange={eliminarUsuario}
+            onChange={cambiarEstadoUsuario}
             label={usuario.habilitado ? "Activo" : "Inactivo"}
             className="d-inline-block ms-2 align-middle"
           />
