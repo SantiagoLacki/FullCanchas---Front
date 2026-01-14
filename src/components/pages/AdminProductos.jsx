@@ -129,7 +129,7 @@ const AdminProductos = ({usuarioAdmin}) => {
                       key={producto._id}
                       producto={producto}
                       fila={(pageProductos - 1) * limit + indice + 1}
-                      setListaProductos={setListaProductos}
+                      obtenerProductos={obtenerProductos}
                       pageProductos={pageProductos}
                       limit={limit}
                       usuarioAdmin={usuarioAdmin}
