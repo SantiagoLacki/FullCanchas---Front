@@ -55,7 +55,7 @@ function Menu({ usuarioAdmin, setUsuarioAdmin, setCarrito }) {
               <>
                 <NavDropdown title={
                     <span className="fw-bold">
-                      <i className="bi bi-gear-fill fs-4 me-1"></i>Administrador
+                      <i className="bi bi-person-gear fs-4 me-1"></i>Administrador
                     </span>
                   }  id="basic-nav-dropdown" className="navbar-links-dropdown">
                   <NavDropdown.Item as={NavLink} to={"/usuarios"} className="dropdown-item-custom">
