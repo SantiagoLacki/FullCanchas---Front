@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import { borrarProductoPorId, editarProducto, leerProductos, leerProductosPaginados, obtenerProductoPorId } from "../helpers/queries";
 import Swal from "sweetalert2";
 
-const ItemProducto = ({ producto, fila, obtenerProductos, pageProductos, limit, usuarioAdmin }) => {
+const ItemProducto = ({ producto, fila, obtenerProductos, setListaProductos, pageProductos, limit, usuarioAdmin }) => {
   const eliminarProducto = () => {
     Swal.fire({
       title: "Eliminar Producto",
@@ -19,8 +19,8 @@ const ItemProducto = ({ producto, fila, obtenerProductos, pageProductos, limit, 
         const respuesta = await borrarProductoPorId(producto._id);
         if (respuesta.status === 200) {
           Swal.fire({
-            title: "Usuario eliminado",
-            text: `El usuario ${producto.nombre} fue eliminado correctamente`,
+            title: "Producto eliminado",
+            text: `El producto ${producto.nombre} fue eliminado correctamente`,
             icon: "success",
           });
           const respuestaProductos = await leerProductosPaginados(pageProductos, limit);

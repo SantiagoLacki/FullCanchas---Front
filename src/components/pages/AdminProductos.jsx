@@ -130,6 +130,7 @@ const AdminProductos = ({usuarioAdmin}) => {
                       producto={producto}
                       fila={(pageProductos - 1) * limit + indice + 1}
                       obtenerProductos={obtenerProductos}
+                      setListaProductos={setListaProductos}
                       pageProductos={pageProductos}
                       limit={limit}
                       usuarioAdmin={usuarioAdmin}

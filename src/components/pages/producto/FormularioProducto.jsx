@@ -32,7 +32,6 @@ const FormularioProducto = ({ titulo }) => {
       console.log(respuesta.status)
       if (respuesta.status === 200) {
         const productoBuscado = await respuesta.json();
-        console.log(productoBuscado)
         if (productoBuscado === undefined) {
           navegacion("/productos");
           Swal.fire({
@@ -68,7 +67,7 @@ const FormularioProducto = ({ titulo }) => {
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "No pudo crearse el usuario",
+          text: "No pudo crearse el producto",
         });
       }
     } else {
