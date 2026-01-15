@@ -136,7 +136,7 @@ const AdminProductos = ({usuarioAdmin}) => {
                             onClick={() => setFiltroEstado("disponibles")}
                             title="Mostrar los productos disponibles"
                         >
-                            <i className="bi bi-person-check me-1"></i> Activos
+                            <i className="bi bi-check-circle me-1"></i> Disponible
                         </button>
                         <button
                             type="button"
@@ -144,7 +144,7 @@ const AdminProductos = ({usuarioAdmin}) => {
                             onClick={() => setFiltroEstado("nodisponibles")}
                             title="Mostrar solo productos no disponibles"
                         >
-                            <i className="bi bi-person-x me-1"></i> Inactivos
+                            <i className="bi bi-x-circle me-1"></i> No Disponible
                         </button>
                         </div>
                     </Col>

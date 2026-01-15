@@ -222,7 +222,7 @@ export const crearCancha = async (canchaNueva) => {
     formData.append("tipoDeSuperficie", canchaNueva.tipoDeSuperficie);
     formData.append("precioPorHora", canchaNueva.precioPorHora);
     formData.append("imagen", canchaNueva.imagen);
-    formData.append("disponibilidad", canchaNueva.disponibilidad);
+    formData.append("habilitado", canchaNueva.habilitado);
     const respuesta = await fetch(urlCanchas, {
       method: "POST",
       headers: {
@@ -230,7 +230,6 @@ export const crearCancha = async (canchaNueva) => {
       },
       body: formData,
     });
-    console.log(respuesta);
     return respuesta;
   } catch (error) {
     console.error(error);
