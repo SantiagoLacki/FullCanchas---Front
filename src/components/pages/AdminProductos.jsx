@@ -95,7 +95,7 @@ const AdminProductos = ({usuarioAdmin}) => {
         <div className="border text-white rounded-2 py-3 px-4 my-4 shadow-lg bg-light">
           <div className="  align-items-center mt-2 mb-3">
             <Row className="d-flex justify-content-between align-items-center mb-3">
-              <Col xs={12} md={6} className="mb-2 mb-md-0">
+              <Col xs={12} md={4} className="mb-2 mb-md-0">
                 <div className="d-flex align-items-center">
                   <h2 className="display-6 titulo-admin fw-bold  me-4">Productos</h2>
                   <div>
@@ -105,7 +105,7 @@ const AdminProductos = ({usuarioAdmin}) => {
                   </div>
                 </div>
               </Col>
-              <Col xs={12} md={6}>
+              <Col xs={12} md={8}>
                 <Form>
                     <Row className="justify-content-start justify-content-md-end">
                     <Col xs="auto d-flex">
@@ -120,8 +120,8 @@ const AdminProductos = ({usuarioAdmin}) => {
                         />
                         </div>
                     </Col>
-                    <Col xs="12" md="auto">
-                        <div>
+                    <Col xs="12" md="6" className="d-flex justify-content-md-end">
+                         <div className="d-flex flex-wrap justify-content-center justify-content-md-start">
                         <button 
                             type="button" 
                             className={`btn ${filtroEstado === "todos" ? "btn-warning" : "btn-outline-warning"}`}
