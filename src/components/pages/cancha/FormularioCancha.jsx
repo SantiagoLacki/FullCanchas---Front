@@ -44,7 +44,7 @@ const FormularioCancha = ({ titulo }) => {
           setValue("tipoDeSuperficie", canchaBuscada.tipoDeSuperficie);
           setValue("precioPorHora", canchaBuscada.precioPorHora);
           setImagenActual(canchaBuscada.imagen)
-          setValue("disponibilidad", canchaBuscada.disponibilidad === "true");
+          setValue("disponibilidad", canchaBuscada.habilitado === "true");
         }
       }
     }
@@ -56,7 +56,7 @@ const FormularioCancha = ({ titulo }) => {
     const canchasMejoradas = {
       ...cancha,
       imagen: cancha.imagen ? cancha.imagen[0] : imagenActual,
-      disponibilidad: Boolean(cancha.disponibilidad),
+      habilitado: Boolean(cancha.habilitado),
     };
 
     if (titulo === "Cancha Nueva") {

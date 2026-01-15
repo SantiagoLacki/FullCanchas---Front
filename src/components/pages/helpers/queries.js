@@ -247,7 +247,7 @@ export const editarCancha = async (canchaEditada, id) => {
     if (canchaEditada.imagen) {
       formData.append("imagen", canchaEditada.imagen);
     }
-    formData.append("disponibilidad", canchaEditada.disponibilidad);
+    formData.append("habilitado", canchaEditada.habilitado);
     const respuesta = await fetch(urlCanchas + `/${id}`, {
       method: "PUT",
       headers: {

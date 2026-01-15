@@ -65,7 +65,7 @@ const AdminCanchas = () => {
               </thead>
               <tbody>
                 {listaCanchas.map((cancha, indice) => (
-                  <ItemCancha key={cancha._id} cancha={cancha} fila={indice + 1} setListaCanchas={setListaCanchas}></ItemCancha>
+                  <ItemCancha key={cancha._id} cancha={cancha} fila={indice + 1} setListaCanchas={setListaCanchas} obtenerCanchas={obtenerCanchas}></ItemCancha>
                 ))}
               </tbody>
             </Table>

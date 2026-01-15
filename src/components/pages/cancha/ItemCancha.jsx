@@ -1,9 +1,9 @@
 import { Button, Form } from "react-bootstrap";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
-import { borrarCanchaPorId, leerCanchas } from "../helpers/queries";
+import { borrarCanchaPorId, leerCanchas, editarCancha } from "../helpers/queries";
 
-const ItemCancha = ({cancha, fila, setListaCanchas}) => {
+const ItemCancha = ({cancha, fila, setListaCanchas, obtenerCanchas}) => {
     const eliminarCancha=()=>{
          Swal.fire({
             title: "Eliminar Cancha",
@@ -20,7 +20,7 @@ const ItemCancha = ({cancha, fila, setListaCanchas}) => {
                 if(respuesta.status === 200){
                 Swal.fire({
                     title: "Cancha eliminada",
-                    text: `La Cancha ${cancha.nombre} fue eliminada correctamente`,
+                    text: `La cancha ${cancha.nombre} fue eliminada correctamente`,
                     icon: "success",
                 });
                 const respuestaCanchas = await leerCanchas();
@@ -36,6 +36,41 @@ const ItemCancha = ({cancha, fila, setListaCanchas}) => {
             }
             });
     }
+      const cambiarEstadoCancha = async () => {
+          const nuevoEstado = !cancha.habilitado;
+          Swal.fire({
+            title: `Disponibilidad de la Cancha`,
+            text: `¿Está seguro que quiere cambiar la disponibilidad de la cancha ${cancha.nombre}?`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#024959",
+            cancelButtonColor: "#d33",
+            confirmButtonText: `${nuevoEstado ? "Disponible" : "No disponible"}`,
+            cancelButtonText: "Cancelar",
+          }).then(async (result) => {
+            if (result.isConfirmed) {
+              const canchaModificada = {
+              ...cancha,
+              habilitado: nuevoEstado,
+              };
+              const respuesta = await editarCancha(canchaModificada, cancha._id);
+              if (respuesta.status === 200) {
+                Swal.fire({
+                    title: "Cambio de disponibilidad",
+                    text: `La cancha ${cancha.nombre} cambió su disponibilidad correctamente.`,
+                    icon: "success",
+                  });
+                await obtenerCanchas();
+              } else {
+                Swal.fire({
+                  title: "Ocurrio un error",
+                  text: `No se pudo cambiar la disponibilidad de la cancha ${cancha.nombre}.`,
+                  icon: "error",
+                });
+              }
+            }
+          });
+        }
     return (
         <tr>
             <td className="text-center align-middle fw-light">{fila}</td>
@@ -53,7 +88,7 @@ const ItemCancha = ({cancha, fila, setListaCanchas}) => {
                     type="switch"
                     id={`switch-cancha-${cancha._id}`}
                     checked={cancha.habilitado}
-                    onChange={eliminarCancha}
+                    onChange={cambiarEstadoCancha}
                     label={cancha.habilitado ? "Disponible" : "No disponible"}
                     className="d-inline-block ms-2 align-middle"
                 />
