@@ -1,4 +1,4 @@
-import { Button } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
 import { borrarCanchaPorId, leerCanchas } from "../helpers/queries";
@@ -41,13 +41,22 @@ const ItemCancha = ({cancha, fila, setListaCanchas}) => {
             <td className="text-center align-middle fw-light">{fila}</td>
             <td className="align-middle fw-light">{cancha.nombre}</td>
             <td className="text-center align-middle fw-light">{cancha.precioPorHora}</td>
-            <td className="text-center align-middle fw-light">{cancha.disponibilidad === "true" ? (<p className="text-success fw-bold">Disponible</p>) : (<p className="text-danger fw-bold">No disponible</p>)}</td>
             <td className="text-center align-middle">
                 <img
                     src={cancha.imagen}
                     className="img-thumbnail"
                     alt="cancha"
                 ></img>
+            </td>
+            <td className="text-center align-middle fw-light">
+                <Form.Check 
+                    type="switch"
+                    id={`switch-cancha-${cancha._id}`}
+                    checked={cancha.habilitado}
+                    onChange={eliminarCancha}
+                    label={cancha.habilitado ? "Disponible" : "No disponible"}
+                    className="d-inline-block ms-2 align-middle"
+                />
             </td>
             <td className="text-center align-middle">
                 <Link className="me-lg-2 btn btn-gold text-white" to={'/canchas/editarcancha/'+cancha._id}>

@@ -58,8 +58,8 @@ const AdminCanchas = () => {
                   <th className="text-secondary">#</th>
                   <th className="text-secondary">Cancha</th>
                   <th className="text-secondary">Precio por Hora</th>
+                <th className="text-secondary">Imagen</th>
                   <th className="text-secondary">Disponibilidad</th>
-                  <th className="text-secondary">Imagen</th>
                   <th className="text-secondary">Acciones</th>
                 </tr>
               </thead>
