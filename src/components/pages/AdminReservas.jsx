@@ -1,13 +1,9 @@
 import { Col, Form, Row, Table, Button, Spinner } from "react-bootstrap";
-import { Link } from "react-router";
-
 import { useEffect, useState } from "react";
-import {
-  leerReservas,
-  leerReservasPaginadas,
-} from "./helpers/queries";
+import { leerReservas, leerReservasPaginadas } from "./helpers/queries";
 import ItemReservaAdmin from "./reserva/ItemReservaAdmin";
 import Swal from "sweetalert2";
+
 const AdminReservas = () => {
   const [fechaBusqueda, setFechaBusqueda] = useState("");
 
@@ -20,7 +16,6 @@ const AdminReservas = () => {
   const [mostrarSpinnerReservas, setMostrarSpinnerReservas] = useState(true);
 
   useEffect(() => {
-
     obtenerReservas();
   }, [pageReservas]);
 

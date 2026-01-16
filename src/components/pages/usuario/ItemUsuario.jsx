@@ -4,7 +4,6 @@ import Swal from "sweetalert2";
 import { borrarUsuarioPorId, editarUsuario } from "../helpers/queries";
 
 const ItemUsuario = ({ usuario, fila, obtenerUsuarios, usuarioAdmin }) => {
-  
   const eliminarUsuario = () => {
     Swal.fire({
       title: "Eliminar Usuario",
@@ -53,16 +52,16 @@ const ItemUsuario = ({ usuario, fila, obtenerUsuarios, usuarioAdmin }) => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         const usuarioModificado = {
-        ...usuario,
-        habilitado: nuevoEstado,
+          ...usuario,
+          habilitado: nuevoEstado,
         };
         const respuesta = await editarUsuario(usuarioModificado, usuario._id);
         if (respuesta.status === 200) {
           Swal.fire({
-              title: "Cambio de Estado",
-              text: `El usuario ${usuario.nombreUsuario} ha sido ${estadoTexto} correctamente.`,
-              icon: "success",
-            });
+            title: "Cambio de Estado",
+            text: `El usuario ${usuario.nombreUsuario} ha sido ${estadoTexto} correctamente.`,
+            icon: "success",
+          });
           await obtenerUsuarios();
         } else {
           Swal.fire({
@@ -73,7 +72,7 @@ const ItemUsuario = ({ usuario, fila, obtenerUsuarios, usuarioAdmin }) => {
         }
       }
     });
-  }
+  };
 
   return (
     <tr>
@@ -81,14 +80,14 @@ const ItemUsuario = ({ usuario, fila, obtenerUsuarios, usuarioAdmin }) => {
       <td className="align-middle fw-light">{usuario.nombreUsuario}</td>
       <td className="text-center align-middle fw-light">{usuario.email}</td>
       <td className="text-center align-middle fw-light">
-          <Form.Check 
-            type="switch"
-            id={`switch-usuario-${usuario._id}`}
-            checked={usuario.habilitado}
-            onChange={cambiarEstadoUsuario}
-            label={usuario.habilitado ? "Activo" : "Inactivo"}
-            className="d-inline-block ms-2 align-middle"
-          />
+        <Form.Check
+          type="switch"
+          id={`switch-usuario-${usuario._id}`}
+          checked={usuario.habilitado}
+          onChange={cambiarEstadoUsuario}
+          label={usuario.habilitado ? "Activo" : "Inactivo"}
+          className="d-inline-block ms-2 align-middle"
+        />
       </td>
       <td className="text-center align-middle fw-light">
         <Link className="me-lg-2 btn btn-gold text-white fw-light" to={"/usuarios/editarusuario/" + usuario._id}>

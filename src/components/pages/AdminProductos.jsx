@@ -1,22 +1,14 @@
 import { Col, Form, Row, Table, Button, Spinner } from "react-bootstrap";
 import { Link } from "react-router";
-
 import { useEffect, useState } from "react";
-
 import ItemProducto from "./producto/ItemProducto";
-import {
-
-  leerProductos,
-  leerProductosPaginados,
-
-} from "./helpers/queries";
+import { leerProductos, leerProductosPaginados } from "./helpers/queries";
 
 import Swal from "sweetalert2";
 
-const AdminProductos = ({usuarioAdmin}) => {
-
+const AdminProductos = ({ usuarioAdmin }) => {
   const [terminoBusquedaProducto, setTerminoBusquedaProducto] = useState("");
- 
+
   const [listaProductos, setListaProductos] = useState([]);
   const [filtroEstado, setFiltroEstado] = useState("todos");
   const [productosOriginales, setProductosOriginales] = useState([]);
@@ -25,35 +17,34 @@ const AdminProductos = ({usuarioAdmin}) => {
 
   const [pageProductos, setPageProductos] = useState(1);
   const [totalPagesProductos, setTotalPagesProductos] = useState(1);
-    const [mostrarSpinnerProductos, setMostrarSpinnerProductos] = useState(true);
-
+  const [mostrarSpinnerProductos, setMostrarSpinnerProductos] = useState(true);
 
   useEffect(() => {
     obtenerProductos();
-        if (productosOriginales.length > 0) {
-            const datosFiltrados = filtrarProductos(productosOriginales);
-            setListaProductos(datosFiltrados);
-        }
+    if (productosOriginales.length > 0) {
+      const datosFiltrados = filtrarProductos(productosOriginales);
+      setListaProductos(datosFiltrados);
+    }
     obtenerProductos();
   }, [pageProductos, filtroEstado]);
 
-  const filtrarProductos = (productos) =>{
-    let datosFiltrados = [... productos]
-    if (filtroEstado === "disponibles"){
-      datosFiltrados = datosFiltrados.filter(producto => producto.habilitado);
-    } else if(filtroEstado === "nodisponibles"){
-      datosFiltrados = datosFiltrados.filter(producto => !producto.habilitado)
+  const filtrarProductos = (productos) => {
+    let datosFiltrados = [...productos];
+    if (filtroEstado === "disponibles") {
+      datosFiltrados = datosFiltrados.filter((producto) => producto.habilitado);
+    } else if (filtroEstado === "nodisponibles") {
+      datosFiltrados = datosFiltrados.filter((producto) => !producto.habilitado);
     }
 
-    return datosFiltrados
-  }
+    return datosFiltrados;
+  };
 
   const obtenerProductos = async () => {
     setMostrarSpinnerProductos(true);
     const respuesta = await leerProductosPaginados(pageProductos, limit);
     if (respuesta.status === 200) {
       const datos = await respuesta.json();
-      const productosRecibidos = datos.productos
+      const productosRecibidos = datos.productos;
       setProductosOriginales(productosRecibidos);
       const datosFiltrados = filtrarProductos(productosRecibidos);
       setListaProductos(datosFiltrados);
@@ -67,7 +58,6 @@ const AdminProductos = ({usuarioAdmin}) => {
     }
     setMostrarSpinnerProductos(false);
   };
-
 
   const handleBuscarProducto = async (e) => {
     setMostrarSpinnerProductos(true);
@@ -88,7 +78,6 @@ const AdminProductos = ({usuarioAdmin}) => {
     setMostrarSpinnerProductos(false);
   };
 
-  
   return (
     <section className="container mainSection">
       <>
@@ -107,48 +96,48 @@ const AdminProductos = ({usuarioAdmin}) => {
               </Col>
               <Col xs={12} md={8}>
                 <Form>
-                    <Row className="justify-content-start justify-content-md-end">
+                  <Row className="justify-content-start justify-content-md-end">
                     <Col xs="auto d-flex">
-                        <div className="d-flex align-items-center">
+                      <div className="d-flex align-items-center">
                         <i className="bi bi-search fs-3 me-2 text-secondary"></i>
                         <Form.Control
-                            type="text"
-                            placeholder="Buscar"
-                            className=" mr-sm-2"
-                            onChange={handleBuscarProducto}
-                            value={terminoBusquedaProducto}
+                          type="text"
+                          placeholder="Buscar"
+                          className=" mr-sm-2"
+                          onChange={handleBuscarProducto}
+                          value={terminoBusquedaProducto}
                         />
-                        </div>
+                      </div>
                     </Col>
                     <Col xs="12" md="6" className="d-flex justify-content-md-end">
-                         <div className="d-flex flex-wrap justify-content-center justify-content-md-start">
-                        <button 
-                            type="button" 
-                            className={`btn ${filtroEstado === "todos" ? "btn-warning" : "btn-outline-warning"}`}
-                            onClick={() => setFiltroEstado("todos")}
-                            title="Mostrar todos los usuarios"
+                      <div className="d-flex flex-wrap justify-content-center justify-content-md-start">
+                        <button
+                          type="button"
+                          className={`btn ${filtroEstado === "todos" ? "btn-warning" : "btn-outline-warning"}`}
+                          onClick={() => setFiltroEstado("todos")}
+                          title="Mostrar todos los usuarios"
                         >
-                            Todos
-                            </button>
-                        <button 
-                            type="button" 
-                            className={`btn ${filtroEstado === "disponibles" ? "btn-success" : "btn-outline-success"}`}
-                            onClick={() => setFiltroEstado("disponibles")}
-                            title="Mostrar los productos disponibles"
-                        >
-                            <i className="bi bi-check-circle me-1"></i> Disponible
+                          Todos
                         </button>
                         <button
-                            type="button"
-                            className={`btn ${filtroEstado === "nodisponibles" ? "btn-danger" : "btn-outline-danger"}`}
-                            onClick={() => setFiltroEstado("nodisponibles")}
-                            title="Mostrar solo productos no disponibles"
+                          type="button"
+                          className={`btn ${filtroEstado === "disponibles" ? "btn-success" : "btn-outline-success"}`}
+                          onClick={() => setFiltroEstado("disponibles")}
+                          title="Mostrar los productos disponibles"
                         >
-                            <i className="bi bi-x-circle me-1"></i> No Disponible
+                          <i className="bi bi-check-circle me-1"></i> Disponible
                         </button>
-                        </div>
+                        <button
+                          type="button"
+                          className={`btn ${filtroEstado === "nodisponibles" ? "btn-danger" : "btn-outline-danger"}`}
+                          onClick={() => setFiltroEstado("nodisponibles")}
+                          title="Mostrar solo productos no disponibles"
+                        >
+                          <i className="bi bi-x-circle me-1"></i> No Disponible
+                        </button>
+                      </div>
                     </Col>
-                    </Row>
+                  </Row>
                 </Form>
               </Col>
             </Row>

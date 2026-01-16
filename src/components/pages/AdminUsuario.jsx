@@ -1,11 +1,8 @@
-import { Col, Dropdown, Form, Row, Table, Button, Spinner } from "react-bootstrap";
+import { Col, Form, Row, Table, Spinner } from "react-bootstrap";
 import { Link } from "react-router";
 import ItemUsuario from "./usuario/ItemUsuario";
 import { useEffect, useState } from "react";
-import {
-  leerUsuarios,
-  leerUsuariosPaginados,
-} from "./helpers/queries";
+import { leerUsuarios, leerUsuariosPaginados } from "./helpers/queries";
 import Swal from "sweetalert2";
 
 const AdminUsuario = ({ usuarioAdmin }) => {
@@ -22,38 +19,37 @@ const AdminUsuario = ({ usuarioAdmin }) => {
 
   useEffect(() => {
     obtenerUsuarios();
-        if (usuariosOriginales.length > 0) {
+    if (usuariosOriginales.length > 0) {
       const datosFiltrados = filtrarUsuarios(usuariosOriginales);
       setListaUsuarios(datosFiltrados);
     }
   }, [pageUsuarios, filtroEstado]);
 
-  const filtrarUsuarios = (usuarios) =>{
-    let datosFiltrados = []
+  const filtrarUsuarios = (usuarios) => {
+    let datosFiltrados = [];
     switch (usuarioAdmin.rol) {
-        case "empleado":
-          datosFiltrados = usuarios.filter((usuario) => usuario.rol === "user");
-          break;
-        case "admin":
-          datosFiltrados = usuarios.filter((usuario) => usuario.rol === "empleado" || usuario.rol === "user");
-          break;
-        case "superadmin":
-          datosFiltrados = usuarios.filter((usuario) => usuario._id !== usuarioAdmin._id);
-          break;
-        default:
-          datosFiltrados = usuarios;
-      }
-    if (filtroEstado === "activos"){
-      datosFiltrados = datosFiltrados.filter(usuario => usuario.habilitado);
-    } else if(filtroEstado === "inactivos"){
-      datosFiltrados = datosFiltrados.filter(usuario => !usuario.habilitado)
+      case "empleado":
+        datosFiltrados = usuarios.filter((usuario) => usuario.rol === "user");
+        break;
+      case "admin":
+        datosFiltrados = usuarios.filter((usuario) => usuario.rol === "empleado" || usuario.rol === "user");
+        break;
+      case "superadmin":
+        datosFiltrados = usuarios.filter((usuario) => usuario._id !== usuarioAdmin._id);
+        break;
+      default:
+        datosFiltrados = usuarios;
+    }
+    if (filtroEstado === "activos") {
+      datosFiltrados = datosFiltrados.filter((usuario) => usuario.habilitado);
+    } else if (filtroEstado === "inactivos") {
+      datosFiltrados = datosFiltrados.filter((usuario) => !usuario.habilitado);
     }
 
-    return datosFiltrados
-  }
+    return datosFiltrados;
+  };
 
-
-const obtenerUsuarios = async () => {
+  const obtenerUsuarios = async () => {
     try {
       setMostrarSpinnerUsuarios(true);
       const primeraRespuesta = await leerUsuariosPaginados(1, limit);
@@ -70,9 +66,9 @@ const obtenerUsuarios = async () => {
           todosLosUsuarios = [...todosLosUsuarios, ...datos.usuario];
         }
       }
-      setUsuariosOriginales(todosLosUsuarios)
-      
-      const datosFiltrados = filtrarUsuarios(todosLosUsuarios)
+      setUsuariosOriginales(todosLosUsuarios);
+
+      const datosFiltrados = filtrarUsuarios(todosLosUsuarios);
 
       setListaUsuarios(datosFiltrados);
       setTotalPagesUsuarios(Math.ceil(datosFiltrados.length / limit));
@@ -98,11 +94,9 @@ const obtenerUsuarios = async () => {
       if (respuesta.status === 200) {
         const datos = await respuesta.json();
         const usuariosResultado = datos || [];
-        let usuariosFiltradosBusqueda = usuariosResultado.filter(
-          (usuario) => usuario.email.toLowerCase().includes(termino.toLowerCase())
-        );
+        let usuariosFiltradosBusqueda = usuariosResultado.filter((usuario) => usuario.email.toLowerCase().includes(termino.toLowerCase()));
 
-         const usuariosFiltrados = filtrarUsuarios(usuariosFiltradosBusqueda);
+        const usuariosFiltrados = filtrarUsuarios(usuariosFiltradosBusqueda);
 
         setListaUsuarios(usuariosFiltrados);
       }
@@ -142,16 +136,16 @@ const obtenerUsuarios = async () => {
                   </Col>
                   <Col xs="12" md="auto">
                     <div>
-                      <button 
-                        type="button" 
+                      <button
+                        type="button"
                         className={`btn ${filtroEstado === "todos" ? "btn-warning" : "btn-outline-warning"}`}
                         onClick={() => setFiltroEstado("todos")}
                         title="Mostrar todos los usuarios"
                       >
                         Todos
-                        </button>
-                      <button 
-                        type="button" 
+                      </button>
+                      <button
+                        type="button"
                         className={`btn ${filtroEstado === "activos" ? "btn-success" : "btn-outline-success"}`}
                         onClick={() => setFiltroEstado("activos")}
                         title="Mostrar los usuarios activos"
