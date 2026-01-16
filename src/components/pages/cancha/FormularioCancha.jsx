@@ -205,8 +205,8 @@ const FormularioCancha = ({ titulo }) => {
                 <div>
                   <Form.Switch
                     type="switch"
-                    label={watch("disponibilidad") ? "Disponible" : "No disponible"}
-                    {...register("disponibilidad")}
+                    label={watch("habilitado") ? "Disponible" : "No disponible"}
+                    {...register("habilitado")}
                     className="fs-5"
                   />
                 </div>
