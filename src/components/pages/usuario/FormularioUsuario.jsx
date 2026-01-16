@@ -29,7 +29,7 @@ const FormularioUsuario = ({ titulo, usuarioAdmin }) => {
         const usuarioBuscado = await respuesta.json();
         console.log(usuarioBuscado);
         if (usuarioBuscado === undefined) {
-          navegacion("/administrador");
+          navegacion("/usuarios");
           Swal.fire({
             icon: "error",
             title: "Oops...",
@@ -74,7 +74,7 @@ const FormularioUsuario = ({ titulo, usuarioAdmin }) => {
         });
       }
     }
-    navegacion("/administrador");
+    navegacion("/usuarios");
     setMostrarSpinner(false);
     setDeshabilitarBoton(false);
   };
@@ -128,23 +128,6 @@ const FormularioUsuario = ({ titulo, usuarioAdmin }) => {
                 <Form.Text className="text-danger">{errors.email?.message}</Form.Text>
               </Form.Group>
 
-              <Form.Group className="mb-3 " controlId="formPassword">
-                <Form.Label className="me-2">Contraseña:</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="contraseña"
-                  {...register("password", {
-                    required: "La contraseña es un dato obligatorio",
-                    pattern: {
-                      value: /^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,16}$/,
-                      message:
-                        "La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un número y un caracter especial",
-                    },
-                  })}
-                />
-                <Form.Text className="text-danger">{errors.password?.message}</Form.Text>
-              </Form.Group>
-
               <Row className="mt-5">
                 <Col xs={12} md={6} className="mb-2 mb-md-0 text-center text-md-end">
                   <Button disabled={deshabilitarBoton} type="submit" variant="warning" className="w-50 btn-gold text-white">
@@ -159,7 +142,7 @@ const FormularioUsuario = ({ titulo, usuarioAdmin }) => {
                   </Button>
                 </Col>
                 <Col xs={12} md={6} className="text-center text-md-start">
-                  <Link to={"/administrador"} className="btn btn-danger w-50">
+                  <Link to={"/usuarios"} className="btn btn-danger w-50">
                     Cancelar
                   </Link>
                 </Col>

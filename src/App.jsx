@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router";
 import Menu from "./components/shared/Navbar";
 import Footer from "./components/shared/Footer";
-import Administrador from "./components/pages/Administrador";
 import Error404 from "./components/pages/Error404";
 import Inicio from "./components/pages/Inicio";
 import Login from "./components/pages/Login";
@@ -22,6 +21,11 @@ import Swal from "sweetalert2";
 import { leerProductosPaginados } from "./components/pages/helpers/queries.js";
 import DetalleProductos from "./components/pages/DetalleProductos.jsx";
 import Carrito from "./components/pages/Carrito.jsx";
+import AdminUsuario from "./components/pages/AdminUsuario.jsx";
+import AdminCanchas from "./components/pages/AdminCanchas.jsx";
+import AdminProductos from "./components/pages/AdminProductos.jsx";
+import AdminReservas from "./components/pages/AdminReservas.jsx";
+
 
 function App() {
   const usuarioLogueado = JSON.parse(sessionStorage.getItem("userKey")) || {};
@@ -135,7 +139,7 @@ function App() {
               }
             ></Route>
             <Route
-              path="/productos"
+              path="/catalogo"
               element={
                 <Productos usuarioAdmin={usuarioAdmin} agregarAlCarrito={agregarAlCarrito}></Productos>
               }
@@ -147,18 +151,18 @@ function App() {
             <Route path="/politicasDePrivacidad" element={<PoliticasDePrivacidad></PoliticasDePrivacidad>}></Route>
             <Route path="/registro" element={<Register></Register>}></Route>
             <Route path="/terminosycondiciones" element={<TerminosYCondiciones></TerminosYCondiciones>}></Route>
-            <Route path="/administrador" element={<ProtectorAdmin isAdmin={usuarioAdmin}></ProtectorAdmin>}>
+            <Route path="/usuarios" element={<ProtectorAdmin isAdmin={usuarioAdmin}></ProtectorAdmin>}>
               <Route
                 index
                 element={
-                  <Administrador
+                  <AdminUsuario
                     usuarioAdmin={usuarioAdmin}
                     obtenerProductos={obtenerProductos}
                     page={page}
                     totalPages={totalPages}
                     listaProductos={listaProductos}
                     setListaProductos={setListaProductos}
-                  ></Administrador>
+                  ></AdminUsuario>
                 }
               ></Route>
               <Route
@@ -166,10 +170,58 @@ function App() {
                 element={<FormularioUsuario titulo={"Usuario Nuevo"} usuarioAdmin={usuarioAdmin}></FormularioUsuario>}
               ></Route>
               <Route path="editarusuario/:id" element={<FormularioUsuario titulo={"Modificar Usuario"}></FormularioUsuario>}></Route>
-              <Route path="crearcancha" element={<FormularioCancha titulo={"Cancha Nueva"}></FormularioCancha>}></Route>
-              <Route path="editarcancha/:id" element={<FormularioCancha titulo={"Modificar Cancha"}></FormularioCancha>}></Route>
               <Route path="crearproducto" element={<FormularioProducto titulo={"Producto Nuevo"}></FormularioProducto>}></Route>
               <Route path="editarproducto/:id" element={<FormularioProducto titulo={"Modificar Producto"}></FormularioProducto>}></Route>
+              <Route path="editarreserva/:id" element={<FormularioReserva titulo={"Modificar Reserva"}></FormularioReserva>}></Route>
+            </Route>
+            <Route path="/canchas" element={<ProtectorAdmin isAdmin={usuarioAdmin}></ProtectorAdmin>}>
+              <Route
+                index
+                element={
+                  <AdminCanchas
+                    usuarioAdmin={usuarioAdmin}
+                    obtenerProductos={obtenerProductos}
+                    page={page}
+                    totalPages={totalPages}
+                    listaProductos={listaProductos}
+                    setListaProductos={setListaProductos}
+                  ></AdminCanchas>
+                }
+              ></Route>
+              <Route path="crearcancha" element={<FormularioCancha titulo={"Cancha Nueva"}></FormularioCancha>}></Route>
+              <Route path="editarcancha/:id" element={<FormularioCancha titulo={"Modificar Cancha"}></FormularioCancha>}></Route>
+            </Route>
+            <Route path="/productos" element={<ProtectorAdmin isAdmin={usuarioAdmin}></ProtectorAdmin>}>
+              <Route
+                index
+                element={
+                  <AdminProductos
+                    usuarioAdmin={usuarioAdmin}
+                    obtenerProductos={obtenerProductos}
+                    page={page}
+                    totalPages={totalPages}
+                    listaProductos={listaProductos}
+                    setListaProductos={setListaProductos}
+                  ></AdminProductos>
+                }
+              ></Route>
+              <Route path="crearproducto" element={<FormularioProducto titulo={"Producto Nuevo"}></FormularioProducto>}></Route>
+              <Route path="editarproducto/:id" element={<FormularioProducto titulo={"Modificar Producto"}></FormularioProducto>}></Route>
+            </Route>
+            <Route path="/reservas" element={<ProtectorAdmin isAdmin={usuarioAdmin}></ProtectorAdmin>}>
+              <Route
+                index
+                element={
+                  <AdminReservas
+                    usuarioAdmin={usuarioAdmin}
+                    obtenerProductos={obtenerProductos}
+                    page={page}
+                    totalPages={totalPages}
+                    listaProductos={listaProductos}
+                    setListaProductos={setListaProductos}
+                  ></AdminReservas>
+                }
+              ></Route>
               <Route path="editarreserva/:id" element={<FormularioReserva titulo={"Modificar Reserva"}></FormularioReserva>}></Route>
             </Route>
             <Route path="/reserva/:id" element={<ReservaCancha usuarioAdmin={usuarioAdmin}></ReservaCancha>}></Route>

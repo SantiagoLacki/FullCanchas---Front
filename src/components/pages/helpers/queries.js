@@ -112,8 +112,7 @@ export const obtenerProductoPorId = async (id) => {
   try {
     const respuesta = await fetch(`${urlProductos}/${id}`);
     if (respuesta.ok) {
-      const producto = await respuesta.json();
-      return producto;
+      return respuesta;
     } else {
       console.error("Error al obtener producto por ID:", respuesta.status);
       return null;
@@ -153,6 +152,7 @@ export const editarProducto = async (productoEditado, id) => {
     formData.append("precio", productoEditado.precio);
     formData.append("categoria", productoEditado.categoria);
     formData.append("descripcion", productoEditado.descripcion);
+    formData.append("habilitado", productoEditado.habilitado)
     if (productoEditado.imagen) {
       formData.append("imagen", productoEditado.imagen);
     }
@@ -222,7 +222,7 @@ export const crearCancha = async (canchaNueva) => {
     formData.append("tipoDeSuperficie", canchaNueva.tipoDeSuperficie);
     formData.append("precioPorHora", canchaNueva.precioPorHora);
     formData.append("imagen", canchaNueva.imagen);
-    formData.append("disponibilidad", canchaNueva.disponibilidad);
+    formData.append("habilitado", canchaNueva.habilitado);
     const respuesta = await fetch(urlCanchas, {
       method: "POST",
       headers: {
@@ -230,7 +230,6 @@ export const crearCancha = async (canchaNueva) => {
       },
       body: formData,
     });
-    console.log(respuesta);
     return respuesta;
   } catch (error) {
     console.error(error);
@@ -247,7 +246,7 @@ export const editarCancha = async (canchaEditada, id) => {
     if (canchaEditada.imagen) {
       formData.append("imagen", canchaEditada.imagen);
     }
-    formData.append("disponibilidad", canchaEditada.disponibilidad);
+    formData.append("habilitado", canchaEditada.habilitado);
     const respuesta = await fetch(urlCanchas + `/${id}`, {
       method: "PUT",
       headers: {

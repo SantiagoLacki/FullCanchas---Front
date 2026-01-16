@@ -44,7 +44,7 @@ const ItemReservaAdmin = ({ reserva, fila, setListaReservas }) => {
       <td className="text-center align-middle fw-light"> {new Date(reserva.dia).toLocaleDateString("es-ES", { timeZone: "UTC" })}</td>
       <td className="text-center align-middle fw-light">{reserva.hora}</td>
       <td className="text-center align-middle">
-        <Link className="me-lg-2 btn btn-gold text-white" to={"/administrador/editarreserva/" + reserva._id}>
+        <Link className="me-lg-2 btn btn-gold text-white" to={"/reservas/editarreserva/" + reserva._id}>
           <i className="bi bi-pencil-square"></i>
         </Link>
         <Button variant="danger" onClick={eliminarReserva}>

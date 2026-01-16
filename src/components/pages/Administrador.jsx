@@ -65,11 +65,23 @@ const Administrador = ({ usuarioAdmin }) => {
         }
       }
       let datosFiltrados = [];
-      if (usuarioAdmin.rol === "admin") {
+       switch(usuarioAdmin.rol) {
+      case 'empleado':
         datosFiltrados = todosLosUsuarios.filter((usuario) => usuario.rol === "user");
-      } else {
-        datosFiltrados = todosLosUsuarios.filter((usuario) => usuario.rol === "admin");
-      }
+        break;
+      case 'admin':
+        datosFiltrados = todosLosUsuarios.filter((usuario) => 
+          usuario.rol === "empleado" || usuario.rol === "user"
+        );
+        break;
+      case 'superadmin':
+        datosFiltrados = todosLosUsuarios.filter((usuario) => 
+          usuario._id !== usuarioAdmin._id
+           );
+        break;
+      default:
+        datosFiltrados = todosLosUsuarios;
+    }
 
       setListaUsuarios(datosFiltrados);
       setTotalPagesUsuarios(Math.ceil(datosFiltrados.length / limit));
@@ -144,30 +156,50 @@ const Administrador = ({ usuarioAdmin }) => {
       if (respuesta.status === 200) {
         const datos = await respuesta.json();
         const usuariosResultado = datos || [];
-        const usuariosFiltrados = usuariosResultado.filter((usuario) => usuario.email.toLowerCase().includes(termino.toLowerCase()) && usuario.rol === "user");
-        setListaUsuarios(usuariosFiltrados);
+        let usuariosFiltrados = [];
+      if (usuarioAdmin.rol === "empleado") {
+        usuariosFiltrados = usuariosResultado.filter((usuario) => 
+          usuario.email.toLowerCase().includes(termino.toLowerCase()) && 
+          usuario.rol === "user"
+        );
+      } else if (usuarioAdmin.rol === "admin") {
+        usuariosFiltrados = usuariosResultado.filter((usuario) => 
+          usuario.email.toLowerCase().includes(termino.toLowerCase()) && 
+          (usuario.rol === "empleado" || usuario.rol === "user")
+        );
+      } else if (usuarioAdmin.rol === "superadmin") {
+        usuariosFiltrados = usuariosResultado.filter((usuario) => 
+          usuario.email.toLowerCase().includes(termino.toLowerCase()) && 
+          usuario._id !== usuarioAdmin._id
+        );
       }
+      
+      setListaUsuarios(usuariosFiltrados);
     }
-    setMostrarSpinnerUsuarios(false);
-  };
+  }
+  setMostrarSpinnerUsuarios(false);
+};
 
-  const handleBuscarUsuarioAdmin = async (e) => {
-    setMostrarSpinnerUsuarios(true);
-    const termino = e.target.value;
-    setTerminoBusquedaUsuario(termino);
-    if (!termino) {
-      obtenerUsuarios();
-    } else {
-      const respuesta = await leerUsuarios();
-      if (respuesta.status === 200) {
-        const datos = await respuesta.json();
-        const usuariosResultado = datos || [];
-        const usuariosFiltrados = usuariosResultado.filter((usuario) => usuario.email.toLowerCase().includes(termino.toLowerCase()) && usuario.rol === "admin");
-        setListaUsuarios(usuariosFiltrados);
-      }
+const handleBuscarSuperAdmin = async (e) => {
+  setMostrarSpinnerUsuarios(true);
+  const termino = e.target.value;
+  setTerminoBusquedaUsuario(termino);
+  if (!termino) {
+    obtenerUsuarios();
+  } else {
+    const respuesta = await leerUsuarios();
+    if (respuesta.status === 200) {
+      const datos = await respuesta.json();
+      const usuariosResultado = datos || [];
+      const usuariosFiltrados = usuariosResultado.filter((usuario) => 
+        usuario.email.toLowerCase().includes(termino.toLowerCase()) && 
+        usuario._id !== usuarioAdmin._id
+      );
+      setListaUsuarios(usuariosFiltrados);
     }
-    setMostrarSpinnerUsuarios(false);
-  };
+  }
+  setMostrarSpinnerUsuarios(false);
+};
 
   const handleBuscarProducto = async (e) => {
     setMostrarSpinnerProductos(true);
@@ -218,7 +250,7 @@ const Administrador = ({ usuarioAdmin }) => {
 
   return (
     <section className="container mainSection">
-    {usuarioAdmin.rol === "staff" ? (
+    {usuarioAdmin.rol === "empleado" ? (
         <div className="border text-white rounded-2 py-3 px-4 my-4 shadow-lg bg-light">
             <div className="  align-items-center mt-2 mb-3">
                 <Row className="d-flex justify-content-between align-items-center mb-3">
@@ -241,7 +273,7 @@ const Administrador = ({ usuarioAdmin }) => {
                         type="text"
                         placeholder="Buscar"
                         className=" mr-sm-2"
-                        onChange={handleBuscarUsuarioAdmin}
+                        onChange={handleBuscarUsuario}
                         value={terminoBusquedaUsuario}
                     />
                     </Col>

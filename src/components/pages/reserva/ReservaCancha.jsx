@@ -33,7 +33,7 @@ const ReservaCancha = ({usuarioAdmin}) => {
             const canchaBuscada = await respuesta.json()
             setCancha(canchaBuscada)
         if(canchaBuscada === undefined){
-            navegacion('/administrador')
+            navegacion('/reservas')
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
