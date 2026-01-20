@@ -79,6 +79,11 @@ const ItemUsuario = ({ usuario, fila, obtenerUsuarios, usuarioAdmin }) => {
       <td className="text-center align-middle fw-light">{fila}</td>
       <td className="align-middle fw-light">{usuario.nombreUsuario}</td>
       <td className="text-center align-middle fw-light">{usuario.email}</td>
+      {(usuarioAdmin.rol === "superAdmin" || usuarioAdmin.rol === "admin") &&(
+        <td className="text-center align-middle fw-light">
+            {usuario.rol === "user" ? "Cliente" : usuario.rol}
+        </td>
+      )}
       <td className="text-center align-middle fw-light">
         <Form.Check
           type="switch"
