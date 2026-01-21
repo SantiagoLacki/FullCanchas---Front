@@ -47,7 +47,7 @@ const FormularioUsuario = ({ titulo, usuarioAdmin }) => {
     setMostrarSpinner(true);
     setDeshabilitarBoton(true);
     if (titulo === "Usuario Nuevo") {
-      const rol = usuarioAdmin.rol === "staff" ? "admin" : "user";
+      const rol = (usuarioAdmin.rol === "superAdmin" || usuarioAdmin.rol === "admin" ) ? usuario.rol : "user";
       const usuarioNuevo = { nombreUsuario: usuario.nombreUsuario, email: usuario.email, password: usuario.password, rol: rol };
       const respuesta = await crearUsuario(usuarioNuevo);
       if (respuesta.status === 201) {
@@ -127,6 +127,47 @@ const FormularioUsuario = ({ titulo, usuarioAdmin }) => {
                 />
                 <Form.Text className="text-danger">{errors.email?.message}</Form.Text>
               </Form.Group>
+
+              {titulo === "Usuario Nuevo" && (
+                <>
+                <Form.Group className="mb-3 " controlId="formPassword">
+                  <Form.Label className="me-2">Contraseña:</Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder="contraseña"
+                    {...register("password", {
+                      required: "La contraseña es un dato obligatorio",
+                      pattern: {
+                        value: /^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,16}$/,
+                        message:
+                          "La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un número y un caracter especial",
+                      },
+                    })}
+                  />
+                  <Form.Text className="text-danger">{errors.password?.message}</Form.Text>
+                </Form.Group>
+                {(usuarioAdmin.rol === "superAdmin" || usuarioAdmin.rol === "admin" ) && (
+                <Form.Group className="mb-3" controlId="tipoUsuario">
+                    <Form.Label className="me-2">
+                      Tipo de Usuario:
+                    </Form.Label>
+                    <Form.Select
+                      {...register("rol", {
+                        required: "Debes seleccionar un tipo de usuario",
+                      })}
+                      isInvalid={!!errors.rol}
+                    >
+                      <option value="">Seleccione un tipo de usuario</option>
+                      <option value="user">Cliente</option>
+                      <option value="empleado">Empleado</option>
+                    </Form.Select>
+                    <Form.Text className="text-danger">{errors.rol?.message}</Form.Text>
+                  </Form.Group>
+              
+                )
+                }
+                  </>
+              )}
 
               <Row className="mt-5">
                 <Col xs={12} md={6} className="mb-2 mb-md-0 text-center text-md-end">
