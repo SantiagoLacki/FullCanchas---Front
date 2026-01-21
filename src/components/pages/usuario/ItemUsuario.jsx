@@ -98,7 +98,7 @@ const ItemUsuario = ({ usuario, fila, obtenerUsuarios, usuarioAdmin }) => {
         <Link className="me-lg-2 btn btn-gold text-white fw-light" to={"/usuarios/editarusuario/" + usuario._id}>
           <i className="bi bi-pencil-square"></i>
         </Link>
-        {usuarioAdmin && usuarioAdmin.rol !== "empleado" && (
+        {(usuarioAdmin.rol !== "empleado" && usuario.rol !== "superAdmin") && (
           <Button variant="danger" onClick={eliminarUsuario}>
             <i className="bi bi-trash"></i>
           </Button>
