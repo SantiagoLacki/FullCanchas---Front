@@ -135,42 +135,7 @@ const Register = () => {
                       {errors.confirmPassword?.message || "Debes confirmar la contraseña."}
                     </Form.Control.Feedback>
                   </Form.Group>
-
-                  <Form.Group className="mb-4" controlId="tipoUsuario">
-                    <Form.Label className="fw-semibold">
-                      Tipo de Usuario <span className="text-danger">*</span>
-                    </Form.Label>
-                    <Form.Select
-                      {...register("rol", {
-                        required: "Debes seleccionar un tipo de usuario",
-                      })}
-                      isInvalid={!!errors.rol}
-                    >
-                      <option value="">Seleccione un tipo de usuario</option>
-                      <option value="user">Usuario</option>
-                      <option value="admin">Administrador</option>
-                      <option value="staff">Desarrollador</option>
-                    </Form.Select>
-                    <Form.Text className="text-danger">{errors.rol?.message}</Form.Text>
-                  </Form.Group>
-
-                  {["admin", "staff"].includes(watch("rol")) && (
-                    <Form.Group className="mb-4" controlId="formClave">
-                      <Form.Label className="fw-semibold">
-                        Clave <span className="text-danger">*</span>
-                      </Form.Label>
-                      <Form.Control
-                        type="password"
-                        placeholder="Clave de acceso para roles especiales"
-                        isInvalid={!!errors.secretKey}
-                        {...register("secretKey", {
-                          required: "La clave es obligatoria para roles especiales",
-                        })}
-                      />
-                      <Form.Text className="text-danger">{errors.secretKey?.message}</Form.Text>
-                    </Form.Group>
-                  )}
-
+                  
                   <Button variant="primary" type="submit" className="w-100 mb-3 fw-bold">
                     Registrarse
                   </Button>
