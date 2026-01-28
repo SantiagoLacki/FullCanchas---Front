@@ -15,6 +15,7 @@ const FormularioUsuario = ({ titulo, usuarioAdmin }) => {
   } = useForm();
   const navegacion = useNavigate();
   const { id } = useParams();
+  const [usuarioActual, setUsuarioActual] = useState();
   const [mostrarSpinner, setMostrarSpinner] = useState(false);
   const [deshabilitarBoton, setDeshabilitarBoton] = useState(false);
 
@@ -27,7 +28,6 @@ const FormularioUsuario = ({ titulo, usuarioAdmin }) => {
       const respuesta = await obtenerUsuarioPorId(id);
       if (respuesta.status === 200) {
         const usuarioBuscado = await respuesta.json();
-        console.log(usuarioBuscado);
         if (usuarioBuscado === undefined) {
           navegacion("/usuarios");
           Swal.fire({
@@ -38,6 +38,7 @@ const FormularioUsuario = ({ titulo, usuarioAdmin }) => {
         } else {
           setValue("nombreUsuario", usuarioBuscado.nombreUsuario);
           setValue("email", usuarioBuscado.email);
+          setUsuarioActual(usuarioBuscado)
         }
       }
     }
@@ -65,7 +66,13 @@ const FormularioUsuario = ({ titulo, usuarioAdmin }) => {
         });
       }
     } else {
-      const respuesta = await editarUsuario(usuario, id);
+      const usuarioEditado = { 
+        nombreUsuario: usuario.nombreUsuario, 
+        email: usuario.email, 
+        rol: usuarioActual.rol
+      };
+      console.log(usuarioEditado)
+      const respuesta = await editarUsuario(usuarioEditado, id);
       if (respuesta.status === 200) {
         Swal.fire({
           title: "Usuario editado",
