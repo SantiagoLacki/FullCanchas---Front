@@ -214,11 +214,6 @@ function App() {
                 element={
                   <AdminReservas
                     usuarioAdmin={usuarioAdmin}
-                    obtenerProductos={obtenerProductos}
-                    page={page}
-                    totalPages={totalPages}
-                    listaProductos={listaProductos}
-                    setListaProductos={setListaProductos}
                   ></AdminReservas>
                 }
               ></Route>

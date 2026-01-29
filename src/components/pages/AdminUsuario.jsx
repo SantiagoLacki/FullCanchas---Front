@@ -25,7 +25,7 @@ const AdminUsuario = ({ usuarioAdmin }) => {
       const datosFiltrados = filtrarUsuarios(usuariosOriginales);
       setListaUsuarios(datosFiltrados);
     }
-  }, [pageUsuarios, filtroEstado, filtroRol, usuariosOriginales]);
+  }, [pageUsuarios, filtroEstado, filtroRol, usuariosOriginales, terminoBusquedaUsuario]);
 
   const filtrarUsuarios = (usuarios) => {
     let datosFiltrados = [];
@@ -52,6 +52,13 @@ const AdminUsuario = ({ usuarioAdmin }) => {
 
     if (filtroRol !== "todos") {
       datosFiltrados = datosFiltrados.filter((usuario) => usuario.rol === filtroRol);
+    }
+
+    if (terminoBusquedaUsuario) {
+      datosFiltrados = datosFiltrados.filter((usuario) => 
+        usuario.email.toLowerCase().includes(terminoBusquedaUsuario.toLowerCase()) ||
+        usuario.nombreUsuario.toLowerCase().includes(terminoBusquedaUsuario.toLowerCase())
+      );
     }
 
     return datosFiltrados;
@@ -89,39 +96,23 @@ const AdminUsuario = ({ usuarioAdmin }) => {
     setMostrarSpinnerUsuarios(false);
   };
 
-  const handleBuscarUsuario = async (e) => {
-    setMostrarSpinnerUsuarios(true);
+  const handleBuscarUsuario = (e) => {
     const termino = e.target.value;
     setTerminoBusquedaUsuario(termino);
-    if (!termino) {
-      const datosFiltrados = filtrarUsuarios(usuariosOriginales);
-      setListaUsuarios(datosFiltrados);
-    } else {
-      const respuesta = await leerUsuarios();
-      if (respuesta.status === 200) {
-        const datos = await respuesta.json();
-        const usuariosResultado = datos || [];
-        let usuariosFiltradosBusqueda = usuariosResultado.filter((usuario) => 
-          usuario.email.toLowerCase().includes(termino.toLowerCase())
-        );
-
-        const usuariosFiltrados = filtrarUsuarios(usuariosFiltradosBusqueda);
-        setListaUsuarios(usuariosFiltrados);
-      }
-    }
-    setMostrarSpinnerUsuarios(false);
   };
 
   const resetearFiltros = () => {
     setFiltroEstado("todos");
     setFiltroRol("todos");
     setTerminoBusquedaUsuario("");
+    const datosFiltrados = filtrarUsuarios(usuariosOriginales);
+    setListaUsuarios(datosFiltrados);
   };
 
   return (
     <section className="container mainSection">
       <div className="border text-white rounded-2 py-3 px-4 my-4 shadow-lg bg-light">
-        <div className="align-items-center mt-2 mb-3">
+        <div className="align-items-center mt-2">
           <Row className="d-flex justify-content-between align-items-center mb-3">
             <Col xs={12} md={6} className="mb-2 mb-md-0">
               <div className="d-flex align-items-center">
@@ -183,60 +174,60 @@ const AdminUsuario = ({ usuarioAdmin }) => {
               </div>
             </Col>
             {(usuarioAdmin.rol === "superAdmin" || usuarioAdmin.rol === "admin") && (
-<Col xs={12} md={6} className="mt-2 mt-md-0">
-              <div className="d-flex flex-wrap gap-2">
-                <span className="text-secondary fw-bold align-self-center me-2">Filtrar por rol:</span>
-                <button
-                  type="button"
-                  className={`btn ${filtroRol === "todos" ? "btn-warning" : "btn-outline-warning"}`}
-                  onClick={() => setFiltroRol("todos")}
-                  title="Mostrar todos los roles"
-                >
-                  Todos
-                </button>
-                {usuarioAdmin.rol === "superAdmin" && (
+              <Col xs={12} md={6} className="mt-2 mt-md-0">
+                <div className="d-flex flex-wrap gap-2 justify-content-end">
+                  <span className="text-secondary fw-bold align-self-center me-2">Filtrar por rol:</span>
                   <button
                     type="button"
-                    className={`btn ${filtroRol === "superAdmin" ? "btn-dark" : "btn-outline-dark"}`}
-                    onClick={() => setFiltroRol("superAdmin")}
-                    title="Mostrar solo superadmins"
+                    className={`btn ${filtroRol === "todos" ? "btn-warning" : "btn-outline-warning"}`}
+                    onClick={() => setFiltroRol("todos")}
+                    title="Mostrar todos los roles"
                   >
-                    <i className="bi bi-shield-shaded me-1"></i> SuperAdmin
+                    Todos
                   </button>
-                )}
-                {(usuarioAdmin.rol === "superAdmin") && (
+                  {usuarioAdmin.rol === "superAdmin" && (
+                    <button
+                      type="button"
+                      className={`btn ${filtroRol === "superAdmin" ? "btn-dark" : "btn-outline-dark"}`}
+                      onClick={() => setFiltroRol("superAdmin")}
+                      title="Mostrar solo superadmins"
+                    >
+                      <i className="bi bi-shield-shaded me-1"></i> SuperAd
+                    </button>
+                  )}
+                  {usuarioAdmin.rol === "superAdmin" && (
+                    <button
+                      type="button"
+                      className={`btn ${filtroRol === "admin" ? "btn-success" : "btn-outline-success"}`}
+                      onClick={() => setFiltroRol("admin")}
+                      title="Mostrar solo admins"
+                    >
+                      <i className="bi bi-shield me-1"></i> Adm
+                    </button>
+                  )}
+                  {(usuarioAdmin.rol === "superAdmin" || usuarioAdmin.rol === "admin") && (
+                    <button
+                      type="button"
+                      className={`btn ${filtroRol === "empleado" ? "btn-secondary" : "btn-outline-secondary"}`}
+                      onClick={() => setFiltroRol("empleado")}
+                      title="Mostrar solo empleados"
+                    >
+                      <i className="bi bi-person-badge me-1"></i> Empl
+                    </button>
+                  )}
                   <button
                     type="button"
-                    className={`btn ${filtroRol === "admin" ? "btn-success" : "btn-outline-success"}`}
-                    onClick={() => setFiltroRol("admin")}
-                    title="Mostrar solo admins"
+                    className={`btn ${filtroRol === "user" ? "btn-info" : "btn-outline-info"}`}
+                    onClick={() => setFiltroRol("user")}
+                    title="Mostrar solo usuarios"
                   >
-                    <i className="bi bi-shield me-1"></i> Admin
+                    <i className="bi bi-person me-1"></i> Client
                   </button>
-                )}
-                {(usuarioAdmin.rol === "superAdmin" || usuarioAdmin.rol === "admin") && (
-                  <button
-                    type="button"
-                    className={`btn ${filtroRol === "empleado" ? "btn-secondary" : "btn-outline-secondary"}`}
-                    onClick={() => setFiltroRol("empleado")}
-                    title="Mostrar solo empleados"
-                  >
-                    <i className="bi bi-person-badge me-1"></i> Empleado
-                  </button>
-                )}
-                <button
-                  type="button"
-                  className={`btn ${filtroRol === "user" ? "btn-info" : "btn-outline-info"}`}
-                  onClick={() => setFiltroRol("user")}
-                  title="Mostrar solo usuarios"
-                >
-                  <i className="bi bi-person me-1"></i> Cliente
-                </button>
-              </div>
-            </Col>
+                </div>
+              </Col>
             )}
           </Row>
-          <Row className="mb-3">
+          <Row className="mt-2 mb-2">
             <Col xs={12}>
               <div className="d-flex justify-content-end">
                 <button
@@ -262,9 +253,9 @@ const AdminUsuario = ({ usuarioAdmin }) => {
                 <th className="text-secondary">#</th>
                 <th className="text-secondary">Nombre de Usuario</th>
                 <th className="text-secondary">Email</th>
-                {(usuarioAdmin.rol === "superAdmin" || usuarioAdmin.rol === "admin") && (<th className="text-secondary">Rol</th>) }
+                {(usuarioAdmin.rol === "superAdmin" || usuarioAdmin.rol === "admin") && <th className="text-secondary">Rol</th>}
                 <th className="text-secondary">Estado</th>
-                <th className="text-secondary">Acciones</th>
+                {(usuarioAdmin.rol === "superAdmin" || usuarioAdmin.rol === "admin") && <th className="text-secondary">Acciones</th>}
               </tr>
             </thead>
             <tbody>
