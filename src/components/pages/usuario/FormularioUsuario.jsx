@@ -167,6 +167,7 @@ const FormularioUsuario = ({ titulo, usuarioAdmin }) => {
                       <option value="">Seleccione un tipo de usuario</option>
                       <option value="user">Cliente</option>
                       <option value="empleado">Empleado</option>
+                      {usuarioAdmin.rol === "superAdmin" && <option value="admin">Administrador</option>}
                     </Form.Select>
                     <Form.Text className="text-danger">{errors.rol?.message}</Form.Text>
                   </Form.Group>

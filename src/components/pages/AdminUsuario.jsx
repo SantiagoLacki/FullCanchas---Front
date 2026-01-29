@@ -25,7 +25,7 @@ const AdminUsuario = ({ usuarioAdmin }) => {
       const datosFiltrados = filtrarUsuarios(usuariosOriginales);
       setListaUsuarios(datosFiltrados);
     }
-  }, [pageUsuarios, filtroEstado, filtroRol, usuariosOriginales]);
+  }, [pageUsuarios, filtroEstado, filtroRol, usuariosOriginales, terminoBusquedaUsuario]);
 
   const filtrarUsuarios = (usuarios) => {
     let datosFiltrados = [];
@@ -51,8 +51,14 @@ const AdminUsuario = ({ usuarioAdmin }) => {
     }
 
     if (filtroRol !== "todos") {
-      console.log(filtroRol)
       datosFiltrados = datosFiltrados.filter((usuario) => usuario.rol === filtroRol);
+    }
+
+    if (terminoBusquedaUsuario) {
+      datosFiltrados = datosFiltrados.filter((usuario) => 
+        usuario.email.toLowerCase().includes(terminoBusquedaUsuario.toLowerCase()) ||
+        usuario.nombreUsuario.toLowerCase().includes(terminoBusquedaUsuario.toLowerCase())
+      );
     }
 
     return datosFiltrados;
@@ -90,31 +96,17 @@ const AdminUsuario = ({ usuarioAdmin }) => {
     setMostrarSpinnerUsuarios(false);
   };
 
-  const handleBuscarUsuario = async (e) => {
-    setMostrarSpinnerUsuarios(true);
+  const handleBuscarUsuario = (e) => {
     const termino = e.target.value;
     setTerminoBusquedaUsuario(termino);
-    if (!termino) {
-      const datosFiltrados = filtrarUsuarios(usuariosOriginales);
-      setListaUsuarios(datosFiltrados);
-    } else {
-      const respuesta = await leerUsuarios();
-      if (respuesta.status === 200) {
-        const datos = await respuesta.json();
-        const usuariosResultado = datos || [];
-        let usuariosFiltradosBusqueda = usuariosResultado.filter((usuario) => usuario.email.toLowerCase().includes(termino.toLowerCase()));
-
-        const usuariosFiltrados = filtrarUsuarios(usuariosFiltradosBusqueda);
-        setListaUsuarios(usuariosFiltrados);
-      }
-    }
-    setMostrarSpinnerUsuarios(false);
   };
 
   const resetearFiltros = () => {
     setFiltroEstado("todos");
     setFiltroRol("todos");
     setTerminoBusquedaUsuario("");
+    const datosFiltrados = filtrarUsuarios(usuariosOriginales);
+    setListaUsuarios(datosFiltrados);
   };
 
   return (
@@ -263,7 +255,7 @@ const AdminUsuario = ({ usuarioAdmin }) => {
                 <th className="text-secondary">Email</th>
                 {(usuarioAdmin.rol === "superAdmin" || usuarioAdmin.rol === "admin") && <th className="text-secondary">Rol</th>}
                 <th className="text-secondary">Estado</th>
-                <th className="text-secondary">Acciones</th>
+                {(usuarioAdmin.rol === "superAdmin" || usuarioAdmin.rol === "admin") && <th className="text-secondary">Acciones</th>}
               </tr>
             </thead>
             <tbody>

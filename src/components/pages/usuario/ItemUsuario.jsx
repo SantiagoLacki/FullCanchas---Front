@@ -51,10 +51,15 @@ const ItemUsuario = ({ usuario, fila, obtenerUsuarios, usuarioAdmin }) => {
       cancelButtonText: "Cancelar",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const usuarioModificado = {
-          ...usuario,
-          habilitado: nuevoEstado,
-        };
+        let usuarioModificado
+        if (usuarioAdmin.rol === "empleado") {
+          usuarioModificado = { habilitado: nuevoEstado };
+          } else {
+          usuarioModificado = {
+            ...usuario,
+            habilitado: nuevoEstado,
+          };
+        }
         const respuesta = await editarUsuario(usuarioModificado, usuario._id);
         if (respuesta.status === 200) {
           Swal.fire({
@@ -94,6 +99,7 @@ const ItemUsuario = ({ usuario, fila, obtenerUsuarios, usuarioAdmin }) => {
           className="d-inline-block ms-2 align-middle"
         />
       </td>
+      {(usuarioAdmin.rol === "superAdmin" || usuarioAdmin.rol === "admin") &&(
       <td className="text-center align-middle fw-light">
         <Link className="me-lg-2 btn btn-gold text-white fw-light" to={"/usuarios/editarusuario/" + usuario._id}>
           <i className="bi bi-pencil-square"></i>
@@ -104,6 +110,7 @@ const ItemUsuario = ({ usuario, fila, obtenerUsuarios, usuarioAdmin }) => {
           </Button>
         )}
       </td>
+      )}
     </tr>
   );
 };
