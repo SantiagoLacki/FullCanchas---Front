@@ -4,7 +4,7 @@ import { leerReservas, leerReservasPaginadas } from "./helpers/queries";
 import ItemReservaAdmin from "./reserva/ItemReservaAdmin";
 import Swal from "sweetalert2";
 
-const AdminReservas = () => {
+const AdminReservas = ({usuarioAdmin}) => {
   const [fechaBusqueda, setFechaBusqueda] = useState("");
 
   const [listaReservas, setListaReservas] = useState([]);
@@ -119,7 +119,7 @@ const AdminReservas = () => {
                   <th className="text-secondary">Cliente</th>
                   <th className="text-secondary">Fecha</th>
                   <th className="text-secondary">Turno</th>
-                  <th className="text-secondary">Acciones</th>
+                  {(usuarioAdmin.rol === "superAdmin" || usuarioAdmin.rol === "admin") && <th className="text-secondary">Acciones</th>}
                 </tr>
               </thead>
               <tbody>
@@ -130,8 +130,7 @@ const AdminReservas = () => {
                       reserva={reserva}
                       fila={(pageReservas - 1) * limit + indice + 1}
                       setListaReservas={setListaReservas}
-                      pageReservas={pageReservas}
-                      limit={limit}
+                      usuarioAdmin={usuarioAdmin}
                     ></ItemReservaAdmin>
                   ))
                 ) : (

@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import { borrarReservaPorId, leerReservas } from "../helpers/queries";
 import Swal from "sweetalert2";
 
-const ItemReservaAdmin = ({ reserva, fila, setListaReservas }) => {
+const ItemReservaAdmin = ({ reserva, fila, setListaReservas, usuarioAdmin}) => {
   const eliminarReserva = () => {
     Swal.fire({
       title: "Eliminar Reserva",
@@ -36,6 +36,7 @@ const ItemReservaAdmin = ({ reserva, fila, setListaReservas }) => {
       }
     });
   };
+  console.log(usuarioAdmin)
   return (
     <tr>
       <td className="text-center align-middle fw-light">{fila}</td>
@@ -43,6 +44,7 @@ const ItemReservaAdmin = ({ reserva, fila, setListaReservas }) => {
       <td className="text-center align-middle fw-light">{reserva.idUsuario?.email}</td>
       <td className="text-center align-middle fw-light"> {new Date(reserva.dia).toLocaleDateString("es-ES", { timeZone: "UTC" })}</td>
       <td className="text-center align-middle fw-light">{reserva.hora}</td>
+      {(usuarioAdmin.rol === "superAdmin" || usuarioAdmin.rol === "admin") &&(
       <td className="text-center align-middle">
         <Link className="me-lg-2 btn btn-gold text-white" to={"/reservas/editarreserva/" + reserva._id}>
           <i className="bi bi-pencil-square"></i>
@@ -51,6 +53,7 @@ const ItemReservaAdmin = ({ reserva, fila, setListaReservas }) => {
           <i className="bi bi-trash"></i>
         </Button>
       </td>
+      )}
     </tr>
   );
 };
