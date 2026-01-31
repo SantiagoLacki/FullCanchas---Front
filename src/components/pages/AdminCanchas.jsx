@@ -6,7 +6,7 @@ import { leerCanchas } from "./helpers/queries";
 
 import Swal from "sweetalert2";
 
-const AdminCanchas = () => {
+const AdminCanchas = ({usuarioAdmin}) => {
   const [listaCanchas, setListaCanchas] = useState([]);
   const [filtroEstado, setFiltroEstado] = useState("todos");
   const [canchasOriginales, setCanchasOriginales] = useState([]);
@@ -31,24 +31,26 @@ const AdminCanchas = () => {
     return datosFiltrados;
   };
 
-  const obtenerCanchas = async () => {
-    setMostrarSpinnerCanchas(true);
-    const respuesta = await leerCanchas();
-    if (respuesta.status === 200) {
-      const datos = await respuesta.json();
-      const canchasRecibidas = datos;
-      setCanchasOriginales(canchasRecibidas);
-      const datosFiltrados = filtrarCanchas(canchasRecibidas);
-      setListaCanchas(datosFiltrados);
-    } else {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Intenta esta operación en unos minutos",
-      });
+  const obtenerReservas = async (page = pageReservas) => {
+  setMostrarSpinnerReservas(true);
+  const respuesta = await leerReservasPaginadas(page, limit);
+  if (respuesta.status === 200) {
+    const datos = await respuesta.json();
+    setListaReservas(datos);
+    setTotalPagesReservas(datos.pages);
+    if (datos.reservas.length === 0 && page > 1) {
+      setPageReservas(page - 1);
+      await obtenerReservas(page - 1);
     }
-    setMostrarSpinnerCanchas(false);
-  };
+  } else {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Intenta esta operación en unos minutos",
+    });
+  }
+  setMostrarSpinnerReservas(false);
+};
 
   return (
     <section className="container mainSection">
@@ -115,7 +117,7 @@ const AdminCanchas = () => {
                   <th className="text-secondary">Precio por Hora</th>
                   <th className="text-secondary">Imagen</th>
                   <th className="text-secondary">Disponibilidad</th>
-                  <th className="text-secondary">Acciones</th>
+                  {(usuarioAdmin.rol === "superAdmin" || usuarioAdmin.rol === "admin") && (<th className="text-secondary">Acciones</th>)}
                 </tr>
               </thead>
               <tbody>
@@ -126,6 +128,7 @@ const AdminCanchas = () => {
                     fila={indice + 1}
                     setListaCanchas={setListaCanchas}
                     obtenerCanchas={obtenerCanchas}
+                    usuarioAdmin={usuarioAdmin}
                   ></ItemCancha>
                 ))}
               </tbody>

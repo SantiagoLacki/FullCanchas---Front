@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import Swal from "sweetalert2";
 import { borrarCanchaPorId, leerCanchas, editarCancha } from "../helpers/queries";
 
-const ItemCancha = ({ cancha, fila, setListaCanchas, obtenerCanchas, usuarioAdmin }) => {
+const ItemCancha = ({ cancha, fila, setListaCanchas, obtenerCanchas, usuarioAdmin}) => {
   const eliminarCancha = () => {
     Swal.fire({
       title: "Eliminar Cancha",
@@ -89,16 +89,17 @@ const ItemCancha = ({ cancha, fila, setListaCanchas, obtenerCanchas, usuarioAdmi
           className="d-inline-block ms-2 align-middle"
         />
       </td>
+      {(usuarioAdmin.rol === "superAdmin" || usuarioAdmin.rol === "admin") && (
       <td className="text-center align-middle">
         <Link className="me-lg-2 btn btn-gold text-white" to={"/canchas/editarcancha/" + cancha._id}>
           <i className="bi bi-pencil-square"></i>
         </Link>
-        {usuarioAdmin && usuarioAdmin.rol !== "empleado" && (
+        
           <Button variant="danger" onClick={eliminarCancha}>
             <i className="bi bi-trash"></i>
           </Button>
-        )}
       </td>
+       )}
     </tr>
   );
 };

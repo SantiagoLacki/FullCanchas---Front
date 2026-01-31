@@ -23,9 +23,14 @@ const ItemReservaAdmin = ({ reserva, fila, setListaReservas, usuarioAdmin}) => {
             text: `La reserva fue eliminada correctamente`,
             icon: "success",
           });
-          const respuestaReservas = await leerReservas();
-          const reservasActualizadas = await respuestaReservas.json();
-          setListaReservas(reservasActualizadas);
+          setListaReservas(prevState => {
+          const nuevasReservas = prevState.reservas.filter(r => r._id !== reserva._id);
+          return {
+            ...prevState,
+            reservas: nuevasReservas,
+            total: prevState.total - 1 
+          };
+        });
         } else {
           Swal.fire({
             title: "Ocurrio un error",
@@ -36,7 +41,6 @@ const ItemReservaAdmin = ({ reserva, fila, setListaReservas, usuarioAdmin}) => {
       }
     });
   };
-  console.log(usuarioAdmin)
   return (
     <tr>
       <td className="text-center align-middle fw-light">{fila}</td>
