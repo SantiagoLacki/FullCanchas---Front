@@ -2,7 +2,7 @@ import { Col, Form, Row, Table, Spinner } from "react-bootstrap";
 import { Link } from "react-router";
 import ItemUsuario from "./usuario/ItemUsuario";
 import { useEffect, useState } from "react";
-import { leerUsuarios, leerUsuariosPaginados } from "./helpers/queries";
+import { leerUsuariosPaginados } from "./helpers/queries";
 import Swal from "sweetalert2";
 
 const AdminUsuario = ({ usuarioAdmin }) => {

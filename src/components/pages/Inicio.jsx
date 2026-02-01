@@ -6,13 +6,13 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { leerCanchas } from "./helpers/queries";
 import "./Inicio.css";
-import Spinner from 'react-bootstrap/Spinner';
+import Spinner from "react-bootstrap/Spinner";
 
 const Inicio = ({ usuarioAdmin, listaProductos, page, totalPages, setPage, agregarAlCarrito }) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
   const [listaCanchas, setListaCanchas] = useState([]);
-  const [mostrarSpinner, setMostrarSpinner] = useState(true)
+  const [mostrarSpinner, setMostrarSpinner] = useState(true);
 
   useEffect(() => {
     AOS.init({
@@ -51,7 +51,7 @@ const Inicio = ({ usuarioAdmin, listaProductos, page, totalPages, setPage, agreg
     } else {
       console.info("Ocurrio un error al buscar las canchas");
     }
-    setMostrarSpinner(false)
+    setMostrarSpinner(false);
   };
 
   return (
@@ -111,18 +111,19 @@ const Inicio = ({ usuarioAdmin, listaProductos, page, totalPages, setPage, agreg
         <div className="px-5 py-5">
           <Container>
             <h1 className="titulo-seccion text-white text-center mt-3 mb-5 text-white">Nuestras Canchas</h1>
-            {mostrarSpinner ?                     
+            {mostrarSpinner ? (
               <div className="text-center mt-5">
-                <Spinner animation="border" variant="warning" role="status" ></Spinner>
-              </div> 
-              :
-            <Row className="justify-content-center">
-              {listaCanchas.map((cancha) => (
-                <Col key={cancha._id} xl={3} lg={4} md={6} sm={12} className="mb-4">
-                  <CardCancha cancha={cancha} />
-                </Col>
-              ))}
-            </Row>}
+                <Spinner animation="border" variant="warning" role="status"></Spinner>
+              </div>
+            ) : (
+              <Row className="justify-content-center">
+                {listaCanchas.map((cancha) => (
+                  <Col key={cancha._id} xl={3} lg={4} md={6} sm={12} className="mb-4">
+                    <CardCancha cancha={cancha} />
+                  </Col>
+                ))}
+              </Row>
+            )}
           </Container>
         </div>
         <div className="unionSuave1"></div>

@@ -1,18 +1,12 @@
-import React from "react";
 import { Link } from "react-router";
-import Footer from "../shared/Footer"; // ajustá la ruta según tu estructura
+import error from "../../assets/error404.png";
 import "./Error404.css";
 
 const Error404 = () => {
   return (
     <div className="error-page">
       <div className="error-container">
-        <img
-          src="error-404-realista.png"
-          alt="Error 404"
-          className="error-image"
-        />
-
+        <img src={error} alt="error 404" className="error-image" />
         <Link to="/" className="error-btn">
           Volver al inicio
         </Link>

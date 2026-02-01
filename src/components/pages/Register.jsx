@@ -10,13 +10,10 @@ const Register = () => {
     handleSubmit,
     reset,
     formState: { errors },
-    setValue,
     watch,
   } = useForm();
 
   const navegacion = useNavigate();
-
-  const password = watch("password");
 
   const onSubmit = async (usuario) => {
     const respuesta = await crearUsuario(usuario);
@@ -135,7 +132,7 @@ const Register = () => {
                       {errors.confirmPassword?.message || "Debes confirmar la contraseña."}
                     </Form.Control.Feedback>
                   </Form.Group>
-                  
+
                   <Button variant="primary" type="submit" className="w-100 mb-3 fw-bold">
                     Registrarse
                   </Button>

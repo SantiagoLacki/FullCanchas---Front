@@ -26,7 +26,6 @@ import AdminCanchas from "./components/pages/AdminCanchas.jsx";
 import AdminProductos from "./components/pages/AdminProductos.jsx";
 import AdminReservas from "./components/pages/AdminReservas.jsx";
 
-
 function App() {
   const usuarioLogueado = JSON.parse(sessionStorage.getItem("userKey")) || {};
   const [usuarioAdmin, setUsuarioAdmin] = useState(usuarioLogueado);
@@ -101,7 +100,7 @@ function App() {
           }
           return p;
         })
-        .filter((p) => p.cantidad > 0)
+        .filter((p) => p.cantidad > 0),
     );
 
     const productoEliminado = carrito.find((p) => p._id === id);
@@ -140,9 +139,7 @@ function App() {
             ></Route>
             <Route
               path="/catalogo"
-              element={
-                <Productos usuarioAdmin={usuarioAdmin} agregarAlCarrito={agregarAlCarrito}></Productos>
-              }
+              element={<Productos usuarioAdmin={usuarioAdmin} agregarAlCarrito={agregarAlCarrito}></Productos>}
             ></Route>
             <Route path="/detalleproducto/:id" element={<DetalleProductos></DetalleProductos>}></Route>
             <Route path="/carrito" element={<Carrito carrito={carrito} eliminarDelCarrito={eliminarDelCarrito}></Carrito>}></Route>
@@ -157,11 +154,6 @@ function App() {
                 element={
                   <AdminUsuario
                     usuarioAdmin={usuarioAdmin}
-                    obtenerProductos={obtenerProductos}
-                    page={page}
-                    totalPages={totalPages}
-                    listaProductos={listaProductos}
-                    setListaProductos={setListaProductos}
                   ></AdminUsuario>
                 }
               ></Route>
@@ -180,11 +172,6 @@ function App() {
                 element={
                   <AdminCanchas
                     usuarioAdmin={usuarioAdmin}
-                    obtenerProductos={obtenerProductos}
-                    page={page}
-                    totalPages={totalPages}
-                    listaProductos={listaProductos}
-                    setListaProductos={setListaProductos}
                   ></AdminCanchas>
                 }
               ></Route>
@@ -197,11 +184,6 @@ function App() {
                 element={
                   <AdminProductos
                     usuarioAdmin={usuarioAdmin}
-                    obtenerProductos={obtenerProductos}
-                    page={page}
-                    totalPages={totalPages}
-                    listaProductos={listaProductos}
-                    setListaProductos={setListaProductos}
                   ></AdminProductos>
                 }
               ></Route>
@@ -209,14 +191,7 @@ function App() {
               <Route path="editarproducto/:id" element={<FormularioProducto titulo={"Modificar Producto"}></FormularioProducto>}></Route>
             </Route>
             <Route path="/reservas" element={<ProtectorAdmin isAdmin={usuarioAdmin}></ProtectorAdmin>}>
-              <Route
-                index
-                element={
-                  <AdminReservas
-                    usuarioAdmin={usuarioAdmin}
-                  ></AdminReservas>
-                }
-              ></Route>
+              <Route index element={<AdminReservas usuarioAdmin={usuarioAdmin}></AdminReservas>}></Route>
               <Route path="editarreserva/:id" element={<FormularioReserva titulo={"Modificar Reserva"}></FormularioReserva>}></Route>
             </Route>
             <Route path="/reserva/:id" element={<ReservaCancha usuarioAdmin={usuarioAdmin}></ReservaCancha>}></Route>

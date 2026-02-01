@@ -6,7 +6,7 @@ import { leerCanchas } from "./helpers/queries";
 
 import Swal from "sweetalert2";
 
-const AdminCanchas = () => {
+const AdminCanchas = ({ usuarioAdmin }) => {
   const [listaCanchas, setListaCanchas] = useState([]);
   const [filtroEstado, setFiltroEstado] = useState("todos");
   const [canchasOriginales, setCanchasOriginales] = useState([]);
@@ -115,7 +115,7 @@ const AdminCanchas = () => {
                   <th className="text-secondary">Precio por Hora</th>
                   <th className="text-secondary">Imagen</th>
                   <th className="text-secondary">Disponibilidad</th>
-                  <th className="text-secondary">Acciones</th>
+                  {(usuarioAdmin.rol === "superAdmin" || usuarioAdmin.rol === "admin") && <th className="text-secondary">Acciones</th>}
                 </tr>
               </thead>
               <tbody>
@@ -126,6 +126,7 @@ const AdminCanchas = () => {
                     fila={indice + 1}
                     setListaCanchas={setListaCanchas}
                     obtenerCanchas={obtenerCanchas}
+                    usuarioAdmin={usuarioAdmin}
                   ></ItemCancha>
                 ))}
               </tbody>

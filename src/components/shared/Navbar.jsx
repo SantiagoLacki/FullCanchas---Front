@@ -1,9 +1,9 @@
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { NavLink, Link, useNavigate } from "react-router-dom"; 
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import FullCanchaLogo from "../../assets/logo-canchasfull-nav.png";
-import { Button, NavDropdown} from "react-bootstrap";
+import { Button, NavDropdown } from "react-bootstrap";
 import Swal from "sweetalert2";
 
 function Menu({ usuarioAdmin, setUsuarioAdmin, setCarrito }) {
@@ -51,13 +51,18 @@ function Menu({ usuarioAdmin, setUsuarioAdmin, setCarrito }) {
             <NavLink as={Link} to={"/carrito"} className="nav-link fw-bold navbar-links rounded px-2">
               <i className="bi bi-cart-plus-fill fs-4 me-1"></i>Carrito
             </NavLink>
-            {usuarioAdmin.token && (usuarioAdmin.rol === "admin" || usuarioAdmin.rol === "superAdmin" || usuarioAdmin.rol === "empleado") ? (
+            {usuarioAdmin.token &&
+            (usuarioAdmin.rol === "admin" || usuarioAdmin.rol === "superAdmin" || usuarioAdmin.rol === "empleado") ? (
               <>
-                <NavDropdown title={
+                <NavDropdown
+                  title={
                     <span className="fw-bold">
                       <i className="bi bi-person-gear fs-4 me-1"></i>Administrador
                     </span>
-                  }  id="basic-nav-dropdown" className="navbar-links-dropdown">
+                  }
+                  id="basic-nav-dropdown"
+                  className="navbar-links-dropdown"
+                >
                   <NavDropdown.Item as={NavLink} to={"/usuarios"} className="dropdown-item-custom">
                     <i className="bi bi-person-vcard fs-4 me-1"></i>
                     Usuarios
@@ -75,7 +80,7 @@ function Menu({ usuarioAdmin, setUsuarioAdmin, setCarrito }) {
                     Reservas
                   </NavDropdown.Item>
                 </NavDropdown>
-                
+
                 <Button className="nav-link fw-bold navbar-links rounded px-2 btn-gold" onClick={logout}>
                   Cerrar Sesión
                 </Button>

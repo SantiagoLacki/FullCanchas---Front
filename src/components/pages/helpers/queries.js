@@ -152,7 +152,7 @@ export const editarProducto = async (productoEditado, id) => {
     formData.append("precio", productoEditado.precio);
     formData.append("categoria", productoEditado.categoria);
     formData.append("descripcion", productoEditado.descripcion);
-    formData.append("habilitado", productoEditado.habilitado)
+    formData.append("habilitado", productoEditado.habilitado);
     if (productoEditado.imagen) {
       formData.append("imagen", productoEditado.imagen);
     }

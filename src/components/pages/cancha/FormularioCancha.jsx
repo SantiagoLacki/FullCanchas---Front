@@ -43,7 +43,7 @@ const FormularioCancha = ({ titulo }) => {
           setValue("nombre", canchaBuscada.nombre);
           setValue("tipoDeSuperficie", canchaBuscada.tipoDeSuperficie);
           setValue("precioPorHora", canchaBuscada.precioPorHora);
-          setImagenActual(canchaBuscada.imagen)
+          setImagenActual(canchaBuscada.imagen);
           setValue("disponibilidad", canchaBuscada.habilitado === "true");
         }
       }

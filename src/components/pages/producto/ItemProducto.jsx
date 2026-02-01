@@ -1,6 +1,6 @@
 import { Button, Form } from "react-bootstrap";
 import { Link } from "react-router";
-import { borrarProductoPorId, editarProducto, leerProductosPaginados} from "../helpers/queries";
+import { borrarProductoPorId, editarProducto, leerProductosPaginados } from "../helpers/queries";
 import Swal from "sweetalert2";
 
 const ItemProducto = ({ producto, fila, obtenerProductos, setListaProductos, pageProductos, limit, usuarioAdmin }) => {

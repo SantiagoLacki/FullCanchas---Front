@@ -2,7 +2,7 @@ import { Col, Form, Row, Table, Button, Spinner } from "react-bootstrap";
 import { Link } from "react-router";
 import { useEffect, useState } from "react";
 import ItemProducto from "./producto/ItemProducto";
-import { leerProductos, leerProductosPaginados } from "./helpers/queries";
+import { leerProductosPaginados } from "./helpers/queries";
 import Swal from "sweetalert2";
 
 const AdminProductos = ({ usuarioAdmin }) => {
@@ -28,7 +28,7 @@ const AdminProductos = ({ usuarioAdmin }) => {
 
   const filtrarProductos = (productos) => {
     let datosFiltrados = [...productos];
-    
+
     if (filtroEstado === "disponibles") {
       datosFiltrados = datosFiltrados.filter((producto) => producto.habilitado);
     } else if (filtroEstado === "nodisponibles") {
@@ -36,9 +36,7 @@ const AdminProductos = ({ usuarioAdmin }) => {
     }
 
     if (terminoBusquedaProducto) {
-      datosFiltrados = datosFiltrados.filter((producto) => 
-        producto.nombre.toLowerCase().includes(terminoBusquedaProducto.toLowerCase())
-      );
+      datosFiltrados = datosFiltrados.filter((producto) => producto.nombre.toLowerCase().includes(terminoBusquedaProducto.toLowerCase()));
     }
 
     return datosFiltrados;
