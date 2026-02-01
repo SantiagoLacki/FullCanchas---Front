@@ -18,7 +18,7 @@ function Login({ setUsuarioAdmin, setCarrito }) {
   const iniciarSesion = async (usuario) => {
     setMostrarSpinner(true);
     setDeshabilitarBoton(true);
-    
+
     try {
       const respuesta = await login(usuario);
       if (respuesta.status === 200) {
@@ -88,11 +88,7 @@ function Login({ setUsuarioAdmin, setCarrito }) {
                       },
                     })}
                   />
-                  {errors.email && (
-                    <Form.Text className="text-danger">
-                      {errors.email.message}
-                    </Form.Text>
-                  )}
+                  {errors.email && <Form.Text className="text-danger">{errors.email.message}</Form.Text>}
                 </Form.Group>
                 <Form.Group className="mb-4" controlId="password">
                   <Form.Label className="fw-semibold">Contraseña</Form.Label>
@@ -109,39 +105,25 @@ function Login({ setUsuarioAdmin, setCarrito }) {
                       },
                     })}
                   />
-                  {errors.password && (
-                    <Form.Text className="text-danger">
-                      {errors.password.message}
-                    </Form.Text>
-                  )}
+                  {errors.password && <Form.Text className="text-danger">{errors.password.message}</Form.Text>}
                   <div className="text-end mt-1">
                     <Link to={"*"} className="text-decoration-none text-primary small">
                       ¿Olvidaste tu contraseña?
                     </Link>
                   </div>
                 </Form.Group>
-                
-                <Button 
-                  variant="primary" 
-                  type="submit" 
-                  className="w-100 mb-3 fw-bold btn-fullcanchas-primary"
-                  disabled={deshabilitarBoton}
-                >
+
+                <Button variant="primary" type="submit" className="w-100 mb-3 fw-bold btn-fullcanchas-primary" disabled={deshabilitarBoton}>
                   {mostrarSpinner ? (
                     <div className="d-flex align-items-center justify-content-center">
-                      <Spinner
-                        animation="border"
-                        size="sm"
-                        role="status"
-                        className="me-2"
-                      />
+                      <Spinner animation="border" size="sm" role="status" className="me-2" />
                       Iniciando sesión...
                     </div>
                   ) : (
                     "Iniciar Sesión"
                   )}
                 </Button>
-                
+
                 <hr className="my-4" />
                 <p className="text-center mt-3 mb-0 small">
                   ¿Aún no tienes cuenta?

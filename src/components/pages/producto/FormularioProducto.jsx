@@ -29,7 +29,6 @@ const FormularioProducto = ({ titulo }) => {
   const obtenerProducto = async () => {
     if (titulo === "Modificar Producto") {
       const respuesta = await obtenerProductoPorId(id);
-      console.log(respuesta.status)
       if (respuesta.status === 200) {
         const productoBuscado = await respuesta.json();
         if (productoBuscado === undefined) {
@@ -217,17 +216,16 @@ const FormularioProducto = ({ titulo }) => {
 
               <Row className="mt-5">
                 <Col xs={12} md={6} className="mb-2 mb-md-0 text-center text-md-end">
-                  <Button 
-                  disabled={deshabilitarBoton} type="submit" variant="warning" className="w-50 btn-gold text-white">
-                  {mostrarSpinner ? (
-                    <div className="d-flex align-items-center justify-content-center">
-                      <Spinner animation="border" size="sm" className="me-2" />
-                      Guardando...
-                    </div>
-                  ) : (
-                    "Guardar"
-                  )}
-                </Button>
+                  <Button disabled={deshabilitarBoton} type="submit" variant="warning" className="w-50 btn-gold text-white">
+                    {mostrarSpinner ? (
+                      <div className="d-flex align-items-center justify-content-center">
+                        <Spinner animation="border" size="sm" className="me-2" />
+                        Guardando...
+                      </div>
+                    ) : (
+                      "Guardar"
+                    )}
+                  </Button>
                 </Col>
                 <Col xs={12} md={6} className="text-center text-md-start">
                   <Link to={"/productos"} className="btn btn-danger w-50">

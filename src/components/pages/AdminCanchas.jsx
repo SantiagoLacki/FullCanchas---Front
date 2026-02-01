@@ -6,7 +6,7 @@ import { leerCanchas } from "./helpers/queries";
 
 import Swal from "sweetalert2";
 
-const AdminCanchas = ({usuarioAdmin}) => {
+const AdminCanchas = ({ usuarioAdmin }) => {
   const [listaCanchas, setListaCanchas] = useState([]);
   const [filtroEstado, setFiltroEstado] = useState("todos");
   const [canchasOriginales, setCanchasOriginales] = useState([]);
@@ -31,26 +31,24 @@ const AdminCanchas = ({usuarioAdmin}) => {
     return datosFiltrados;
   };
 
-  const obtenerReservas = async (page = pageReservas) => {
-  setMostrarSpinnerReservas(true);
-  const respuesta = await leerReservasPaginadas(page, limit);
-  if (respuesta.status === 200) {
-    const datos = await respuesta.json();
-    setListaReservas(datos);
-    setTotalPagesReservas(datos.pages);
-    if (datos.reservas.length === 0 && page > 1) {
-      setPageReservas(page - 1);
-      await obtenerReservas(page - 1);
+  const obtenerCanchas = async () => {
+    setMostrarSpinnerCanchas(true);
+    const respuesta = await leerCanchas();
+    if (respuesta.status === 200) {
+      const datos = await respuesta.json();
+      const canchasRecibidas = datos;
+      setCanchasOriginales(canchasRecibidas);
+      const datosFiltrados = filtrarCanchas(canchasRecibidas);
+      setListaCanchas(datosFiltrados);
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Intenta esta operación en unos minutos",
+      });
     }
-  } else {
-    Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: "Intenta esta operación en unos minutos",
-    });
-  }
-  setMostrarSpinnerReservas(false);
-};
+    setMostrarSpinnerCanchas(false);
+  };
 
   return (
     <section className="container mainSection">
@@ -117,7 +115,7 @@ const AdminCanchas = ({usuarioAdmin}) => {
                   <th className="text-secondary">Precio por Hora</th>
                   <th className="text-secondary">Imagen</th>
                   <th className="text-secondary">Disponibilidad</th>
-                  {(usuarioAdmin.rol === "superAdmin" || usuarioAdmin.rol === "admin") && (<th className="text-secondary">Acciones</th>)}
+                  {(usuarioAdmin.rol === "superAdmin" || usuarioAdmin.rol === "admin") && <th className="text-secondary">Acciones</th>}
                 </tr>
               </thead>
               <tbody>

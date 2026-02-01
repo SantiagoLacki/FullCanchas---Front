@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button,  Modal } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
 import { crearReserva, leerReservas } from "../helpers/queries";
@@ -14,122 +14,123 @@ const ItemReserva = ({ turno, dias, listaReservas, setListaReservas, cancha, usu
   };
 
   const handleReservar = async () => {
-  if (!reservaSeleccionada) return;
-  
-  const claveUltimaReserva = `ultimaReserva_${usuarioAdmin.id}`;
-  const ultimaReservaStr = localStorage.getItem(claveUltimaReserva);
-  
-  if (ultimaReservaStr) {
-    const ultimaReserva = JSON.parse(ultimaReservaStr);
-    
-    const tiempoTranscurrido = Date.now() - ultimaReserva.timestamp;
-    const minutos = Math.floor(tiempoTranscurrido / 60000);
-    const segundos = Math.floor((tiempoTranscurrido % 60000) / 1000);
+    if (!reservaSeleccionada) return;
 
-    if (tiempoTranscurrido < 300000) {
-      const result = await Swal.fire({
-        title: "¿Otra reserva?",
-        html: `
+    const claveUltimaReserva = `ultimaReserva_${usuarioAdmin.id}`;
+    const ultimaReservaStr = localStorage.getItem(claveUltimaReserva);
+
+    if (ultimaReservaStr) {
+      const ultimaReserva = JSON.parse(ultimaReservaStr);
+
+      const tiempoTranscurrido = Date.now() - ultimaReserva.timestamp;
+      const minutos = Math.floor(tiempoTranscurrido / 60000);
+      const segundos = Math.floor((tiempoTranscurrido % 60000) / 1000);
+
+      if (tiempoTranscurrido < 300000) {
+        const result = await Swal.fire({
+          title: "¿Otra reserva?",
+          html: `
           <div class="text-center">
             <p>Hiciste una reserva hace <strong>${minutos}:${segundos.toString().padStart(2, "0")}</strong> minutos</p>
             <p class="small text-muted"><strong>${ultimaReserva.cancha} - ${ultimaReserva.fecha} ${ultimaReserva.hora}</strong></p>
             <p>¿Quieres reservar otro turno?</p>
           </div>
         `,
-        icon: "info",
-        showCancelButton: true,
-        confirmButtonColor: "#28a745",
-        cancelButtonColor: "#ca5118ff",
-        confirmButtonText: "Sí, reservar",
-        cancelButtonText: "Cancelar",
-        footer: "<small>💡 <strong>Recordá:</strong> Cada reserva debe ser abonada. Si acumulás reservas sin pago, podrías perder el acceso para hacer nuevas reservas.</small>",
-      });
+          icon: "info",
+          showCancelButton: true,
+          confirmButtonColor: "#28a745",
+          cancelButtonColor: "#ca5118ff",
+          confirmButtonText: "Sí, reservar",
+          cancelButtonText: "Cancelar",
+          footer:
+            "<small>💡 <strong>Recordá:</strong> Cada reserva debe ser abonada. Si acumulás reservas sin pago, podrías perder el acceso para hacer nuevas reservas.</small>",
+        });
 
-      if (!result.isConfirmed) {
-        handleClose();
-        return;
+        if (!result.isConfirmed) {
+          handleClose();
+          return;
+        }
       }
     }
-  }
 
-  const fechaUTC = new Date(reservaSeleccionada.fechaISO + "T00:00:00.000Z");
-  const reserva = { 
-    idUsuario: usuarioAdmin.id, 
-    idCancha: cancha._id, 
-    dia: fechaUTC.toISOString(), 
-    hora: reservaSeleccionada.horario 
-  };
-  
-  const respuesta = await crearReserva(reserva);
-  if (respuesta.status === 201) {
-    localStorage.setItem(
-      claveUltimaReserva,
-      JSON.stringify({
-        timestamp: Date.now(),
-        cancha: reservaSeleccionada.nombreCancha,
-        fecha: reservaSeleccionada.fecha,
-        hora: reservaSeleccionada.horario,
-        cliente: usuarioAdmin.id,
-      })
-    );
-    
-    Swal.fire({
-      title: "Reserva creada",
-      html: `
+    const fechaUTC = new Date(reservaSeleccionada.fechaISO + "T00:00:00.000Z");
+    const reserva = {
+      idUsuario: usuarioAdmin.id,
+      idCancha: cancha._id,
+      dia: fechaUTC.toISOString(),
+      hora: reservaSeleccionada.horario,
+    };
+
+    const respuesta = await crearReserva(reserva);
+    if (respuesta.status === 201) {
+      localStorage.setItem(
+        claveUltimaReserva,
+        JSON.stringify({
+          timestamp: Date.now(),
+          cancha: reservaSeleccionada.nombreCancha,
+          fecha: reservaSeleccionada.fecha,
+          hora: reservaSeleccionada.horario,
+          cliente: usuarioAdmin.id,
+        }),
+      );
+
+      Swal.fire({
+        title: "Reserva creada",
+        html: `
         <div class="text-start">
           <p>Tu reserva para el <strong>${reservaSeleccionada.fecha}</strong> a las <strong>${reservaSeleccionada.horario}</strong> fue creada correctamente.</p>
         </div>
       `,
-      confirmButtonColor: "#28a745",
-      icon: "success",
-      footer: '<div class="text-warning fw-bold">💰 Recuerda: Debes abonar la reserva en las instalaciones del complejo</div>',
-    });
-  }
-  
-  const respuestaReservas = await leerReservas();
-  const reservasActualizadas = await respuestaReservas.json();
-  setListaReservas(reservasActualizadas);
-  handleClose();
-};
+        confirmButtonColor: "#28a745",
+        icon: "success",
+        footer: '<div class="text-warning fw-bold">💰 Recuerda: Debes abonar la reserva en las instalaciones del complejo</div>',
+      });
+    }
+
+    const respuestaReservas = await leerReservas();
+    const reservasActualizadas = await respuestaReservas.json();
+    setListaReservas(reservasActualizadas);
+    handleClose();
+  };
 
   const handleShow = (dia) => {
-  if (usuarioAdmin.rol === "user") {
-    setReservaSeleccionada({
-      fecha: new Date(dia.fecha).toLocaleDateString("es-ES"),
-      fechaISO: dia.fechaISO,
-      horario: turno.formato24,
-      horarioAmPm: turno.formatoAmPm,
-      nombreDia: dia.nombre,
-      nombreCancha: cancha?.nombre || "Cancha",
-      precio: cancha?.precioPorHora || 0,
-      cliente: usuarioAdmin.email,
-    });
-    setShow(true);
-  } else if (usuarioAdmin.rol === "admin" || usuarioAdmin.rol === "staff") {
-    Swal.fire({
-      title: "Acceso restringido",
-      text: "Los usuarios administradores y desarrolladores no pueden realizar reservas. Solo los usuarios regulares pueden reservar turnos.",
-      icon: "info",
-      confirmButtonColor: "#3085d6",
-      confirmButtonText: "Entendido",
-    });
-  } else {
-    Swal.fire({
-      title: "Iniciar Sesión",
-      text: "Debes iniciar sesión como usuario regular para poder reservar un turno",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Ir a Iniciar Sesión",
-      cancelButtonText: "Cancelar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        window.location.href = "/login";
-      }
-    });
-  }
-};
+    if (usuarioAdmin.rol === "user") {
+      setReservaSeleccionada({
+        fecha: new Date(dia.fecha).toLocaleDateString("es-ES"),
+        fechaISO: dia.fechaISO,
+        horario: turno.formato24,
+        horarioAmPm: turno.formatoAmPm,
+        nombreDia: dia.nombre,
+        nombreCancha: cancha?.nombre || "Cancha",
+        precio: cancha?.precioPorHora || 0,
+        cliente: usuarioAdmin.email,
+      });
+      setShow(true);
+    } else if (usuarioAdmin.rol === "admin" || usuarioAdmin.rol === "staff") {
+      Swal.fire({
+        title: "Acceso restringido",
+        text: "Los usuarios administradores y desarrolladores no pueden realizar reservas. Solo los usuarios regulares pueden reservar turnos.",
+        icon: "info",
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Entendido",
+      });
+    } else {
+      Swal.fire({
+        title: "Iniciar Sesión",
+        text: "Debes iniciar sesión como usuario regular para poder reservar un turno",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ir a Iniciar Sesión",
+        cancelButtonText: "Cancelar",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = "/login";
+        }
+      });
+    }
+  };
 
   const estaReservado = (dia) => {
     const fechaDia = new Date(dia.fecha).toISOString().split("T")[0];
@@ -221,7 +222,8 @@ const ItemReserva = ({ turno, dias, listaReservas, setListaReservas, cancha, usu
             <>
               <div>
                 <p className="text-end me-4 modal-text fs-6 mb-1 mt-2">
-                  <i className="bi bi-person-circle fw-bold modal-icon me-1"></i>Cliente: <strong>{reservaSeleccionada.cliente}</strong>{" "}
+                  <i className="bi bi-person-circle fw-bold modal-icon me-1"></i>Cliente:{" "}
+                  <strong>{reservaSeleccionada.cliente}</strong>{" "}
                 </p>
                 <div className="border p-4 rounded-2 shadow mx-3 mt-3 modal-text">
                   <p className="fw-bold modal-icon fs-5">{reservaSeleccionada.nombreCancha}</p>
@@ -253,7 +255,7 @@ const ItemReserva = ({ turno, dias, listaReservas, setListaReservas, cancha, usu
             </>
           )}
           <p className="ms-4 mt-3 fw-light fs-6">
-             Al hacer click en reservar declaras haber leido y aceptado los <Link to={"/terminosycondiciones"}>Términos y Condiciones</Link>
+            Al hacer click en reservar declaras haber leido y aceptado los <Link to={"/terminosycondiciones"}>Términos y Condiciones</Link>
           </p>
         </Modal.Body>
         <Modal.Footer className="border-0 d-flex justify-content-between mb-3">

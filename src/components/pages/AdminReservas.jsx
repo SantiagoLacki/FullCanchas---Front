@@ -4,7 +4,7 @@ import { leerReservas, leerReservasPaginadas } from "./helpers/queries";
 import ItemReservaAdmin from "./reserva/ItemReservaAdmin";
 import Swal from "sweetalert2";
 
-const AdminReservas = ({usuarioAdmin}) => {
+const AdminReservas = ({ usuarioAdmin }) => {
   const [fechaBusqueda, setFechaBusqueda] = useState("");
 
   const [listaReservas, setListaReservas] = useState([]);
