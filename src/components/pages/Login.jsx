@@ -10,6 +10,7 @@ function Login({ setUsuarioAdmin, setCarrito }) {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
   const navegacion = useNavigate();
   const [mostrarSpinner, setMostrarSpinner] = useState(false);
@@ -21,32 +22,66 @@ function Login({ setUsuarioAdmin, setCarrito }) {
 
     try {
       const respuesta = await login(usuario);
+
       if (respuesta.status === 200) {
         const datosUsuario = await respuesta.json();
+
+        if (!datosUsuario.habilitado) {
+          Swal.fire({
+            title: "Acceso denegado",
+            text: `El usuario ${datosUsuario.nombreUsuario} no se encuentra habilitado para ingresar al sistema.`,
+            icon: "warning",
+            confirmButtonColor: "#d33",
+            confirmButtonText: "Entendido",
+          });
+
+          reset();
+          setMostrarSpinner(false);
+          setDeshabilitarBoton(false);
+          return;
+        }
+
         setUsuarioAdmin(datosUsuario);
         setCarrito([]);
         sessionStorage.removeItem("carrito");
+
         Swal.fire({
-          title: "Inicio de sesión correcto",
+          title: "Inicio de sesión exitoso",
           text: `Bienvenido ${datosUsuario.nombreUsuario}`,
           icon: "success",
+          timer: 2000,
+          showConfirmButton: false,
         });
+
         if (datosUsuario.rol === "empleado" || datosUsuario.rol === "admin" || datosUsuario.rol === "superAdmin") {
           navegacion("/usuarios");
         } else {
           navegacion("/");
         }
+      } else if (respuesta.status === 401) {
+        Swal.fire({
+          title: "Error al iniciar sesión",
+          text: "Credenciales incorrectas. Verifique su email y contraseña.",
+          icon: "error",
+        });
+      } else if (respuesta.status === 403) {
+        Swal.fire({
+          title: "Acceso denegado",
+          text: "Su cuenta ha sido deshabilitada. Contacte al administrador.",
+          icon: "warning",
+          confirmButtonColor: "#d33",
+        });
       } else {
         Swal.fire({
           title: "Error al iniciar sesión",
-          text: `Credenciales incorrectas`,
+          text: "Ocurrió un error inesperado. Intente nuevamente.",
           icon: "error",
         });
       }
     } catch (error) {
       Swal.fire({
         title: "Error de conexión",
-        text: `No se pudo conectar con el servidor`,
+        text: "No se pudo conectar con el servidor. Verifique su conexión a internet.",
         icon: "error",
       });
     } finally {

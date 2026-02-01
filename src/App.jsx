@@ -154,11 +154,6 @@ function App() {
                 element={
                   <AdminUsuario
                     usuarioAdmin={usuarioAdmin}
-                    obtenerProductos={obtenerProductos}
-                    page={page}
-                    totalPages={totalPages}
-                    listaProductos={listaProductos}
-                    setListaProductos={setListaProductos}
                   ></AdminUsuario>
                 }
               ></Route>
@@ -177,11 +172,6 @@ function App() {
                 element={
                   <AdminCanchas
                     usuarioAdmin={usuarioAdmin}
-                    obtenerProductos={obtenerProductos}
-                    page={page}
-                    totalPages={totalPages}
-                    listaProductos={listaProductos}
-                    setListaProductos={setListaProductos}
                   ></AdminCanchas>
                 }
               ></Route>
@@ -194,11 +184,6 @@ function App() {
                 element={
                   <AdminProductos
                     usuarioAdmin={usuarioAdmin}
-                    obtenerProductos={obtenerProductos}
-                    page={page}
-                    totalPages={totalPages}
-                    listaProductos={listaProductos}
-                    setListaProductos={setListaProductos}
                   ></AdminProductos>
                 }
               ></Route>
