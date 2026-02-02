@@ -33,7 +33,7 @@ const FormularioCancha = ({ titulo }) => {
       if (respuesta.status === 200) {
         const canchaBuscada = await respuesta.json();
         if (canchaBuscada === undefined) {
-          navegacion("/administrador");
+          navegacion("/canchas");
           Swal.fire({
             icon: "error",
             title: "Oops...",
@@ -43,8 +43,8 @@ const FormularioCancha = ({ titulo }) => {
           setValue("nombre", canchaBuscada.nombre);
           setValue("tipoDeSuperficie", canchaBuscada.tipoDeSuperficie);
           setValue("precioPorHora", canchaBuscada.precioPorHora);
-          setImagenActual(canchaBuscada.imagen)
-          setValue("disponibilidad", canchaBuscada.disponibilidad === "true");
+          setImagenActual(canchaBuscada.imagen);
+          setValue("disponibilidad", canchaBuscada.habilitado === "true");
         }
       }
     }
@@ -56,7 +56,7 @@ const FormularioCancha = ({ titulo }) => {
     const canchasMejoradas = {
       ...cancha,
       imagen: cancha.imagen ? cancha.imagen[0] : imagenActual,
-      disponibilidad: Boolean(cancha.disponibilidad),
+      habilitado: Boolean(cancha.habilitado),
     };
 
     if (titulo === "Cancha Nueva") {
@@ -85,7 +85,7 @@ const FormularioCancha = ({ titulo }) => {
         });
       }
     }
-    navegacion("/administrador");
+    navegacion("/canchas");
     setMostrarSpinner(false);
     setDeshabilitarBoton(false);
   };
@@ -205,8 +205,8 @@ const FormularioCancha = ({ titulo }) => {
                 <div>
                   <Form.Switch
                     type="switch"
-                    label={watch("disponibilidad") ? "Disponible" : "No disponible"}
-                    {...register("disponibilidad")}
+                    label={watch("habilitado") ? "Disponible" : "No disponible"}
+                    {...register("habilitado")}
                     className="fs-5"
                   />
                 </div>
@@ -227,7 +227,7 @@ const FormularioCancha = ({ titulo }) => {
                   </Button>
                 </Col>
                 <Col xs={12} md={6} className="text-center text-md-start">
-                  <Link to={"/administrador"} className="btn btn-danger w-50">
+                  <Link to={"/canchas"} className="btn btn-danger w-50">
                     Cancelar
                   </Link>
                 </Col>

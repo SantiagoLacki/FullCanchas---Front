@@ -20,7 +20,6 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* --- Asegura que todas las cards tengan la misma altura --- */
 .info-card {
   display: flex;
   flex-direction: column;
@@ -28,10 +27,10 @@
 }
 
 .info-card .card-body {
-  flex-grow: 1; /* hace que el contenido crezca para ocupar el espacio */
+  flex-grow: 1; 
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* distribuye el contenido */
+  justify-content: space-between; 
 }
 
 .info-card:hover {
@@ -59,7 +58,6 @@
   font-size: 15px;
 }
 
-/* Bloque final (estado actual del emprendimiento) */
 .quienes-somos-section .text-center.mt-5 {
   background: linear-gradient(to right, #008500, #5A9A00);
   color: white;
@@ -68,7 +66,6 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Botón coherente con la paleta */
 .quienes-somos-btn {
   background-color: #D4AC0D;
   color: white;
@@ -84,11 +81,6 @@
   background-color: #b68c0b;
 }
 
-/* ===============================
-   🌐 RESPONSIVE DESIGN
-================================ */
-
-/* Tablets (pantallas medianas) */
 @media (max-width: 992px) {
   .info-card img {
     height: 180px;
@@ -108,7 +100,6 @@
   }
 }
 
-/* Celulares (pantallas pequeñas) */
 @media (max-width: 576px) {
   .info-card {
     margin-bottom: 20px;

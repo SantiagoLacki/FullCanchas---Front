@@ -10,6 +10,7 @@ function Login({ setUsuarioAdmin, setCarrito }) {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
   const navegacion = useNavigate();
   const [mostrarSpinner, setMostrarSpinner] = useState(false);
@@ -18,35 +19,69 @@ function Login({ setUsuarioAdmin, setCarrito }) {
   const iniciarSesion = async (usuario) => {
     setMostrarSpinner(true);
     setDeshabilitarBoton(true);
-    
+
     try {
       const respuesta = await login(usuario);
+
       if (respuesta.status === 200) {
         const datosUsuario = await respuesta.json();
+
+        if (!datosUsuario.habilitado) {
+          Swal.fire({
+            title: "Acceso denegado",
+            text: `El usuario ${datosUsuario.nombreUsuario} no se encuentra habilitado para ingresar al sistema.`,
+            icon: "warning",
+            confirmButtonColor: "#d33",
+            confirmButtonText: "Entendido",
+          });
+
+          reset();
+          setMostrarSpinner(false);
+          setDeshabilitarBoton(false);
+          return;
+        }
+
         setUsuarioAdmin(datosUsuario);
         setCarrito([]);
         sessionStorage.removeItem("carrito");
+
         Swal.fire({
-          title: "Inicio de sesión correcto",
+          title: "Inicio de sesión exitoso",
           text: `Bienvenido ${datosUsuario.nombreUsuario}`,
           icon: "success",
+          timer: 2000,
+          showConfirmButton: false,
         });
-        if (datosUsuario.rol === "staff" || datosUsuario.rol === "admin") {
-          navegacion("/administrador");
+
+        if (datosUsuario.rol === "empleado" || datosUsuario.rol === "admin" || datosUsuario.rol === "superAdmin") {
+          navegacion("/usuarios");
         } else {
           navegacion("/");
         }
+      } else if (respuesta.status === 401) {
+        Swal.fire({
+          title: "Error al iniciar sesión",
+          text: "Credenciales incorrectas. Verifique su email y contraseña.",
+          icon: "error",
+        });
+      } else if (respuesta.status === 403) {
+        Swal.fire({
+          title: "Acceso denegado",
+          text: "Su cuenta ha sido deshabilitada. Contacte al administrador.",
+          icon: "warning",
+          confirmButtonColor: "#d33",
+        });
       } else {
         Swal.fire({
           title: "Error al iniciar sesión",
-          text: `Credenciales incorrectas`,
+          text: "Ocurrió un error inesperado. Intente nuevamente.",
           icon: "error",
         });
       }
     } catch (error) {
       Swal.fire({
         title: "Error de conexión",
-        text: `No se pudo conectar con el servidor`,
+        text: "No se pudo conectar con el servidor. Verifique su conexión a internet.",
         icon: "error",
       });
     } finally {
@@ -88,11 +123,7 @@ function Login({ setUsuarioAdmin, setCarrito }) {
                       },
                     })}
                   />
-                  {errors.email && (
-                    <Form.Text className="text-danger">
-                      {errors.email.message}
-                    </Form.Text>
-                  )}
+                  {errors.email && <Form.Text className="text-danger">{errors.email.message}</Form.Text>}
                 </Form.Group>
                 <Form.Group className="mb-4" controlId="password">
                   <Form.Label className="fw-semibold">Contraseña</Form.Label>
@@ -109,39 +140,25 @@ function Login({ setUsuarioAdmin, setCarrito }) {
                       },
                     })}
                   />
-                  {errors.password && (
-                    <Form.Text className="text-danger">
-                      {errors.password.message}
-                    </Form.Text>
-                  )}
+                  {errors.password && <Form.Text className="text-danger">{errors.password.message}</Form.Text>}
                   <div className="text-end mt-1">
                     <Link to={"*"} className="text-decoration-none text-primary small">
                       ¿Olvidaste tu contraseña?
                     </Link>
                   </div>
                 </Form.Group>
-                
-                <Button 
-                  variant="primary" 
-                  type="submit" 
-                  className="w-100 mb-3 fw-bold btn-fullcanchas-primary"
-                  disabled={deshabilitarBoton}
-                >
+
+                <Button variant="primary" type="submit" className="w-100 mb-3 fw-bold btn-fullcanchas-primary" disabled={deshabilitarBoton}>
                   {mostrarSpinner ? (
                     <div className="d-flex align-items-center justify-content-center">
-                      <Spinner
-                        animation="border"
-                        size="sm"
-                        role="status"
-                        className="me-2"
-                      />
+                      <Spinner animation="border" size="sm" role="status" className="me-2" />
                       Iniciando sesión...
                     </div>
                   ) : (
                     "Iniciar Sesión"
                   )}
                 </Button>
-                
+
                 <hr className="my-4" />
                 <p className="text-center mt-3 mb-0 small">
                   ¿Aún no tienes cuenta?
