@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 import { Link, useNavigate, useParams } from "react-router";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { crearReserva, editarReserva, leerCanchas, leerReservas, leerUsuarios, obtenerReservaPorId } from "../helpers/queries";
+import { crearReserva, editarReserva, leerCanchas, leerReservas, leerUsuarios, obtenerReservaPorId, obtenerCanchaPorId} from "../helpers/queries";
 
 const FormularioReserva = ({ titulo }) => {
   const {
@@ -20,12 +20,34 @@ const FormularioReserva = ({ titulo }) => {
   const [canchas, setCanchas] = useState([]);
   const [listaReservas, setListaReservas] = useState([]);
   const [mostrarSpinner, setMostrarSpinner] = useState(false);
-  const [deshabilitarBoton, setDeshabilitarBoton] = useState(false);
+  const [mostrarSpinnerDatos, setMostrarSpinnerDatos] = useState(false);
+  const [deshabilitarBoton, setDeshabilitarBoton] = useState(false);  
+  const [mensajeCanchaDeshabilitada, setMensajeCanchaDeshabilitada] = useState("");
 
   useEffect(() => {
     cargarFormulario();
     obtenerReservas();
   }, []);
+
+  const verificarCanchaHabilitada = async (idCancha) => {
+    try {
+      const respuesta = await obtenerCanchaPorId(idCancha);
+      if (respuesta.status === 200) {
+        const cancha = await respuesta.json();
+        
+        if (!cancha.habilitado) {
+          setMensajeCanchaDeshabilitada("⚠️ Esta cancha no está habilitada actualmente. No se pueden realizar reservas.");
+          setDeshabilitarBoton(true);
+        } else {
+          setMensajeCanchaDeshabilitada("");
+          setDeshabilitarBoton(false);
+        }
+      }
+    } catch (error) {
+      console.error("Error al verificar la cancha:", error);
+    }
+    setMostrarSpinnerDatos(false);
+  };
 
   const obtenerReservas = async () => {
     const respuesta = await leerReservas();
@@ -38,6 +60,7 @@ const FormularioReserva = ({ titulo }) => {
   };
 
   const cargarFormulario = async () => {
+    setMostrarSpinnerDatos(true);
     const [respuestaUsuarios, respuestaCanchas] = await Promise.all([leerUsuarios(), leerCanchas()]);
     if (respuestaUsuarios.status === 200) {
       const usuariosBuscados = await respuestaUsuarios.json();
@@ -70,6 +93,11 @@ const FormularioReserva = ({ titulo }) => {
           setValue("idCancha", reservaBuscada.idCancha?._id);
           setValue("dia", fechaFormateada);
           setValue("hora", reservaBuscada.hora);
+          if (reservaBuscada.idCancha?._id) {
+            setTimeout(() => {
+              verificarCanchaHabilitada(reservaBuscada.idCancha._id);
+            }, 500);
+          }
         }
       }
     }
@@ -155,6 +183,11 @@ const FormularioReserva = ({ titulo }) => {
         <div className="border rounded-4 py-1 px-4 mb-4 shadow-lg bg-light">
           <h1 className="display-6 titulo-admin fw-bold text-center me-4 mt-2">{titulo}</h1>
           <div className="d-flex justify-content-center">
+          {mostrarSpinnerDatos ? (
+            <div className="text-center mt-5">
+              <Spinner animation="border" variant="warning" role="status"></Spinner>
+            </div>
+          ) : (
             <Form className="my-4 w-75" onSubmit={handleSubmit(onSubmit)}>
               <Form.Group className="mb-4" controlId="formCliente">
                 <Form.Label className="me-2">Cliente:</Form.Label>
@@ -184,11 +217,16 @@ const FormularioReserva = ({ titulo }) => {
                   <option value="">Seleccione una cancha</option>
                   {canchas.map((cancha) => (
                     <option key={cancha._id} value={cancha._id}>
-                      {cancha.nombre} - ${cancha.precioPorHora} - {cancha.tipoDeSuperficie}
+                      {cancha.nombre} - ${cancha.precioPorHora} - {cancha.tipoDeSuperficie} {!cancha.habilitado && "(No habilitada)"}
                     </option>
                   ))}
                 </Form.Select>
                 <Form.Text className="text-danger">{errors.idCancha?.message}</Form.Text>
+                {mensajeCanchaDeshabilitada && (
+                  <div className="alert alert-warning mt-2 py-2" role="alert">
+                    <small>{mensajeCanchaDeshabilitada}</small>
+                  </div>
+                )}
               </Form.Group>
 
               <Form.Group className="mb-4" controlId="formDia">
@@ -242,6 +280,7 @@ const FormularioReserva = ({ titulo }) => {
                 </Col>
               </Row>
             </Form>
+            )}
           </div>
         </div>
       </section>
