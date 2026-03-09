@@ -15,7 +15,7 @@ function Productos({ usuarioAdmin, agregarAlCarrito }) {
   const [pagePelotas, setPagePelotas] = useState(1);
 
   const mostrarProductos = (categoria, page) => {
-    const filtrados = listaProductos.filter((p) => p.categoria === categoria);
+    const filtrados = listaProductos.filter((p) => p.categoria === categoria && p.habilitado === true);
     const totalPages = Math.ceil(filtrados.length / productosPorPagina);
     const inicio = (page - 1) * productosPorPagina;
     const fin = inicio + productosPorPagina;

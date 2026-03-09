@@ -3,7 +3,6 @@ import { Link } from "react-router";
 
 const CardCancha = ({ cancha }) => {
   const estaDisponible = cancha.habilitado;
-  console.log(estaDisponible)
   return (
     <Card className="shadow-sm h-100 border border-1 border-black mb-3">
       <div className="overflow-hidden">
