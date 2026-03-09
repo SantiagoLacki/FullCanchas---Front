@@ -131,8 +131,8 @@ const Inicio = ({ usuarioAdmin, listaProductos, page, totalPages, setPage, agreg
           <Container>
             <h1 className="titulo-seccion text-white text-center mt-3 mb-5 text-white ">Productos</h1>
             <Row className="justify-content-center">
-              {listaProductos.length > 0 ? (
-                listaProductos.map((producto) => (
+              {listaProductos && listaProductos.length > 0 ? (
+                 listaProductos.map((producto) => (
                   <Col key={producto._id} xl={3} lg={4} md={6} sm={12} className="mb-4">
                     <CardProducto usuarioAdmin={usuarioAdmin} producto={producto} agregarAlCarrito={agregarAlCarrito} />
                   </Col>
