@@ -36,7 +36,7 @@ const FormularioProducto = ({ titulo }) => {
           Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: "El usuario es inexistente",
+            text: "El producto es inexistente",
           });
         } else {
           setValue("nombre", productoBuscado.nombre);

@@ -8,13 +8,26 @@ const DetalleProductos = () => {
   const [producto, setProducto] = useState({});
 
   useEffect(() => {
-    const cargarProducto = async () => {
-      const productoBuscado = await obtenerProductoPorId(id);
-      setProducto(productoBuscado);
-    };
     cargarProducto();
   }, [id]);
 
+  const cargarProducto = async () => {
+    const respuesta = await obtenerProductoPorId(id);
+    if (respuesta.status === 200) {
+      const productoBuscado = await respuesta.json();
+      console.log(productoBuscado)
+      if (productoBuscado === undefined) {
+        navegacion("/productos");
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "El producto es inexistente",
+        });
+      } else {
+          setProducto(productoBuscado);
+      }
+    }
+  };
   return (
     <Container className="py-5">
       <Row className="justify-content-center">
