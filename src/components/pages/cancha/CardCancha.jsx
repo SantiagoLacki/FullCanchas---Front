@@ -2,7 +2,7 @@ import { Button, Card } from "react-bootstrap";
 import { Link } from "react-router";
 
 const CardCancha = ({ cancha }) => {
-  const estaDisponible = cancha.disponibilidad === "true";
+  const estaDisponible = cancha.habilitado;
   return (
     <Card className="shadow-sm h-100 border border-1 border-black mb-3">
       <div className="overflow-hidden">

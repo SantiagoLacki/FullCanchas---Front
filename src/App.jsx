@@ -50,7 +50,7 @@ function App() {
     const respuesta = await leerProductosPaginados(page, limit);
     if (respuesta.status === 200) {
       const datos = await respuesta.json();
-      setListaProductos(datos.productos);
+      setListaProductos(datos.productos.filter((p) => p.habilitado));
       setTotalPages(datos.totalPages);
     } else {
       Swal.fire({
